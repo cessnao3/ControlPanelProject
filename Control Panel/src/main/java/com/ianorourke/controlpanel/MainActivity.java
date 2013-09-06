@@ -12,15 +12,17 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RectangleView rect = new RectangleView(this);
-        rect.setX(50);
-        rect.setY(50);
+        float defaultSize = 300;
 
-        ViewGroup.LayoutParams rectangleParams = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+        RectangleView rect = new RectangleView(this, defaultSize, RectangleView.RectColors.RED);
+        RectangleView rect2 = new RectangleView(this, defaultSize, RectangleView.RectColors.BLUE);
+
+        rect2.setX((int) defaultSize);
+
+        ViewGroup.LayoutParams rectangleParams = new ViewGroup.LayoutParams((int) defaultSize, (int) defaultSize);
 
         addContentView(rect, rectangleParams);
+        addContentView(rect2, rectangleParams);
     }
     
 }
