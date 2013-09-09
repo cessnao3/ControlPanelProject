@@ -17,7 +17,6 @@ public class RectangleView extends View {
         super(context);
 
         this.color = color;
-
         this.size = size;
     }
 
@@ -49,5 +48,22 @@ public class RectangleView extends View {
         this.setY(event.getRawY() - this.getMeasuredHeight());
 
         return true;
+    }
+
+    public void setCenter(float x, float y) {
+        this.setX(x - this.getWidth() / 2);
+        this.setY(y - this.getHeight() / 2);
+    }
+
+    public void setCenter(PointFloat p) {
+        float x = (float) p.x - (float) this.getWidth() / 2;
+        float y = (float) p.y - (float) this.getHeight() / 2;
+
+        this.setX(x);
+        this.setY(y);
+    }
+
+    public PointFloat getCenter() {
+        return new PointFloat(this.getX() - this.getWidth() / 2, this.getY() - this.getHeight() / 2);
     }
 }
