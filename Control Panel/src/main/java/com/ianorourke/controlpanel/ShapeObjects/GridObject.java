@@ -1,22 +1,20 @@
-package com.ianorourke.controlpanel;
+package com.ianorourke.controlpanel.ShapeObjects;
 
 public class GridObject {
-    private PointFloat gridPoint;
+    //TODO: Fix Occupied
+
+    private PointD gridPoint;
     private boolean occupied = false;
 
     public GridObject(float x, float y) {
-        this.gridPoint = new PointFloat(x, y);
+        this.gridPoint = new PointD(x, y);
     }
 
-    public double getX() {
-        return this.gridPoint.x;
+    public void setPoint(PointD newPoint) {
+        this.gridPoint = newPoint;
     }
 
-    public double getY() {
-        return this.gridPoint.y;
-    }
-
-    public PointFloat getPoint() {
+    public PointD getPoint() {
         return this.gridPoint;
     }
 

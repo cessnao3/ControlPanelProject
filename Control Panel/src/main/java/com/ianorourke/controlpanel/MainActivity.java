@@ -1,10 +1,11 @@
 package com.ianorourke.controlpanel;
 
+import com.ianorourke.controlpanel.ShapeObjects.*;
+
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.*;
-
 import android.graphics.Point;
+import android.view.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -12,11 +13,7 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
 
     private List<GridObject> gridPointList = new ArrayList<GridObject>();
-
     private List<RectangleView> rectangleList = new ArrayList<RectangleView>();
-
-    private float defaultSize = 300;
-    private ViewGroup.LayoutParams rectangleParams = new ViewGroup.LayoutParams((int) defaultSize, (int) defaultSize);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,48 +26,73 @@ public class MainActivity extends Activity {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 GridObject point = new GridObject(screenSize.x / 6 + screenSize.x * x / 3, screenSize.y / 8 + screenSize.y * y / 4);
+
                 gridPointList.add(point);
             }
         }
 
-        for (int i = 0; i < 2; i++) {
-            RectangleView rect = new RectangleView(this, defaultSize, RectangleView.RectColors.RED);
+        for (int i = 1; i < 11; i++) {
+            RectangleView rect = new RectangleView(this, 100);
 
             rectangleList.add(rect);
-            addContentView(rect, rectangleParams);
+            addContentView(rect, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
         }
 
-        this.alignRectangles();
+        for (int i = 0; i < rectangleList.size(); i++) {
+            alignRectangle(rectangleList.get(i));
+        }
     }
 
-    private void alignRectangles() {
-        for (int i = 0; i < rectangleList.size(); i++) {
-            int bestPoint = -1;
-            double bestDistance = -1;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
 
-            for (int j = 0; j < gridPointList.size(); j++) {
-                if (bestPoint != -1) {
-                    double currentDistance = getDistance(rectangleList.get(i).getCenter(), gridPointList.get(j).getPoint());
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_align:
+                for (int i = 0; i < rectangleList.size(); i++) {
+                    alignRectangle(rectangleList.get(i));
+                }
 
-                    if (bestDistance > currentDistance && !gridPointList.get(j).getOccupied()) {
-                        bestDistance = currentDistance;
-                        bestPoint = j;
-                    }
-                } else {
-                    if (!gridPointList.get(j).getOccupied()) {
-                        bestPoint = j;
-                    }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void alignRectangle(RectangleView rect) {
+        int bestPoint = -1;
+        double bestDistance = -1;
+
+        for (int i = 0; i < gridPointList.size(); i++) {
+            GridObject currentGrid = gridPointList.get(i);
+
+            if (bestPoint >= 0) {
+                double currentDistance = getDistance(rect.getCenter(), currentGrid.getPoint());
+
+                if (bestDistance > currentDistance && !currentGrid.getOccupied()) {
+                    bestDistance = currentDistance;
+                    bestPoint = i;
+                }
+            } else {
+                if (!gridPointList.get(i).getOccupied()) {
+                    bestPoint = i;
                 }
             }
+        }
 
-            if (bestPoint != -1) {
-                rectangleList.get(i).setCenter(gridPointList.get(bestPoint).getPoint());
-                gridPointList.get(bestPoint).setOccupied(true);
-            }
+        if (bestPoint >= 0) {
+            rectangleList.get(bestPoint).setCenter(gridPointList.get(bestPoint).getPoint());
+            gridPointList.get(bestPoint).setOccupied(true);
         }
     }
 
-    private double getDistance(PointFloat p1, PointFloat p2) {
+    private double getDistance(PointD p1, PointD p2) {
         return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
     }
 }
