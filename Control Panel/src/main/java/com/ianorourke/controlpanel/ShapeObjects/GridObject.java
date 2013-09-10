@@ -1,20 +1,22 @@
 package com.ianorourke.controlpanel.ShapeObjects;
 
+import android.graphics.PointF;
+
 public class GridObject {
     //TODO: Fix Occupied
 
-    private PointD gridPoint;
+    private PointF gridPoint;
     private boolean occupied = false;
 
     public GridObject(float x, float y) {
-        this.gridPoint = new PointD(x, y);
+        this.gridPoint = new PointF(x, y);
     }
 
-    public void setPoint(PointD newPoint) {
+    public void setPoint(PointF newPoint) {
         this.gridPoint = newPoint;
     }
 
-    public PointD getPoint() {
+    public PointF getPoint() {
         return this.gridPoint;
     }
 
