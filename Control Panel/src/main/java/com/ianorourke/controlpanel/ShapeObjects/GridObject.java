@@ -6,7 +6,7 @@ public class GridObject {
     //TODO: Fix Occupied
 
     private PointF gridPoint;
-    private boolean occupied = false;
+    private RectangleView currentObject = null;
 
     public GridObject(float x, float y) {
         this.gridPoint = new PointF(x, y);
@@ -20,11 +20,19 @@ public class GridObject {
         return this.gridPoint;
     }
 
-    public void setOccupied(boolean value) {
-        this.occupied = value;
+    public void setObject(RectangleView newObject) {
+        this.currentObject = newObject;
     }
 
-    public boolean getOccupied() {
-        return this.occupied;
+    public RectangleView getObject() {
+        return this.currentObject;
+    }
+
+    public boolean hasObject() {
+        if (currentObject != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

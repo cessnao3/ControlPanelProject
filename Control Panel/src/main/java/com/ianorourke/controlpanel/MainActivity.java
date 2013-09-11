@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
+    private int currentRect = 0;
 
     private List<GridObject> gridPointList = new ArrayList<GridObject>();
     private List<RectangleView> rectangleList = new ArrayList<RectangleView>();
@@ -31,19 +32,21 @@ public class MainActivity extends Activity {
                 gridPointList.add(point);
             }
         }
+    }
 
-        for (int i = 0; i < 8; i++) {
-            RectangleView rect = new RectangleView(this, 300);
+    private void createRectangle() {
+        RectangleView rect = new RectangleView(this, 300);
 
-            rect.color = i + 1;
+        rect.setX(0);
+        rect.setY(0);
 
-            rectangleList.add(rect);
-            addContentView(rect, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
-        }
+        currentRect++;
+        rect.color = currentRect;
 
-        for (int i = 0; i < rectangleList.size(); i++) {
-            alignRectangle(rectangleList.get(i));
-        }
+        rectangleList.add(rect);
+        addContentView(rect, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
+
+        alignObject(rect);
     }
 
     @Override
@@ -59,43 +62,57 @@ public class MainActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.menu_align:
                 for (int i = 0; i < gridPointList.size(); i++) {
-                    gridPointList.get(i).setOccupied(false);
+                    //gridPointList.get(i).setOccupied(false);
                 }
 
                 for (int i = 0; i < rectangleList.size(); i++) {
-                    alignRectangle(rectangleList.get(i));
+                    alignObject(rectangleList.get(i));
                 }
 
+                return true;
+            case R.id.menu_new:
+                createRectangle();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void alignRectangle(RectangleView rect) {
-        int bestPoint = -1;
-        float bestDistance = -1;
+    private void alignObject(RectangleView rect) {
+        Integer bestInt = null;
+        Float bestDistance = null;
 
         for (int i = 0; i < gridPointList.size(); i++) {
-            GridObject currentGrid = gridPointList.get(i);
+            GridObject point = gridPointList.get(i);
 
-            if (bestPoint >= 0) {
-                float currentDistance = getDistance(rect.getCenter(), currentGrid.getPoint());
+            if (point.getObject() != null) {
+                float currentDistance = getDistance(rect.getCenter(), point.getPoint());
 
-                if (bestDistance > currentDistance && !currentGrid.getOccupied()) {
-                    bestDistance = currentDistance;
-                    bestPoint = i;
-                }
-            } else {
-                if (!gridPointList.get(i).getOccupied()) {
-                    bestPoint = i;
+                if (bestInt != null) {
+                    if (bestDistance > currentDistance) {
+                        bestInt = new Integer(i);
+                        bestDistance = new Float(currentDistance);
+                    }
+                } else {
+                    bestInt = new Integer(i);
+                    bestDistance = new Float(currentDistance);
                 }
             }
         }
 
-        if (bestPoint >= 0) {
-            rectangleList.get(bestPoint).setCenter(gridPointList.get(bestPoint).getPoint());
-            gridPointList.get(bestPoint).setOccupied(true);
+        if (bestInt != null) {
+            int newGridInt = bestInt.intValue();
+
+            for (int i = 0; i < gridPointList.size(); i++) {
+                if (newGridInt != i && gridPointList.get(i).getObject().equals(rect)) {
+                    gridPointList.get(i).setObject(null);
+                }
+            }
+
+            GridObject point = gridPointList.get(newGridInt);
+
+            rect.setCenter(point.getPoint());
+            point.setObject(rect);
         }
     }
 
