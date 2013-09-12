@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
         rectangleList.add(rect);
         addContentView(rect, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
 
-        alignObject(rect);
+        alignObject(rectangleList.indexOf(rect));
     }
 
     @Override
@@ -62,11 +62,11 @@ public class MainActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.menu_align:
                 for (int i = 0; i < gridPointList.size(); i++) {
-                    //gridPointList.get(i).setOccupied(false);
+                    gridPointList.get(i).setObject(null);
                 }
 
                 for (int i = 0; i < rectangleList.size(); i++) {
-                    alignObject(rectangleList.get(i));
+                    alignObject(i);
                 }
 
                 return true;
@@ -78,14 +78,18 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void alignObject(RectangleView rect) {
+    private void alignObject(int rectNum) {
         Integer bestInt = null;
         Float bestDistance = null;
+
+        RectangleView rect = rectangleList.get(rectNum);
 
         for (int i = 0; i < gridPointList.size(); i++) {
             GridObject point = gridPointList.get(i);
 
-            if (point.getObject() != null) {
+            if (point.getObject() == null) {
+
+                //HERE
                 float currentDistance = getDistance(rect.getCenter(), point.getPoint());
 
                 if (bestInt != null) {
@@ -97,6 +101,8 @@ public class MainActivity extends Activity {
                     bestInt = new Integer(i);
                     bestDistance = new Float(currentDistance);
                 }
+
+                //to HERE
             }
         }
 
@@ -104,8 +110,8 @@ public class MainActivity extends Activity {
             int newGridInt = bestInt.intValue();
 
             for (int i = 0; i < gridPointList.size(); i++) {
-                if (newGridInt != i && gridPointList.get(i).getObject().equals(rect)) {
-                    gridPointList.get(i).setObject(null);
+                if (newGridInt != i && gridPointList.get(i).hasObject()) {
+                    if (gridPointList.get(i).getObject().equals(rect)) gridPointList.get(i).setObject(null);
                 }
             }
 
