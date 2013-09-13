@@ -50,6 +50,10 @@ public class RectangleView extends View {
         this.setX(toCenterPoint(this.getX() + displacementX));
         this.setY(toCenterPoint(this.getY() + displacementY));
 
+        if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+            Grid.alignObject(this);
+        }
+
         return true;
     }
 
@@ -72,6 +76,6 @@ public class RectangleView extends View {
     }
 
     private float toCornerPoint(float coord) {
-        return coord - this.size / 2;
+        return coord +x this.size / 2;
     }
 }

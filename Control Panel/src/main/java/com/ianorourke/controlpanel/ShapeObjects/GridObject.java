@@ -24,6 +24,12 @@ public class GridObject {
         this.currentObject = newObject;
     }
 
+    public void refreshObject() {
+        if (this.currentObject != null) {
+            this.currentObject.setCenter(this.getPoint());
+        }
+    }
+
     public RectangleView getObject() {
         return this.currentObject;
     }
@@ -31,6 +37,15 @@ public class GridObject {
     public boolean hasObject() {
         if (currentObject != null) {
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean hasObject(RectangleView rect) {
+        if (currentObject != null) {
+            if (currentObject.equals(rect)) return false;
+            else return true;
         } else {
             return false;
         }
