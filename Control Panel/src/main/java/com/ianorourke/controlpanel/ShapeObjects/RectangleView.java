@@ -76,6 +76,6 @@ public class RectangleView extends View {
     }
 
     private float toCornerPoint(float coord) {
-        return coord +x this.size / 2;
+        return coord + this.size / 2;
     }
 }
