@@ -2,35 +2,34 @@ package com.ianorourke.controlpanel.ShapeObjects;
 
 import android.content.Context;
 import android.graphics.PointF;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Grid {
-    public static List<GridObject> gridPointList = new ArrayList<GridObject>();
-    public static List<RectangleView> rectangleList = new ArrayList<RectangleView>();
+    //TODO: Only gridPointList
 
-    private static int currentRect = 0;
+    public static List<GridObject> gridPointList = new ArrayList<GridObject>();
+    //public static List<RectangleView> rectangleList = new ArrayList<RectangleView>();
+
+    public static int currentRect = 0;
 
     public static RectangleView createRectangle(Context context) {
-        if (currentRect < 8) {
-            RectangleView rect = new RectangleView(context, 300);
+        if (currentRect >= 11) return null;
 
-            rect.setX(0);
-            rect.setY(0);
+        RectangleView rect = new RectangleView(context, 300);
 
-            currentRect++;
-            rect.color = currentRect;
+        rect.setX(0);
+        rect.setY(0);
 
-            rectangleList.add(rect);
+        currentRect++;
+        rect.color = currentRect;
 
-            alignObject(rect);
+        //rectangleList.add(rect);
 
-            return rect;
-        } else {
-            return null;
-        }
+        alignObject(rect);
+
+        return rect;
     }
 
     public static boolean alignObject(RectangleView rect) {
@@ -79,7 +78,7 @@ public class Grid {
 
     public static void resetAllObjects() {
         for (int i = 0; i < gridPointList.size(); i++) {
-            gridPointList.get(i).refreshObject();
+            gridPointList.get(i).realignObject();
         }
     }
 

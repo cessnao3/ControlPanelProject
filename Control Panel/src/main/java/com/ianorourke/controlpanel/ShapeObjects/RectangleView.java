@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 
+import android.view.ViewGroup;
+
 public class RectangleView extends View {
     private int size;
 
@@ -32,8 +34,6 @@ public class RectangleView extends View {
             p.setColor(Color.BLUE);
         }
 
-        //p.setColor(Color.RED);
-
         canvas.drawRect(0, 0, size, size, p);
     }
 
@@ -47,8 +47,8 @@ public class RectangleView extends View {
         float displacementX = event.getRawX() - screenLocation[0];
         float displacementY = event.getRawY() - screenLocation[1];
 
-        this.setX(toCenterPoint(this.getX() + displacementX));
-        this.setY(toCenterPoint(this.getY() + displacementY));
+        this.setX(toCornerPoint(this.getX() + displacementX));
+        this.setY(toCornerPoint(this.getY() + displacementY));
 
         if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
             Grid.alignObject(this);
@@ -58,13 +58,12 @@ public class RectangleView extends View {
     }
 
     public void setCenter(PointF p) {
-        this.setX(toCenterPoint(p.x));
-        this.setY(toCenterPoint(p.y));
+        this.setX(toCornerPoint(p.x));
+        this.setY(toCornerPoint(p.y));
     }
 
     public PointF getCenter() {
-        //return new PointF(this.getX() - this.getWidth() / 2, this.getY() - this.getHeight() / 2);
-        return new PointF(toCornerPoint(this.getX()), toCornerPoint(this.getY()));
+        return new PointF(toCenterPoint(this.getX()), toCenterPoint(this.getY()));
     }
 
     public int getSize() {
@@ -72,10 +71,15 @@ public class RectangleView extends View {
     }
 
     private float toCenterPoint(float coord) {
-        return coord - this.size / 2;
+        return coord + this.size / 2;
     }
 
     private float toCornerPoint(float coord) {
-        return coord + this.size / 2;
+        return coord - this.size / 2;
+    }
+
+    public void removeView() {
+        ViewGroup viewParent = (ViewGroup) this.getParent();
+        viewParent.removeView(this);
     }
 }

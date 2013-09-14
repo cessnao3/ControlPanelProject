@@ -24,7 +24,7 @@ public class GridObject {
         this.currentObject = newObject;
     }
 
-    public void refreshObject() {
+    public void realignObject() {
         if (this.currentObject != null) {
             this.currentObject.setCenter(this.getPoint());
         }
