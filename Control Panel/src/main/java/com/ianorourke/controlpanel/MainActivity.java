@@ -15,16 +15,13 @@ import java.util.ArrayList;
 
 import android.graphics.Rect;
 
-public class MainActivity extends Activity implements Grid.ViewInterface {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
 
-        Grid.viewDelegate = this;
-
-        //addContentView(Grid);
+        //TODO: FIX Window for GRIDS
     }
 
     @Override
@@ -43,16 +40,6 @@ public class MainActivity extends Activity implements Grid.ViewInterface {
                 }
             }
         }
-    }
-
-    @Override
-    public void removeRectView(RectangleView rect) {
-        ((ViewGroup) findViewById(android.R.id.content)).removeView(rect);
-
-        ViewGroup vg = (ViewGroup) findViewById(android.R.id.content).getRootView();
-        vg.removeView(rect.getRootView());
-
-        //getWindow().getDecorView().getRootView()
     }
 
     @Override

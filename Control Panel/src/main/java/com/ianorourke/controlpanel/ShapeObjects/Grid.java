@@ -7,17 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Grid {
-    public static interface ViewInterface {
-        public void removeRectView(RectangleView rect);
-    }
-
-    public static ViewInterface viewDelegate = new ViewInterface() {
-        @Override
-        public void removeRectView(RectangleView rect) {
-
-        }
-    };
-
     public static List<GridObject> gridPointList = new ArrayList<GridObject>();
     //public static List<RectangleView> rectangleList = new ArrayList<RectangleView>();
 
@@ -89,14 +78,6 @@ public class Grid {
                 if (gridPointList.get(i).getObject().equals(rect)) gridPointList.get(i).setObject(null);
             }
         }
-    }
-
-    public static void removeRect(RectangleView rect) {
-        deleteRect(rect);
-
-        viewDelegate.removeRectView(rect);
-        currentRect = currentRect - 1;
-
     }
 
     public static void resetAllObjects() {
