@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
 
 import android.view.ViewGroup;
 
@@ -15,11 +16,17 @@ public class RectangleView extends View {
 
     public int color;
 
+    private Rect rect;
+
+    private boolean isRectEnabled = true;
+
     public RectangleView(Context context, int size) {
         super(context);
         this.size = size;
 
         this.setPadding(0, 0, 0, 0);
+
+        rect = new Rect(0, 0, size, size);
     }
 
     @Override
@@ -34,27 +41,37 @@ public class RectangleView extends View {
             p.setColor(Color.BLUE);
         }
 
-        canvas.drawRect(0, 0, size, size, p);
+        canvas.drawRect(this.rect, p);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        super.onTouchEvent(event);
+        if (rect.contains((int)event.getX(), (int)event.getY())) {
+            //super.onTouchEvent(event);
 
-        int[] screenLocation = new int[2];
-        this.getLocationOnScreen(screenLocation);
+            int[] screenLocation = new int[2];
+            this.getLocationOnScreen(screenLocation);
 
-        float displacementX = event.getRawX() - screenLocation[0];
-        float displacementY = event.getRawY() - screenLocation[1];
+            float displacementX = event.getRawX() - screenLocation[0];
+            float displacementY = event.getRawY() - screenLocation[1];
 
-        this.setX(toCornerPoint(this.getX() + displacementX));
-        this.setY(toCornerPoint(this.getY() + displacementY));
+            this.setX(toCornerPoint(this.getX() + displacementX));
+            this.setY(toCornerPoint(this.getY() + displacementY));
 
-        if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-            Grid.alignObject(this);
-        }
+            if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                if (this.getX() < 0 && this.getY() < 0) {
+                    if (isRectEnabled && event.getAction() == MotionEvent.ACTION_UP) {
+                        this.removeSelf();
 
-        return true;
+                        isRectEnabled = false;
+                    }
+                } else {
+                    Grid.alignObject(this);
+                }
+            }
+
+            return true;
+        } else return false;
     }
 
     public void setCenter(PointF p) {
@@ -78,8 +95,12 @@ public class RectangleView extends View {
         return coord - this.size / 2;
     }
 
-    public void removeView() {
+    public void removeSelf() {
+        Grid.deleteRect(this);
+        Grid.currentRect--;
+
         ViewGroup viewParent = (ViewGroup) this.getParent();
+
         viewParent.removeView(this);
     }
 }

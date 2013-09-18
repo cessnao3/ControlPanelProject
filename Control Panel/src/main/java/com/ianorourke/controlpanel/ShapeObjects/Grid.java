@@ -7,7 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Grid {
-    //TODO: Only gridPointList
+    public static interface ViewInterface {
+        public void removeRectView(RectangleView rect);
+    }
+
+    public static ViewInterface viewDelegate = new ViewInterface() {
+        @Override
+        public void removeRectView(RectangleView rect) {
+
+        }
+    };
 
     public static List<GridObject> gridPointList = new ArrayList<GridObject>();
     //public static List<RectangleView> rectangleList = new ArrayList<RectangleView>();
@@ -36,6 +45,8 @@ public class Grid {
         Integer bestInt = null;
         Float bestDistance = null;
 
+        GridObject[][] objects = new GridObject[3][4];
+
         if (rect == null) return false;
 
         for (int i = 0; i < gridPointList.size(); i++) {
@@ -59,11 +70,7 @@ public class Grid {
         if (bestInt != null) {
             int newGridInt = bestInt.intValue();
 
-            for (int i = 0; i < gridPointList.size(); i++) {
-                if (newGridInt != i && gridPointList.get(i).hasObject()) {
-                    if (gridPointList.get(i).getObject().equals(rect)) gridPointList.get(i).setObject(null);
-                }
-            }
+            deleteRect(rect);
 
             GridObject point = gridPointList.get(newGridInt);
 
@@ -74,6 +81,22 @@ public class Grid {
         } else {
             return false;
         }
+    }
+
+    public static void deleteRect(RectangleView rect) {
+        for (int i = 0; i < gridPointList.size(); i++) {
+            if (gridPointList.get(i).hasObject()) {
+                if (gridPointList.get(i).getObject().equals(rect)) gridPointList.get(i).setObject(null);
+            }
+        }
+    }
+
+    public static void removeRect(RectangleView rect) {
+        deleteRect(rect);
+
+        viewDelegate.removeRectView(rect);
+        currentRect = currentRect - 1;
+
     }
 
     public static void resetAllObjects() {

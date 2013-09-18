@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.text.AndroidCharacter;
 import android.view.*;
 import android.util.DisplayMetrics;
 
@@ -14,28 +15,16 @@ import java.util.ArrayList;
 
 import android.graphics.Rect;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Grid.ViewInterface {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
 
-        Grid.currentRect = 0;
-        /*
-        if (savedInstanceState == null) {
-            Point screenSize = new Point();
-            getWindowManager().getDefaultDisplay().getSize(screenSize);
+        Grid.viewDelegate = this;
 
-            for (int y = 0; y < 4; y++) {
-                for (int x = 0; x < 3; x++) {
-                    GridObject point = new GridObject(screenSize.x / 6 + screenSize.x * x / 3, screenSize.y / 8 + screenSize.y * y / 4);
-
-                    Grid.gridPointList.add(point);
-                }
-            }
-        }
-        */
+        //addContentView(Grid);
     }
 
     @Override
@@ -56,6 +45,15 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void removeRectView(RectangleView rect) {
+        ((ViewGroup) findViewById(android.R.id.content)).removeView(rect);
+
+        ViewGroup vg = (ViewGroup) findViewById(android.R.id.content).getRootView();
+        vg.removeView(rect.getRootView());
+
+        //getWindow().getDecorView().getRootView()
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
