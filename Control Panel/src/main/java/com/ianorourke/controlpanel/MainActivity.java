@@ -27,6 +27,9 @@ public class MainActivity extends Activity {
 
 
         //TODO: FIX Window for GRIDS
+
+        //TODO: Density Independent Pixels for Rectangles
+        //TODO: Number of Rects based on Aspect Ratio
     }
 
     @Override
