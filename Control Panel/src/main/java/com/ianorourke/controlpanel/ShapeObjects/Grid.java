@@ -10,12 +10,14 @@ public class Grid {
     public static List<GridObject> gridPointList = new ArrayList<GridObject>();
     //public static List<RectangleView> rectangleList = new ArrayList<RectangleView>();
 
+    public static int rectSize = 300;
+
     public static int currentRect = 0;
 
     public static RectangleView createRectangle(Context context) {
-        if (currentRect >= 11) return null;
+        if (currentRect >= gridPointList.size() - 1) return null;
 
-        RectangleView rect = new RectangleView(context, 300);
+        RectangleView rect = new RectangleView(context, rectSize);
 
         rect.setX(0);
         rect.setY(0);

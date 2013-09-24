@@ -15,11 +15,16 @@ import java.util.ArrayList;
 
 import android.graphics.Rect;
 
+import android.util.Log;
+
 public class MainActivity extends Activity {
+
+    private float scale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         //TODO: FIX Window for GRIDS
     }
@@ -28,18 +33,32 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
+        this.scale = getResources().getDisplayMetrics().density;
+
+        //rectSize = (300.0 * this.scale + 0.5f);
+        Grid.rectSize = (int) (50.0 * this.scale + 0.5f);
+        Log.v("cp", new Integer(Grid.rectSize).toString());
+
         if (Grid.gridPointList.size() == 0) {
             Point screenSize = new Point();
             getWindowManager().getDefaultDisplay().getSize(screenSize);
 
-            for (int y = 0; y < 4; y++) {
-                for (int x = 0; x < 3; x++) {
-                    GridObject point = new GridObject(screenSize.x / 6 + screenSize.x * x / 3, screenSize.y / 8 + screenSize.y * y / 4);
+            //TODO: Fix Window Sizing
+            //TODO: Remove -1 from numY
+
+            int numX = (screenSize.x - Grid.rectSize) / Grid.rectSize;
+            int numY = (screenSize.y - Grid.rectSize) / Grid.rectSize - 3;
+
+            for (int y = 0; y < numY; y++) {
+                for (int x = 0; x < numX; x++) {
+                    GridObject point = new GridObject(screenSize.x / (2 * numX) + screenSize.x * x / numX, screenSize.y / (2 * numY) + screenSize.y * y / numY);
 
                     Grid.gridPointList.add(point);
                 }
             }
         }
+
+        Log.v("cp", new Integer(Grid.gridPointList.size()).toString());
     }
 
     @Override
