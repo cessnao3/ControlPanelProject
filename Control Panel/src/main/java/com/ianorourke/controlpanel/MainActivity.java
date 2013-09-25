@@ -1,28 +1,17 @@
 package com.ianorourke.controlpanel;
 
-import android.app.ActionBar;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Point;
-import android.graphics.PointF;
-import android.text.AndroidCharacter;
 import android.view.*;
-import android.util.DisplayMetrics;
-
-import java.util.List;
-import java.util.ArrayList;
-
-import android.graphics.Rect;
 
 import android.util.Log;
 
 public class MainActivity extends Activity {
 
-    private float scale;
-
-    GridView mainView;
+    private GridView mainView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +30,17 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        this.scale = getResources().getDisplayMetrics().density;
+        float scale = getResources().getDisplayMetrics().density;
 
         //rectSize = (300.0 * this.scale + 0.5f);
-        Grid.rectSize = (int) (50.0 * this.scale + 0.5f);
+        Grid.rectSize = (int) (50.0 * scale + 0.5f);
         Log.v("cp", new Integer(Grid.rectSize).toString());
 
         if (Grid.gridPointList.size() == 0) {
             Point screenSize = new Point();
             getWindowManager().getDefaultDisplay().getSize(screenSize);
+
+            //TODO: Size for this.mainView
 
             //Point screenSize = new Point(getWindow().getDecorView().getWidth(), getWindow().getDecorView().getHeight());
 

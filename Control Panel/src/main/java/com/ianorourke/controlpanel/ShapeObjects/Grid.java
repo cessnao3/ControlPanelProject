@@ -54,7 +54,7 @@ public class Grid {
         for (int i = 0; i < gridPointList.size(); i++) {
             GridObject point = gridPointList.get(i);
 
-            if (point.hasObject(rect) == false) {
+            if (!point.hasObject(rect)) {
                 float currentDistance = getDistance(rect.getCenter(), point.getPoint());
 
                 if (bestInt != null) {
@@ -99,7 +99,7 @@ public class Grid {
         }
     }
 
-    public static float getDistance(PointF p1, PointF p2) {
+    private static float getDistance(PointF p1, PointF p2) {
         double x1 = (double) p1.x;
         double y1 = (double) p1.y;
         double x2 = (double) p2.x;

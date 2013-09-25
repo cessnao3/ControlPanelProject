@@ -35,11 +35,7 @@ public class GridObject {
     }
 
     public boolean hasObject() {
-        if (currentObject != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return (currentObject != null) ? true : false;
     }
 
     public boolean hasObject(RectangleView rect) {

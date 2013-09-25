@@ -1,7 +1,9 @@
 package com.ianorourke.controlpanel.ShapeObjects;
 
 import android.content.Context;
-import android.view.*;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,14 +11,12 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 
-import android.view.ViewGroup;
-
 public class RectangleView extends View {
-    private int size;
+
+    private final Rect rect;
+    private final int size;
 
     public int color;
-
-    private Rect rect;
 
     private boolean isRectEnabled = true;
 
@@ -95,7 +95,7 @@ public class RectangleView extends View {
         return coord - this.size / 2;
     }
 
-    public void removeSelf() {
+    private void removeSelf() {
         Grid.deleteRect(this);
         Grid.currentRect--;
 
