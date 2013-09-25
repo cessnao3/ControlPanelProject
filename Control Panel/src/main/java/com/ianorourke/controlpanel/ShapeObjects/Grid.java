@@ -6,6 +6,10 @@ import android.graphics.PointF;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
+//TODO: Extend ViewGroup?
+
 public class Grid {
     public static List<GridObject> gridPointList = new ArrayList<GridObject>();
     //public static List<RectangleView> rectangleList = new ArrayList<RectangleView>();
@@ -13,7 +17,7 @@ public class Grid {
     public static int rectSize = 300;
 
     public static int currentRect = 0;
-
+/*
     public static RectangleView createRectangle(Context context) {
         if (currentRect >= gridPointList.size() - 1) return null;
 
@@ -25,11 +29,18 @@ public class Grid {
         currentRect++;
         rect.color = currentRect;
 
+        Log.v("cp", new Integer(currentRect).toString());
+
         //rectangleList.add(rect);
 
         alignObject(rect);
 
         return rect;
+    }
+    */
+
+    public static void addRectangle(RectangleView rect) {
+        alignObject(rect);
     }
 
     public static boolean alignObject(RectangleView rect) {

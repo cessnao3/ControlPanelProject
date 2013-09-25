@@ -1,5 +1,6 @@
 package com.ianorourke.controlpanel;
 
+import android.app.ActionBar;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 
 import android.os.Bundle;
@@ -21,10 +22,14 @@ public class MainActivity extends Activity {
 
     private float scale;
 
+    GridView mainView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        this.mainView = new GridView(this);
+        setContentView(this.mainView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         //TODO: FIX Window for GRIDS
 
@@ -46,13 +51,16 @@ public class MainActivity extends Activity {
             Point screenSize = new Point();
             getWindowManager().getDefaultDisplay().getSize(screenSize);
 
+            //Point screenSize = new Point(getWindow().getDecorView().getWidth(), getWindow().getDecorView().getHeight());
+
             //TODO: Fix Window Sizing
-            //TODO: Remove -1 from numY
 
             int numX = (screenSize.x - Grid.rectSize) / Grid.rectSize;
-            int numY = (screenSize.y - Grid.rectSize) / Grid.rectSize - 3;
+            int numY = (screenSize.y - Grid.rectSize) / Grid.rectSize;
 
-            for (int y = 0; y < numY; y++) {
+            //TODO: Remove - 2 from numY
+
+            for (int y = 0; y < numY - 1; y++) {
                 for (int x = 0; x < numX; x++) {
                     GridObject point = new GridObject(screenSize.x / (2 * numX) + screenSize.x * x / numX, screenSize.y / (2 * numY) + screenSize.y * y / numY);
 
@@ -76,10 +84,13 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                RectangleView rect = Grid.createRectangle(this);
 
-                if (rect != null) addContentView(rect, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
+                this.mainView.createRectangle();
                 return true;
+                //RectangleView rect = Grid.createRectangle(this);
+
+                //if (rect != null) addContentView(rect, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
+                //return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
