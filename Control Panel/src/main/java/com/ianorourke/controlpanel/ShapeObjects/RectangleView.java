@@ -66,7 +66,7 @@ public class RectangleView extends View {
                         isRectEnabled = false;
                     }
                 } else {
-                    Grid.alignObject(this);
+                    GridView.Grid.alignObject(this);
                 }
             }
 
@@ -96,8 +96,8 @@ public class RectangleView extends View {
     }
 
     private void removeSelf() {
-        Grid.deleteRect(this);
-        Grid.currentRect--;
+        GridView.Grid.deleteRect(this);
+        GridView.Grid.currentRect--;
 
         ViewGroup viewParent = (ViewGroup) this.getParent();
 

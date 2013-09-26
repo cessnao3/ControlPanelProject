@@ -21,51 +21,86 @@ public class MainActivity extends Activity {
         setContentView(this.mainView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         //TODO: FIX Window for GRIDS
-
-        //TODO: Density Independent Pixels for Rectangles
-        //TODO: Number of Rects based on Aspect Ratio
     }
 
+    /*
     @Override
     protected void onStart() {
         super.onStart();
 
         float scale = getResources().getDisplayMetrics().density;
 
-        //rectSize = (300.0 * this.scale + 0.5f);
-        Grid.rectSize = (int) (50.0 * scale + 0.5f);
-        Log.v("cp", new Integer(Grid.rectSize).toString());
+        GridView.Grid.rectSize = (int) (100.0 * scale + 0.5f);
+        Log.v("cp", new Integer(GridView.Grid.rectSize).toString());
 
-        if (Grid.gridPointList.size() == 0) {
+        if (GridView.Grid.gridPointList.size() == 0) {
             Point screenSize = new Point();
             getWindowManager().getDefaultDisplay().getSize(screenSize);
 
             //TODO: Size for this.mainView
-
-            //Point screenSize = new Point(getWindow().getDecorView().getWidth(), getWindow().getDecorView().getHeight());
-
             //TODO: Fix Window Sizing
 
-            int numX = (screenSize.x - Grid.rectSize) / Grid.rectSize;
-            int numY = (screenSize.y - Grid.rectSize) / Grid.rectSize;
+            int numX = (screenSize.x - GridView.Grid.rectSize / 4) / GridView.Grid.rectSize;
+            int numY = (screenSize.y - GridView.Grid.rectSize / 4) / GridView.Grid.rectSize;
 
-            //TODO: Remove - 2 from numY
+            numY = (screenSize.y - GridView.Grid.rectSize / 4 - GridView.Grid.rectSize) / GridView.Grid.rectSize;
+
+            //TODO: Remove - 1 from numY
 
             for (int y = 0; y < numY - 1; y++) {
                 for (int x = 0; x < numX; x++) {
                     GridObject point = new GridObject(screenSize.x / (2 * numX) + screenSize.x * x / numX, screenSize.y / (2 * numY) + screenSize.y * y / numY);
 
-                    Grid.gridPointList.add(point);
+                    GridView.Grid.gridPointList.add(point);
                 }
             }
         }
 
-        Log.v("cp", new Integer(Grid.gridPointList.size()).toString());
+        Log.v("cp", new Integer(GridView.Grid.gridPointList.size()).toString());
+    }*/
+
+    @Override
+    public void onResume() {
+        super.onStart();
+
+        float scale = getResources().getDisplayMetrics().density;
+
+        GridView.Grid.rectSize = (int) (100.0 * scale + 0.5f);
+        Log.v("cp", new Integer(GridView.Grid.rectSize).toString());
+
+
+        if (GridView.Grid.gridPointList.size() == 0) {
+            Point screenSize = new Point();
+            getWindowManager().getDefaultDisplay().getSize(screenSize);
+
+            //getWindow().getDecorView().getRootView().getX(), (int) getWindow().getDecorView().getRootView().getY());
+
+            screenSize = new Point(this.mainView.getWidth(), this.mainView.getHeight());
+
+            //TODO: Size for this.mainView
+            //TODO: Fix Window Sizing
+
+            int numX = (screenSize.x - GridView.Grid.rectSize / 4) / GridView.Grid.rectSize;
+            int numY = (screenSize.y - GridView.Grid.rectSize / 4) / GridView.Grid.rectSize;
+
+            //numY = (screenSize.y - GridView.Grid.rectSize / 4 - GridView.Grid.rectSize) / GridView.Grid.rectSize;
+
+            //TODO: Remove - 1 from numY
+
+            for (int y = 0; y < numY; y++) {
+                for (int x = 0; x < numX; x++) {
+                    GridObject point = new GridObject(screenSize.x / (2 * numX) + screenSize.x * x / numX, screenSize.y / (2 * numY) + screenSize.y * y / numY);
+
+                    GridView.Grid.gridPointList.add(point);
+                }
+            }
+        }
+
+        Log.v("cp", new Integer(GridView.Grid.gridPointList.size()).toString());
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
         return true;
@@ -75,13 +110,10 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
+                RectangleView rect = this.mainView.createRectangle();
 
-                this.mainView.createRectangle();
+                if (rect != null) addContentView(rect, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
                 return true;
-                //RectangleView rect = Grid.createRectangle(this);
-
-                //if (rect != null) addContentView(rect, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
-                //return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
