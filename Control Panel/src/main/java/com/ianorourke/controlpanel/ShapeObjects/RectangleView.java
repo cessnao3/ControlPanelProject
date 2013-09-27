@@ -11,6 +11,8 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 
+import android.widget.TextView;
+
 public class RectangleView extends View {
 
     private final Rect rect;
@@ -42,6 +44,16 @@ public class RectangleView extends View {
         }
 
         canvas.drawRect(this.rect, p);
+
+        TextView text = new TextView(getContext());
+        text.setWidth(this.getWidth());
+        text.setHeight(this.getHeight());
+        text.setX(0.0f);
+        text.setY(0.0f);
+
+        text.setText("Hello, World!");
+
+        this.addView(text);
     }
 
     @Override
@@ -72,6 +84,11 @@ public class RectangleView extends View {
 
             return true;
         } else return false;
+    }
+
+    public void addView(View v) {
+        ViewGroup group = (ViewGroup) this.getRootView();
+        group.addView(v);
     }
 
     public void setCenter(PointF p) {
