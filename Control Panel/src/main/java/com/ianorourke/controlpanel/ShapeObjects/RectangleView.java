@@ -20,6 +20,8 @@ public class RectangleView extends View {
 
     public int color;
 
+    public TextView text;
+
     private boolean isRectEnabled = true;
 
     public RectangleView(Context context, int size) {
@@ -33,6 +35,8 @@ public class RectangleView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
+        //this.addView(text);
+
         Paint p = new Paint();
 
         if (color % 3 == 0) {
@@ -44,23 +48,11 @@ public class RectangleView extends View {
         }
 
         canvas.drawRect(this.rect, p);
-
-        TextView text = new TextView(getContext());
-        text.setWidth(this.getWidth());
-        text.setHeight(this.getHeight());
-        text.setX(0.0f);
-        text.setY(0.0f);
-
-        text.setText("Hello, World!");
-
-        this.addView(text);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (rect.contains((int)event.getX(), (int)event.getY())) {
-            //super.onTouchEvent(event);
-
             int[] screenLocation = new int[2];
             this.getLocationOnScreen(screenLocation);
 
@@ -87,8 +79,11 @@ public class RectangleView extends View {
     }
 
     public void addView(View v) {
-        ViewGroup group = (ViewGroup) this.getRootView();
+        ViewGroup group = (ViewGroup) this.getParent();
+        //ViewGroup group2 = (ViewGroup) this.get
         group.addView(v);
+
+        v.bringToFront();
     }
 
     public void setCenter(PointF p) {

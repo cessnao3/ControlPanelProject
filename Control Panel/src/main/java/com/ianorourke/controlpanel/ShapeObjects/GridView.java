@@ -5,6 +5,8 @@ import android.graphics.PointF;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.RelativeLayout;
+
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -17,25 +19,24 @@ public class GridView extends View {
         this.setPadding(0, 0, 0, 0);
     }
 
-    public RectangleView createRectangle() {
+    public RelativeLayout createRectangle() {
         if (Grid.currentRect >= Grid.gridPointList.size() - 1) return null;
 
-        RectangleView rect = new RectangleView(this.getContext(), Grid.rectSize);
+        RectangleLayout rectLayout = new RectangleLayout(this.getContext(), Grid.rectSize);
 
-        rect.setX(0);
-        rect.setY(0);
+        //RectangleView rect = new RectangleView(this.getContext(), Grid.rectSize);
+
+        //rect.setX(0);
+        //rect.setY(0);
 
         Grid.currentRect++;
-        rect.color = Grid.currentRect;
+        rectLayout.rectView.color = Grid.currentRect;
 
         Log.v("cp", new Integer(Grid.currentRect).toString());
 
-        Grid.addRectangle(rect);
+        Grid.addRectangle(rectLayout.rectView);
 
-        //ViewGroup view = (ViewGroup) this.getRootView();
-        //view.addView(rect);
-
-        return rect;
+        return rectLayout.layout;
     }
 
     public static class Grid {
