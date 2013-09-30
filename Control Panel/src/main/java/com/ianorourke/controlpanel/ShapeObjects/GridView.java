@@ -22,7 +22,7 @@ public class GridView extends View {
     }
 
     public RectangleLayout createRect() {
-        //if (Grid.currentRect >= Grid.gridPointList.size() - 1) return null;
+        if (Grid.currentRect >= Grid.gridPointList.size() - 1) return null;
 
         RectangleLayout rectLayout = new RectangleLayout(getContext(), Grid.rectSize);
 

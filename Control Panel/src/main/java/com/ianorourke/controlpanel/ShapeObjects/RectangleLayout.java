@@ -76,6 +76,8 @@ public class RectangleLayout {
     }
 
     public void removeSelf() {
+        //TODO: Fix Deletion
+
         GridView.Grid.deleteRect(this);
         GridView.Grid.currentRect--;
 
@@ -116,6 +118,8 @@ public class RectangleLayout {
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
+            //TODO: Fix Touch Events
+
             if (rect.contains((int)event.getX(), (int)event.getY())) {
                 int[] screenLocation = new int[2];
                 this.getLocationOnScreen(screenLocation);
