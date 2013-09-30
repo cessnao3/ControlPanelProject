@@ -1,6 +1,7 @@
 package com.ianorourke.controlpanel;
 
 import com.ianorourke.controlpanel.ShapeObjects.*;
+import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.*;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -66,9 +67,20 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                RelativeLayout rect = this.mainView.createRectangle();
+                //RectangleLayout rectLayout = this.mainView.createRectangle();
 
-                if (rect != null) addContentView(rect, new ViewGroup.LayoutParams(GridView.Grid.rectSize, GridView.Grid.rectSize));
+                RectangleLayout rectLayout = this.mainView.createRect();
+                RectangleView rect = rectLayout.getRectangleView();
+
+                if (rectLayout != null) addContentView(rectLayout.layout, new ViewGroup.LayoutParams(rectLayout.getSize(), rectLayout.getSize()));
+
+                //View contentView = getWindow().getDecorView();
+                //rectLayout.setCenter(contentView.getWidth(), contentView.getHeight());
+
+                //rectLayout.layout.bringToFront();
+
+                //Log.v("cp", "Added View");
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

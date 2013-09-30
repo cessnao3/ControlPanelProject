@@ -1,12 +1,14 @@
 package com.ianorourke.controlpanel.ShapeObjects;
 
+import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.RectangleView;
+
 import android.graphics.PointF;
 
 public class GridObject {
     //TODO: Fix Occupied
 
     private PointF gridPoint;
-    private RectangleView currentObject = null;
+    private RectangleLayout currentObject = null;
 
     public GridObject(float x, float y) {
         this.gridPoint = new PointF(x, y);
@@ -20,7 +22,7 @@ public class GridObject {
         return this.gridPoint;
     }
 
-    public void setObject(RectangleView newObject) {
+    public void setObject(RectangleLayout newObject) {
         this.currentObject = newObject;
     }
 
@@ -30,7 +32,7 @@ public class GridObject {
         }
     }
 
-    public RectangleView getObject() {
+    public RectangleLayout getObject() {
         return this.currentObject;
     }
 
@@ -38,7 +40,7 @@ public class GridObject {
         return (currentObject != null) ? true : false;
     }
 
-    public boolean hasObject(RectangleView rect) {
+    public boolean hasObject(RectangleLayout rect) {
         if (currentObject != null) {
             if (currentObject.equals(rect)) return false;
             else return true;

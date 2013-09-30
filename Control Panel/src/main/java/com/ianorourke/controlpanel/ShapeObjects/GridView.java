@@ -1,5 +1,7 @@
 package com.ianorourke.controlpanel.ShapeObjects;
 
+import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.RectangleView;
+
 import android.content.Context;
 import android.graphics.PointF;
 import android.view.View;
@@ -19,24 +21,18 @@ public class GridView extends View {
         this.setPadding(0, 0, 0, 0);
     }
 
-    public RelativeLayout createRectangle() {
-        if (Grid.currentRect >= Grid.gridPointList.size() - 1) return null;
+    public RectangleLayout createRect() {
+        //if (Grid.currentRect >= Grid.gridPointList.size() - 1) return null;
 
-        RectangleLayout rectLayout = new RectangleLayout(this.getContext(), Grid.rectSize);
-
-        //RectangleView rect = new RectangleView(this.getContext(), Grid.rectSize);
-
-        //rect.setX(0);
-        //rect.setY(0);
+        RectangleLayout rectLayout = new RectangleLayout(getContext(), Grid.rectSize);
 
         Grid.currentRect++;
-        rectLayout.rectView.color = Grid.currentRect;
 
         Log.v("cp", new Integer(Grid.currentRect).toString());
 
-        Grid.addRectangle(rectLayout.rectView);
+        Grid.addRectangle(rectLayout);
 
-        return rectLayout.layout;
+        return rectLayout;
     }
 
     public static class Grid {
@@ -47,17 +43,17 @@ public class GridView extends View {
 
         public static int currentRect = 0;
 
-        public static void addRectangle(RectangleView rect) {
+        public static void addRectangle(RectangleLayout rect) {
             alignObject(rect);
         }
 
-        public static boolean alignObject(RectangleView rect) {
+        public static boolean alignObject(RectangleLayout rect) {
+            if (rect == null) return false;
+
             Integer bestInt = null;
             Float bestDistance = null;
 
             GridObject[][] objects = new GridObject[3][4];
-
-            if (rect == null) return false;
 
             for (int i = 0; i < gridPointList.size(); i++) {
                 GridObject point = gridPointList.get(i);
@@ -93,7 +89,7 @@ public class GridView extends View {
             }
         }
 
-        public static void deleteRect(RectangleView rect) {
+        public static void deleteRect(RectangleLayout rect) {
             for (int i = 0; i < gridPointList.size(); i++) {
                 if (gridPointList.get(i).hasObject()) {
                     if (gridPointList.get(i).getObject().equals(rect)) gridPointList.get(i).setObject(null);
