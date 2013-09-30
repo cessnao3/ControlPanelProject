@@ -27,6 +27,8 @@ public class MainActivity extends Activity {
     public void onResume() {
         super.onResume();
 
+        //TODO: Fix Layout
+
         float scale = getResources().getDisplayMetrics().density;
 
         GridView.Grid.rectSize = (int) (100.0 * scale + 0.5f);
@@ -67,20 +69,13 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                //RectangleLayout rectLayout = this.mainView.createRectangle();
-
                 RectangleLayout rectLayout = this.mainView.createRect();
-                RectangleView rect = rectLayout.getRectangleView();
 
-                if (rectLayout != null) addContentView(rectLayout.layout, new ViewGroup.LayoutParams(rectLayout.getSize(), rectLayout.getSize()));
+                if (rectLayout != null) {
+                    RectangleView rect = rectLayout.getRectangleView();
 
-                //View contentView = getWindow().getDecorView();
-                //rectLayout.setCenter(contentView.getWidth(), contentView.getHeight());
-
-                //rectLayout.layout.bringToFront();
-
-                //Log.v("cp", "Added View");
-
+                    addContentView(rectLayout.layout, new ViewGroup.LayoutParams(rectLayout.getSize(), rectLayout.getSize()));
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
