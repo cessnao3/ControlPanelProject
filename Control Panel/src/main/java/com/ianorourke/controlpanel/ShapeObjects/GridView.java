@@ -3,6 +3,7 @@ package com.ianorourke.controlpanel.ShapeObjects;
 import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.RectangleView;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,36 @@ public class GridView extends View {
         super(context);
 
         this.setPadding(0, 0, 0, 0);
+    }
+
+    @Override
+    protected void onMeasure (int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        float scale = getResources().getDisplayMetrics().density;
+
+        GridView.Grid.rectSize = (int) (100.0 * scale + 0.5f);
+        Log.v("cp", new Integer(GridView.Grid.rectSize).toString());
+
+        if (GridView.Grid.gridPointList.size() == 0) {
+            Point screenSize = new Point(this.getWidth(), this.getHeight());
+
+            int screenX = screenSize.x;
+            int screenY = screenSize.y;
+
+            int numX = (screenSize.x - GridView.Grid.rectSize / 4) / GridView.Grid.rectSize;
+            int numY = (screenSize.y - GridView.Grid.rectSize / 4) / GridView.Grid.rectSize;
+
+            for (int y = 0; y < numY; y++) {
+                for (int x = 0; x < numX; x++) {
+                    GridObject point = new GridObject(screenSize.x / (2 * numX) + screenSize.x * x / numX, screenSize.y / (2 * numY) + screenSize.y * y / numY);
+
+                    GridView.Grid.gridPointList.add(point);
+                }
+            }
+        }
+
+        Log.v("cp", new Integer(GridView.Grid.gridPointList.size()).toString());
     }
 
     public RectangleLayout createRect() {
@@ -101,6 +132,11 @@ public class GridView extends View {
             for (int i = 0; i < gridPointList.size(); i++) {
                 gridPointList.get(i).realignObject();
             }
+        }
+
+        public static void clearGridPoints() {
+            gridPointList.clear();
+            currentRect = 0;
         }
 
         private static float getDistance(PointF p1, PointF p2) {

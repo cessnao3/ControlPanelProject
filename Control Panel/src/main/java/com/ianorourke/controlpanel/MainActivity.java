@@ -24,38 +24,14 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
 
-        //TODO: Fix Layout
+        //TODO: Clean Code
+        //TODO: Separate Grid from GridView
 
-        float scale = getResources().getDisplayMetrics().density;
-
-        GridView.Grid.rectSize = (int) (100.0 * scale + 0.5f);
-        Log.v("cp", new Integer(GridView.Grid.rectSize).toString());
-
-
-        if (GridView.Grid.gridPointList.size() == 0) {
-            Point screenSize = new Point(this.mainView.getWidth(), this.mainView.getHeight());
-
-            //TODO: Size for this.mainView
-
-            int screenX = screenSize.x;
-            int screenY = screenSize.y;
-
-            int numX = (screenSize.x - GridView.Grid.rectSize / 4) / GridView.Grid.rectSize;
-            int numY = (screenSize.y - GridView.Grid.rectSize / 4) / GridView.Grid.rectSize;
-
-            for (int y = 0; y < numY; y++) {
-                for (int x = 0; x < numX; x++) {
-                    GridObject point = new GridObject(screenSize.x / (2 * numX) + screenSize.x * x / numX, screenSize.y / (2 * numY) + screenSize.y * y / numY);
-
-                    GridView.Grid.gridPointList.add(point);
-                }
-            }
-        }
-
-        Log.v("cp", new Integer(GridView.Grid.gridPointList.size()).toString());
+        this.mainView = new GridView(this);
+        GridView.Grid.clearGridPoints();
     }
 
     @Override
