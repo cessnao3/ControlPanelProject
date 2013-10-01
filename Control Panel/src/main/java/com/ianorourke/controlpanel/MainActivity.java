@@ -23,8 +23,9 @@ public class MainActivity extends Activity {
         //TODO: Work with GridLayout -> Cleaner Solution
 
         //this.mainLayout = new GridLayout(this);
+        //setContentView(this.mainLayout.getLayout());
 
-        setContentView(this.mainLayout.getLayout());
+        setContentView(this.mainView);
     }
 
     @Override
