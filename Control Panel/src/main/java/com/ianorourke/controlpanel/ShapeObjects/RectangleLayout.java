@@ -34,11 +34,19 @@ public class RectangleLayout {
         textView.setWidth(size);
         textView.setHeight(size);
 
-        textView.setText("Hello, World!");
+        textView.setText(Orbiter.text);
         textView.setTextSize(30.0f);
 
         layout.addView(rectView);
         layout.addView(textView);
+    }
+
+    public String getText() {
+        return textView.getText().toString();
+    }
+
+    public void setText(String newText) {
+        textView.setText(newText);
     }
 
     public int getSize() {
@@ -50,7 +58,7 @@ public class RectangleLayout {
     }
 
     private void alignSelf() {
-        GridView.Grid.alignObject(this);
+        GridController.alignObject(this);
     }
 
     public PointF getCenter() {
@@ -76,10 +84,8 @@ public class RectangleLayout {
     }
 
     public void removeSelf() {
-        //TODO: Fix Deletion
-
-        GridView.Grid.deleteRect(this);
-        GridView.Grid.currentRect--;
+        GridController.deleteRect(this);
+        GridController.currentRect--;
 
         ViewGroup viewParent = (ViewGroup) this.layout.getParent();
         viewParent.removeView(layout);
@@ -118,20 +124,20 @@ public class RectangleLayout {
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            //TODO: Fix Touch Events
-
             if (rect.contains((int)event.getX(), (int)event.getY())) {
                 int[] screenLocation = new int[2];
                 this.getLocationOnScreen(screenLocation);
 
+                layout.getParent().bringChildToFront(layout);
+
                 float displacementX = event.getRawX() - screenLocation[0];
                 float displacementY = event.getRawY() - screenLocation[1];
 
-                layout.setX(toCornerPoint(this.getX() + displacementX));
-                layout.setY(toCornerPoint(this.getY() + displacementY));
+                layout.setX(toCornerPoint(layout.getX() + displacementX));
+                layout.setY(toCornerPoint(layout.getY() + displacementY));
 
                 if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    if (this.getX() < 0 && this.getY() < 0) {
+                    if (layout.getX() < 0 && layout.getY() < 0) {
                         if (isRectEnabled && event.getAction() == MotionEvent.ACTION_UP) {
                             removeSelf();
 

@@ -5,8 +5,6 @@ import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.RectangleView;
 import android.graphics.PointF;
 
 public class GridObject {
-    //TODO: Fix Occupied
-
     private PointF gridPoint;
     private RectangleLayout currentObject = null;
 

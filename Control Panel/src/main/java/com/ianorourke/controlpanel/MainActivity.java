@@ -5,11 +5,7 @@ import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.*;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.graphics.Point;
 import android.view.*;
-
-import android.util.Log;
-import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity {
 
@@ -20,18 +16,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         this.mainView = new GridView(this);
+        GridController.clearGridPoints();
+
         setContentView(this.mainView);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        //TODO: Clean Code
-        //TODO: Separate Grid from GridView
-
-        this.mainView = new GridView(this);
-        GridView.Grid.clearGridPoints();
     }
 
     @Override
@@ -52,6 +39,17 @@ public class MainActivity extends Activity {
 
                     addContentView(rectLayout.layout, new ViewGroup.LayoutParams(rectLayout.getSize(), rectLayout.getSize()));
                 }
+                return true;
+            case R.id.menu_changetext:
+
+                if (Orbiter.text.equals("HI!")) {
+                    Orbiter.changeText("Hello, World!");
+                } else {
+                    Orbiter.changeText("HI!");
+                }
+
+                GridController.updateRects(Orbiter.text);
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

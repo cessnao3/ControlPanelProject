@@ -3,4 +3,8 @@
         android:title="New"
         android:orderInCategory="100"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/menu_changetext"
+        android:title="Change"
+        android:orderInCategory="200"
+        android:showAsAction="ifRoom" />
 </menu>
