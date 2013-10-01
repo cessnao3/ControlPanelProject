@@ -128,6 +128,7 @@ public class RectangleLayout {
                 int[] screenLocation = new int[2];
                 this.getLocationOnScreen(screenLocation);
 
+                //TODO: Bring Rect to Front
                 layout.getParent().bringChildToFront(layout);
 
                 float displacementX = event.getRawX() - screenLocation[0];

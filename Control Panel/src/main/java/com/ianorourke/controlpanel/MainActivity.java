@@ -11,6 +11,8 @@ public class MainActivity extends Activity {
 
     private GridView mainView;
 
+    //private GridLayout mainLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +20,11 @@ public class MainActivity extends Activity {
         this.mainView = new GridView(this);
         GridController.clearGridPoints();
 
-        setContentView(this.mainView);
+        //TODO: Work with GridLayout -> Cleaner Solution
+
+        //this.mainLayout = new GridLayout(this);
+
+        setContentView(this.mainLayout.getLayout());
     }
 
     @Override
@@ -32,6 +38,9 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
+                //this.mainLayout.createRect();
+
+
                 RectangleLayout rectLayout = this.mainView.createRect();
 
                 if (rectLayout != null) {
@@ -39,6 +48,7 @@ public class MainActivity extends Activity {
 
                     addContentView(rectLayout.layout, new ViewGroup.LayoutParams(rectLayout.getSize(), rectLayout.getSize()));
                 }
+
                 return true;
             case R.id.menu_changetext:
 
