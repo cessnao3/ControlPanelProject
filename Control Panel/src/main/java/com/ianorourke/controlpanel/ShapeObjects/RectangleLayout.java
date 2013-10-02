@@ -34,7 +34,7 @@ public class RectangleLayout {
         textView.setWidth(size);
         textView.setHeight(size);
 
-        textView.setText(Orbiter.text);
+        textView.setText("Hello, World!");
         textView.setTextSize(30.0f);
 
         layout.addView(rectView);

@@ -11,6 +11,8 @@ public class MainActivity extends Activity {
 
     private GridView mainView;
 
+    private String labelText = "Hello, World!";
+
     //private GridLayout mainLayout;
 
     @Override
@@ -53,13 +55,13 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.menu_changetext:
 
-                if (Orbiter.text.equals("HI!")) {
-                    Orbiter.changeText("Hello, World!");
+                if (labelText.equals("HI!")) {
+                    labelText = "Hello, World!";
                 } else {
-                    Orbiter.changeText("HI!");
+                    labelText = "HI!";
                 }
 
-                GridController.updateRects(Orbiter.text);
+                GridController.updateRects(labelText);
 
                 return true;
             default:
