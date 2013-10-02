@@ -27,7 +27,7 @@ public class OrbiterConnect {
         Socket socket;
 
         PrintStream out;
-        BufferedStream in;
+        BufferedReader in;
 
         public AsyncOrbiterConnection(String host, int port) {
             this.port = port;
@@ -48,6 +48,12 @@ public class OrbiterConnect {
 
 
             } catch (UnknownHostException e) {
+                e.printStackTrace();
+
+                socket = null;
+                out = null;
+                in = null;
+            } catch (IOException e) {
                 e.printStackTrace();
 
                 socket = null;
