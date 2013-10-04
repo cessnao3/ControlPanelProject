@@ -1,5 +1,6 @@
 package com.ianorourke.controlpanel;
 
+import com.ianorourke.controlpanel.Orbiter.OrbiterConnect;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.*;
 
@@ -54,7 +55,6 @@ public class MainActivity extends Activity {
 
                 return true;
             case R.id.menu_changetext:
-
                 if (labelText.equals("HI!")) {
                     labelText = "Hello, World!";
                 } else {
@@ -62,6 +62,11 @@ public class MainActivity extends Activity {
                 }
 
                 GridController.updateRects(labelText);
+
+                return true;
+            case R.id.menu_connect:
+                OrbiterConnect orbConnect = new OrbiterConnect();
+                orbConnect.connectToOrbiter();
 
                 return true;
             default:
