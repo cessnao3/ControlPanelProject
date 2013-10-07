@@ -57,8 +57,6 @@ public class GridView extends View {
 
         RectangleLayout rectLayout = new RectangleLayout(getContext(), GridController.rectSize);
 
-        GridController.currentRect++;
-
         Log.v("cp", new Integer(GridController.currentRect).toString());
 
         GridController.addRectangle(rectLayout);

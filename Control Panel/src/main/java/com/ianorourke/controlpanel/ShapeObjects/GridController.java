@@ -14,7 +14,25 @@ public class GridController {
     public static int currentRect = 0;
 
     public static void addRectangle(RectangleLayout rect) {
-        alignObject(rect);
+        if (rect != null) {
+            boolean addedRect = false;
+
+            for (int i = 0; i < gridPointList.size(); i++) {
+                GridObject point = gridPointList.get(i);
+
+                if (!point.hasObject()) {
+                    point.setObject(rect);
+                    rect.setCenter(point.getPoint());
+                    addedRect = true;
+                    currentRect++;
+                    break;
+                }
+            }
+
+            if (!addedRect) {
+                rect.removeSelf();
+            }
+        }
     }
 
     public static boolean alignObject(RectangleLayout rect) {
@@ -73,8 +91,13 @@ public class GridController {
 
     public static void deleteRect(RectangleLayout rect) {
         for (int i = 0; i < gridPointList.size(); i++) {
-            if (gridPointList.get(i).hasObject()) {
-                if (gridPointList.get(i).getObject().equals(rect)) gridPointList.get(i).setObject(null);
+            GridObject point = gridPointList.get(i);
+
+            if (point.hasObject(rect)) {
+                point.setObject(null);
+
+                //TODO: Fix Multiple Deletions of Rects
+                currentRect--;
             }
         }
     }

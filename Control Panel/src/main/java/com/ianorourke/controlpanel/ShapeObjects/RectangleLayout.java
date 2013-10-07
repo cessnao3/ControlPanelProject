@@ -85,10 +85,9 @@ public class RectangleLayout {
 
     public void removeSelf() {
         GridController.deleteRect(this);
-        GridController.currentRect--;
 
         ViewGroup viewParent = (ViewGroup) this.layout.getParent();
-        viewParent.removeView(layout);
+        if (viewParent != null) viewParent.removeView(layout);
     }
 
     //RectangleView Class
@@ -137,6 +136,7 @@ public class RectangleLayout {
                 layout.setX(toCornerPoint(layout.getX() + displacementX));
                 layout.setY(toCornerPoint(layout.getY() + displacementY));
 
+                //TODO: Clean Deletion Code
                 if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
                     if (layout.getX() < 0 && layout.getY() < 0) {
                         if (isRectEnabled && event.getAction() == MotionEvent.ACTION_UP) {

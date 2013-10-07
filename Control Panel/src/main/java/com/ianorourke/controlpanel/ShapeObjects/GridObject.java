@@ -22,6 +22,7 @@ public class GridObject {
 
     public void setObject(RectangleLayout newObject) {
         this.currentObject = newObject;
+        //this.currentObject.setCenter(this.gridPoint);
     }
 
     public void realignObject() {
