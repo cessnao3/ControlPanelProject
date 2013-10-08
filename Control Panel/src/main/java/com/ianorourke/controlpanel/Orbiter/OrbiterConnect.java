@@ -11,7 +11,8 @@ import java.net.Socket;
 public class OrbiterConnect {
 
     public void connectToOrbiter(/*String host, int port*/) {
-        AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("192.168.1.102", 37777);
+        AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("192.168.1.102", 37778);
+        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.2.2", 37777);
 
         orbConnection.execute();
     }
@@ -23,6 +24,8 @@ public class OrbiterConnect {
         private String host;
 
         private Socket socket;
+        //private PrintStream out;
+
         private PrintStream out;
         private BufferedReader in;
 
@@ -40,15 +43,16 @@ public class OrbiterConnect {
         }
 
         protected String doInBackground(Void... params) {
-            Log.v("cp", "Connecting to: " + host + ":" + new Integer(port).toString());
-
             try {
                 socket = new Socket(this.host, this.port);
 
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintStream(new BufferedOutputStream(socket.getOutputStream()), true);
+                //out = new PrintStream(new BufferedOutputStream(socket.getOutputStream()), true);
 
-                socket.setSoTimeout(20000);
+                //out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                out = new PrintStream(socket.getOutputStream(), true);
+
+                socket.setSoTimeout(30000);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -56,36 +60,38 @@ public class OrbiterConnect {
 
             Log.v("cp", "Socket: " + socket.toString());
 
-            this.sleepThread(5000);
+            boolean listenLoop = true;
 
             try {
                 if (!socket.isConnected()) return GENERIC_ERROR;
 
+                //out.println("ORB:GBodyCount");
+                //out.write("ORB:GBodyCount" + "\n");
                 out.println("ORB:GBodyCount");
                 out.flush();
 
-                if (out.checkError()) Log.v("cp", "Send Error");
+                //if (out.checkError()) Log.v("cp", "Send Error");
 
-                this.sleepThread(500);
+                //this.sleepThread(500);
 
-                if (!socket.isOutputShutdown()) socket.shutdownOutput();
+                //if (!socket.isOutputShutdown()) socket.shutdownOutput();
 
                 for (int i = 0; i < 5; i++) {
-                    this.sleepThread(500);
+                    Integer currentRound = new Integer(i + 1);
 
                     if (!in.ready()) {
-                        Log.v("cp", "Continue");
+                        Log.v("cp", "Continue " + currentRound.toString());
+
+                        this.sleepThread(1000);
+
                         continue;
                     }
 
-                    int test = in.read();
-                    Log.v("cp", "Read: " + new Integer(test).toString());
-
                     String response = in.readLine();
-                    Log.v("cp", "Response " + new Integer(i + 1).toString() + ": " + response);
+                    Log.v("cp", "Response " + currentRound.toString() + ": " + response);
 
                     if (response != null){
-                        onProgressUpdate(response);
+                        publishProgress(response);
                         break;
                     }
                 }
@@ -117,6 +123,8 @@ public class OrbiterConnect {
 
         protected void onPostExecute(String response) {
             Log.v("cp", "Ended Task");
+
+            GridController.updateRects(response);
         }
     }
 }

@@ -20,6 +20,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //TODO: Fix Overwriting Rects when Switching Views
+
         this.mainView = new GridView(this);
         GridController.clearGridPoints();
 
