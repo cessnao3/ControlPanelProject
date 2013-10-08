@@ -5,18 +5,13 @@ import android.util.Log;
 
 import com.ianorourke.controlpanel.ShapeObjects.GridController;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class OrbiterConnect {
 
     public void connectToOrbiter(/*String host, int port*/) {
-        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("192.168.73.1", 37777);
-        AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.2.2", 37777);
+        AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("192.168.1.102", 37777);
 
         orbConnection.execute();
     }
@@ -27,7 +22,9 @@ public class OrbiterConnect {
         private int port;
         private String host;
 
-        private String testString = "FOCUS:Name";
+        private Socket socket;
+        private PrintStream out;
+        private BufferedReader in;
 
         public AsyncOrbiterConnection(String host, int port) {
             this.port = port;
@@ -44,7 +41,70 @@ public class OrbiterConnect {
 
         protected String doInBackground(Void... params) {
             Log.v("cp", "Connecting to: " + host + ":" + new Integer(port).toString());
-            //TODO: Rewrite Connection Code
+
+            try {
+                socket = new Socket(this.host, this.port);
+
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new PrintStream(new BufferedOutputStream(socket.getOutputStream()), true);
+
+                socket.setSoTimeout(20000);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Log.v("cp", "Socket: " + socket.toString());
+
+            this.sleepThread(5000);
+
+            try {
+                if (!socket.isConnected()) return GENERIC_ERROR;
+
+                out.println("ORB:GBodyCount");
+                out.flush();
+
+                if (out.checkError()) Log.v("cp", "Send Error");
+
+                this.sleepThread(500);
+
+                if (!socket.isOutputShutdown()) socket.shutdownOutput();
+
+                for (int i = 0; i < 5; i++) {
+                    this.sleepThread(500);
+
+                    if (!in.ready()) {
+                        Log.v("cp", "Continue");
+                        continue;
+                    }
+
+                    int test = in.read();
+                    Log.v("cp", "Read: " + new Integer(test).toString());
+
+                    String response = in.readLine();
+                    Log.v("cp", "Response " + new Integer(i + 1).toString() + ": " + response);
+
+                    if (response != null){
+                        onProgressUpdate(response);
+                        break;
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+
+                Log.v("cp", "IO Exception Error");
+            } finally {
+                try {
+                    if (!socket.isClosed()) {
+                        //if (!socket.isInputShutdown()) socket.shutdownInput();
+                        //if (!socket.isOutputShutdown()) socket.shutdownOutput();
+                        socket.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
             return "00END00";
         }
 

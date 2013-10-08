@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
             case R.id.menu_new:
                 //this.mainLayout.createRect();
 
+                //TODO: Move this Functionality to GridLayout
 
                 RectangleLayout rectLayout = this.mainView.createRect();
 
@@ -65,6 +66,16 @@ public class MainActivity extends Activity {
 
                 return true;
             case R.id.menu_connect:
+                if (GridController.currentRect == 0) {
+                    RectangleLayout rectangleLayout = this.mainView.createRect();
+
+                    if (rectangleLayout != null) {
+                        RectangleView rect = rectangleLayout.getRectangleView();
+
+                        addContentView(rectangleLayout.layout, new ViewGroup.LayoutParams(rectangleLayout.getSize(), rectangleLayout.getSize()));
+                    }
+                }
+
                 OrbiterConnect orbConnect = new OrbiterConnect();
                 orbConnect.connectToOrbiter();
 

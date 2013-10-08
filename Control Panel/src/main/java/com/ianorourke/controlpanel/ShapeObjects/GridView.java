@@ -4,16 +4,9 @@ import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.RectangleView;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.graphics.PointF;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.RelativeLayout;
 
 import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GridView extends View {
     public GridView(Context context) {
@@ -29,7 +22,6 @@ public class GridView extends View {
         float scale = getResources().getDisplayMetrics().density;
 
         GridController.rectSize = (int) (100.0 * scale + 0.5f);
-        Log.v("cp", new Integer(GridController.rectSize).toString());
 
         if (GridController.gridPointList.size() == 0) {
             Point screenSize = new Point(this.getWidth(), this.getHeight());
@@ -48,8 +40,6 @@ public class GridView extends View {
                 }
             }
         }
-
-        Log.v("cp", new Integer(GridController.gridPointList.size()).toString());
     }
 
     public RectangleLayout createRect() {
@@ -57,9 +47,9 @@ public class GridView extends View {
 
         RectangleLayout rectLayout = new RectangleLayout(getContext(), GridController.rectSize);
 
-        Log.v("cp", new Integer(GridController.currentRect).toString());
-
         GridController.addRectangle(rectLayout);
+
+        Log.v("cp", new Integer(GridController.currentRect).toString());
 
         return rectLayout;
     }
