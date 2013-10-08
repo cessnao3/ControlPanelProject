@@ -11,8 +11,9 @@ import java.net.Socket;
 public class OrbiterConnect {
 
     public void connectToOrbiter(/*String host, int port*/) {
-        AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("192.168.1.102", 37778);
-        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.2.2", 37777);
+        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("192.168.1.102", 37777); //ProBook Home Network
+        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.2.2", 37777); //Android Emulator
+        AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.3.2", 37777); //Genymotion Emulator
 
         orbConnection.execute();
     }
@@ -58,12 +59,14 @@ public class OrbiterConnect {
                 e.printStackTrace();
             }
 
-            Log.v("cp", "Socket: " + socket.toString());
-
             boolean listenLoop = true;
 
+            //TODO: Fix Null Pointer Exception Crash
+
             try {
+                if (socket == null) return GENERIC_ERROR;
                 if (!socket.isConnected()) return GENERIC_ERROR;
+                Log.v("cp", "Socket: " + socket.toString());
 
                 //out.println("ORB:GBodyCount");
                 //out.write("ORB:GBodyCount" + "\n");
@@ -102,6 +105,7 @@ public class OrbiterConnect {
             } finally {
                 try {
                     if (!socket.isClosed()) {
+                        //TODO: Add these?
                         //if (!socket.isInputShutdown()) socket.shutdownInput();
                         //if (!socket.isOutputShutdown()) socket.shutdownOutput();
                         socket.close();
@@ -124,7 +128,7 @@ public class OrbiterConnect {
         protected void onPostExecute(String response) {
             Log.v("cp", "Ended Task");
 
-            GridController.updateRects(response);
+            //GridController.updateRects(response);
         }
     }
 }

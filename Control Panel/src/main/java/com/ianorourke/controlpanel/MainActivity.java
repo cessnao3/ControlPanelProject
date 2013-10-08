@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.*;
 
+import android.util.Log;
+
 public class MainActivity extends Activity {
 
     private GridView mainView;
@@ -20,17 +22,25 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO: Fix Overwriting Rects when Switching Views
+        //TODO: Move points and move rects to new points
 
-        this.mainView = new GridView(this);
-        GridController.clearGridPoints();
+        Log.v("cp", ((savedInstanceState == null) ? "State Null" : "State True") + ", " + ((this.mainView == null) ? "View Null" : "View True"));
 
-        //TODO: Work with GridLayout -> Cleaner Solution
+        if (savedInstanceState == null || this.mainView == null) {
+            GridController.clearGridPoints();
 
-        //this.mainLayout = new GridLayout(this);
-        //setContentView(this.mainLayout.getLayout());
+            this.mainView = new GridView(this);
+            GridController.clearGridPoints();
 
-        setContentView(this.mainView);
+            //TODO: Work with GridLayout -> Cleaner Solution
+
+            //this.mainLayout = new GridLayout(this);
+            //setContentView(this.mainLayout.getLayout());
+
+            setContentView(this.mainView);
+        }
+
+        GridController.resetAllObjects();
     }
 
     @Override

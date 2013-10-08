@@ -109,6 +109,12 @@ public class GridController {
     }
 
     public static void clearGridPoints() {
+        for (int i = 0; i < gridPointList.size(); i++) {
+            GridObject point = gridPointList.get(i);
+
+            if (point.hasObject()) point.getObject().removeSelf();
+        }
+
         gridPointList.clear();
         currentRect = 0;
     }
