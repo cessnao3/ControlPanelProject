@@ -102,6 +102,10 @@ public class GridController {
         }
     }
 
+    public static void resetAllGridPoints() {
+        //TODO: Reset Objects for New Grid Positions
+    }
+
     public static void resetAllObjects() {
         for (int i = 0; i < gridPointList.size(); i++) {
             gridPointList.get(i).realignObject();

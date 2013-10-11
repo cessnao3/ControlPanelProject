@@ -41,16 +41,4 @@ public class GridView extends View {
             }
         }
     }
-
-    public RectangleLayout createRect() {
-        if (GridController.currentRect >= GridController.gridPointList.size() - 1) return null;
-
-        RectangleLayout rectLayout = new RectangleLayout(getContext(), GridController.rectSize);
-
-        GridController.addRectangle(rectLayout);
-
-        Log.v("cp", new Integer(GridController.currentRect).toString());
-
-        return rectLayout;
-    }
 }

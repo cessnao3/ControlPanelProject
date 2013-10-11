@@ -12,33 +12,28 @@ import android.util.Log;
 
 public class MainActivity extends Activity {
 
-    private GridView mainView;
+    //private GridView mainView;
 
     private String labelText = "Hello, World!";
 
-    //private GridLayout mainLayout;
+    private GridLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //TODO: Move points and move rects to new points
+        //TODO: http://techblogon.com/android-screen-orientation-change-rotation-example/
 
-        Log.v("cp", ((savedInstanceState == null) ? "State Null" : "State True") + ", " + ((this.mainView == null) ? "View Null" : "View True"));
+        Log.v("cp", ((savedInstanceState == null) ? "State Null" : "State True") + ", " + ((this.mainLayout == null) ? "Layout Null" : "Layout True"));
 
-        if (savedInstanceState == null || this.mainView == null) {
-            GridController.clearGridPoints();
+        //if (savedInstanceState == null || this.mainView == null) {
+        if (GridController.gridPointList.size() == 0) {
 
-            this.mainView = new GridView(this);
-            GridController.clearGridPoints();
+            this.mainLayout = new GridLayout(this);
 
-            //TODO: Work with GridLayout -> Cleaner Solution
-
-            //this.mainLayout = new GridLayout(this);
-            //setContentView(this.mainLayout.getLayout());
-
-            setContentView(this.mainView);
-        }
+            setContentView(this.mainLayout.getLayout());
+        } else GridController.resetAllGridPoints();
 
         GridController.resetAllObjects();
     }
@@ -54,17 +49,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                //this.mainLayout.createRect();
-
-                //TODO: Move this Functionality to GridLayout
-
-                RectangleLayout rectLayout = this.mainView.createRect();
-
-                if (rectLayout != null) {
-                    RectangleView rect = rectLayout.getRectangleView();
-
-                    addContentView(rectLayout.layout, new ViewGroup.LayoutParams(rectLayout.getSize(), rectLayout.getSize()));
-                }
+                this.mainLayout.createRect();
 
                 return true;
             case R.id.menu_changetext:
@@ -79,13 +64,7 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.menu_connect:
                 if (GridController.currentRect == 0) {
-                    RectangleLayout rectangleLayout = this.mainView.createRect();
-
-                    if (rectangleLayout != null) {
-                        RectangleView rect = rectangleLayout.getRectangleView();
-
-                        addContentView(rectangleLayout.layout, new ViewGroup.LayoutParams(rectangleLayout.getSize(), rectangleLayout.getSize()));
-                    }
+                    mainLayout.createRect();
                 }
 
                 OrbiterConnect orbConnect = new OrbiterConnect();
