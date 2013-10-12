@@ -22,6 +22,7 @@ public class GridObject {
 
     public void setObject(RectangleLayout newObject) {
         this.currentObject = newObject;
+        this.realignObject();
     }
 
     public void realignObject() {
@@ -39,11 +40,7 @@ public class GridObject {
     }
 
     public boolean hasObject(RectangleLayout rect) {
-        if (currentObject != null) {
-            if (currentObject.equals(rect)) return false;
-            else return true;
-        } else {
-            return false;
-        }
+        if (currentObject != null && currentObject.equals(rect)) return true;
+        else return false;
     }
 }

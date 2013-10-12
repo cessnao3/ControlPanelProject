@@ -28,8 +28,6 @@ public class GridLayout {
         GridController.addRectangle(rectLayout);
 
         if (rectLayout != null) {
-            RectangleLayout.RectangleView rect = rectLayout.getRectangleView();
-
             layout.addView(rectLayout.layout, new ViewGroup.LayoutParams(rectLayout.getSize(), rectLayout.getSize()));
         }
 

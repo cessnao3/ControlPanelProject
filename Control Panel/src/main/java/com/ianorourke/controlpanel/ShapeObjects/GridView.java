@@ -26,9 +26,6 @@ public class GridView extends View {
         if (GridController.gridPointList.size() == 0) {
             Point screenSize = new Point(this.getWidth(), this.getHeight());
 
-            int screenX = screenSize.x;
-            int screenY = screenSize.y;
-
             int numX = (screenSize.x - GridController.rectSize / 4) / GridController.rectSize;
             int numY = (screenSize.y - GridController.rectSize / 4) / GridController.rectSize;
 

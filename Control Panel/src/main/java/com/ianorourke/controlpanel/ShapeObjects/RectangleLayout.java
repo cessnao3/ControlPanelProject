@@ -41,20 +41,12 @@ public class RectangleLayout {
         layout.addView(textView);
     }
 
-    public String getText() {
-        return textView.getText().toString();
-    }
-
     public void setText(String newText) {
         textView.setText(newText);
     }
 
     public int getSize() {
         return this.size;
-    }
-
-    public RectangleView getRectangleView() {
-        return this.rectView;
     }
 
     private void alignSelf() {
@@ -68,11 +60,6 @@ public class RectangleLayout {
     public void setCenter(PointF p) {
         this.layout.setX(toCornerPoint(p.x));
         this.layout.setY(toCornerPoint(p.y));
-    }
-
-    public void setCenter(float x, float y) {
-        this.layout.setX(toCornerPoint(x));
-        this.layout.setY(toCornerPoint(y));
     }
 
     private float toCenterPoint(float coord) {
@@ -94,12 +81,9 @@ public class RectangleLayout {
 
     public class RectangleView extends View {
         private final Rect rect;
-        private boolean isRectEnabled = true;
 
         public RectangleView(Context context) {
             super(context);
-
-            this.setPadding(0, 0, 0, 0);
 
             rect = new Rect(0, 0, size, size);
         }
@@ -123,33 +107,24 @@ public class RectangleLayout {
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            if (rect.contains((int)event.getX(), (int)event.getY())) {
-                int[] screenLocation = new int[2];
-                this.getLocationOnScreen(screenLocation);
+            int[] screenLocation = new int[2];
+            this.getLocationOnScreen(screenLocation);
 
-                //TODO: Bring Rect to Front
+            //TODO: Bring Rect to Front
 
-                float displacementX = event.getRawX() - screenLocation[0];
-                float displacementY = event.getRawY() - screenLocation[1];
+            float displacementX = event.getRawX() - screenLocation[0];
+            float displacementY = event.getRawY() - screenLocation[1];
 
-                layout.setX(toCornerPoint(layout.getX() + displacementX));
-                layout.setY(toCornerPoint(layout.getY() + displacementY));
+            layout.setX(toCornerPoint(layout.getX() + displacementX));
+            layout.setY(toCornerPoint(layout.getY() + displacementY));
 
-                //TODO: Clean Deletion Code
-                if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    if (layout.getX() < 0 && layout.getY() < 0) {
-                        if (isRectEnabled && event.getAction() == MotionEvent.ACTION_UP) {
-                            removeSelf();
+            if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                if (layout.getX() < 0 && layout.getY() < 0) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) removeSelf();
+                } else alignSelf();
+            }
 
-                            isRectEnabled = false;
-                        }
-                    } else {
-                        alignSelf();
-                    }
-                }
-
-                return true;
-            } else return false;
+            return true;
         }
     }
 }

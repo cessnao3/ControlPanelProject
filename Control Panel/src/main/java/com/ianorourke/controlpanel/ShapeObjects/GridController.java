@@ -20,10 +20,9 @@ public class GridController {
                 GridObject point = gridPointList.get(i);
 
                 if (!point.hasObject()) {
-                    point.setObject(rect);
-                    rect.setCenter(point.getPoint());
+                    addRect(rect, point);
+
                     addedRect = true;
-                    //currentRect++;
                     break;
                 }
             }
@@ -41,8 +40,6 @@ public class GridController {
 
         Integer bestInt = null;
         Float bestDistance = null;
-
-        GridObject[][] objects = new GridObject[3][4];
 
         for (int i = 0; i < gridPointList.size(); i++) {
             GridObject point = gridPointList.get(i);
@@ -66,11 +63,7 @@ public class GridController {
             int newGridInt = bestInt.intValue();
 
             deleteRect(rect);
-
-            GridObject point = gridPointList.get(newGridInt);
-
-            point.setObject(rect);
-            point.realignObject();
+            addRect(rect, gridPointList.get(newGridInt));
         }
     }
 
@@ -84,6 +77,11 @@ public class GridController {
                 rect.setText(string);
             }
         }
+    }
+
+    public static void addRect(RectangleLayout rect, GridObject point) {
+        point.setObject(rect);
+        point.realignObject();
     }
 
     public static void deleteRect(RectangleLayout rect) {
