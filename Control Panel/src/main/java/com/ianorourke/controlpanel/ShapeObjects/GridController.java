@@ -7,15 +7,14 @@ import java.util.List;
 
 public class GridController {
     public static List<GridObject> gridPointList = new ArrayList<GridObject>();
-    //public static List<RectangleView> rectangleList = new ArrayList<RectangleView>();
 
     public static int rectSize = 300;
-
-    public static int currentRect = 0;
 
     public static void addRectangle(RectangleLayout rect) {
         if (rect != null) {
             boolean addedRect = false;
+
+            //TODO: Fix weird Adding Rect Bug
 
             for (int i = 0; i < gridPointList.size(); i++) {
                 GridObject point = gridPointList.get(i);
@@ -24,7 +23,7 @@ public class GridController {
                     point.setObject(rect);
                     rect.setCenter(point.getPoint());
                     addedRect = true;
-                    currentRect++;
+                    //currentRect++;
                     break;
                 }
             }
@@ -32,11 +31,13 @@ public class GridController {
             if (!addedRect) {
                 rect.removeSelf();
             }
+
+            resetAllObjects();
         }
     }
 
-    public static boolean alignObject(RectangleLayout rect) {
-        if (rect == null) return false;
+    public static void alignObject(RectangleLayout rect) {
+        if (rect == null) return;
 
         Integer bestInt = null;
         Float bestDistance = null;
@@ -46,7 +47,7 @@ public class GridController {
         for (int i = 0; i < gridPointList.size(); i++) {
             GridObject point = gridPointList.get(i);
 
-            if (!point.hasObject(rect)) {
+            if (!point.hasObject() || point.hasObject(rect)) {
                 float currentDistance = getDistance(rect.getCenter(), point.getPoint());
 
                 if (bestInt != null) {
@@ -68,12 +69,8 @@ public class GridController {
 
             GridObject point = gridPointList.get(newGridInt);
 
-            rect.setCenter(point.getPoint());
             point.setObject(rect);
-
-            return true;
-        } else {
-            return false;
+            point.realignObject();
         }
     }
 
@@ -95,9 +92,6 @@ public class GridController {
 
             if (point.hasObject(rect)) {
                 point.setObject(null);
-
-                //TODO: Fix Multiple Deletions of Rects
-                currentRect--;
             }
         }
     }
@@ -120,7 +114,16 @@ public class GridController {
         }
 
         gridPointList.clear();
-        currentRect = 0;
+    }
+
+    public static int getNumRects() {
+        int rects = 0;
+
+        for (int i = 0; i < gridPointList.size(); i++) {
+            if (gridPointList.get(i).hasObject()) rects++;
+        }
+
+        return rects;
     }
 
     private static float getDistance(PointF p1, PointF p2) {

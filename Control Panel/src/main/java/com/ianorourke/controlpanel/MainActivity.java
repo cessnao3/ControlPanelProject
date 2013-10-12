@@ -11,9 +11,6 @@ import android.view.*;
 import android.util.Log;
 
 public class MainActivity extends Activity {
-
-    //private GridView mainView;
-
     private String labelText = "Hello, World!";
 
     private GridLayout mainLayout;
@@ -25,15 +22,15 @@ public class MainActivity extends Activity {
         //TODO: Move points and move rects to new points
         //TODO: http://techblogon.com/android-screen-orientation-change-rotation-example/
 
-        Log.v("cp", ((savedInstanceState == null) ? "State Null" : "State True") + ", " + ((this.mainLayout == null) ? "Layout Null" : "Layout True"));
+        //Log.v("cp", ((savedInstanceState == null) ? "State Null" : "State True") + ", " + ((this.mainLayout == null) ? "Layout Null" : "Layout True"));
 
-        //if (savedInstanceState == null || this.mainView == null) {
-        if (GridController.gridPointList.size() == 0) {
-
+        if (this.mainLayout == null || this.mainLayout.getLayout() == null) {
             this.mainLayout = new GridLayout(this);
 
+            GridController.clearGridPoints();
+
             setContentView(this.mainLayout.getLayout());
-        } else GridController.resetAllGridPoints();
+        }
 
         GridController.resetAllObjects();
     }
@@ -63,10 +60,6 @@ public class MainActivity extends Activity {
 
                 return true;
             case R.id.menu_connect:
-                if (GridController.currentRect == 0) {
-                    mainLayout.createRect();
-                }
-
                 OrbiterConnect orbConnect = new OrbiterConnect();
                 orbConnect.connectToOrbiter();
 

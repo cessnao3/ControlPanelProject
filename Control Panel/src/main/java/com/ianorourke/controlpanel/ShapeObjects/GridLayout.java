@@ -11,7 +11,6 @@ public class GridLayout {
 
     public GridLayout(Context context) {
         layout = new RelativeLayout(context);
-
         mainView = new GridView(context);
 
         layout.addView(mainView);
@@ -22,7 +21,7 @@ public class GridLayout {
     }
 
     public void createRect() {
-        if (GridController.currentRect >= GridController.gridPointList.size() - 1) return;
+        if (GridController.getNumRects() >= GridController.gridPointList.size() - 1) return;
 
         RectangleLayout rectLayout = new RectangleLayout(layout.getContext(), GridController.rectSize);
 
@@ -34,7 +33,7 @@ public class GridLayout {
             layout.addView(rectLayout.layout, new ViewGroup.LayoutParams(rectLayout.getSize(), rectLayout.getSize()));
         }
 
-        Log.v("cp", new Integer(GridController.currentRect).toString());
+        Log.v("cp", new Integer(GridController.getNumRects()).toString());
     }
 
 }
