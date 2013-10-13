@@ -3,6 +3,7 @@ package com.ianorourke.controlpanel.Orbiter;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import android.widget.TextView;
 import com.ianorourke.controlpanel.ShapeObjects.GridController;
 
 import java.io.*;
@@ -10,12 +11,25 @@ import java.net.Socket;
 
 public class OrbiterConnect {
 
-    public void connectToOrbiter(/*String host, int port*/) {
-        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("192.168.1.102", 37777); //ProBook Home Network
+    protected AsyncOrbiterConnection orbConnection;
+
+    public void connect(/*String host, int port*/) {
+        if (orbConnection != null) return;
+
+        orbConnection = new AsyncOrbiterConnection("192.168.1.102", 37777); //ProBook Home Network
         //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.2.2", 37777); //Android Emulator
-        AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.3.2", 37777); //Genymotion Emulator
+        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.3.2", 37777); //Genymotion Emulator
 
         orbConnection.execute();
+    }
+
+    public void disconnect() {
+        if (orbConnection == null) return;
+
+        //TODO: Setup Canceling
+        if (!orbConnection.isCancelled()) orbConnection.cancel(true);
+
+        orbConnection = null;
     }
 
     private static class AsyncOrbiterConnection extends AsyncTask<Void, String, String> {
@@ -46,18 +60,22 @@ public class OrbiterConnect {
             try {
                 socket = new Socket(this.host, this.port);
 
+                socket.setSoTimeout(30000);
+
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintStream(socket.getOutputStream(), true);
-
-                socket.setSoTimeout(30000);
+                //out = new PrintStream(socket.getOutputStream());
 
             } catch (IOException e) {
                 e.printStackTrace();
+                return "Socket Init Error";
             }
 
-            //TODO: Listen Loop
+            //TODO: Remove most sleepThread if possible
+            this.sleepThread(1000);
 
-            boolean listenLoop = true;
+            //TODO: Listen Loop
+            //boolean listenLoop = true;
 
             //TODO: Fix Null Pointer Exception Crash
 
@@ -66,8 +84,21 @@ public class OrbiterConnect {
                 if (!socket.isConnected()) return GENERIC_ERROR;
                 Log.v("cp", "Socket: " + socket.toString());
 
-                out.println("ORB:GBodyCount");
-                out.flush();
+                final String CHANGE_HUD = "ORB:ToggleHudColor" + "\n";
+                //final String GET_FOCUS = "FOCUS:Name";
+                //final String SET_TIMEWARP = "ORB:SetTimeAccel:5";
+
+                String message = CHANGE_HUD;
+
+                Log.v("cp", "Message: " + message);
+
+                out.println(message);
+
+                if (out.checkError() == true){
+                    Log.v("cp", "OUT ERROR");
+                    publishProgress("Out Error");
+                    return GENERIC_ERROR;
+                }
 
                 for (int i = 0; i < 5; i++) {
                     Integer currentRound = new Integer(i + 1);

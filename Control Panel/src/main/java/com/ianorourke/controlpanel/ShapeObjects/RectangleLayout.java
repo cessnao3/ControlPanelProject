@@ -90,7 +90,7 @@ public class RectangleLayout {
 
         @Override
         public void onDraw(Canvas canvas) {
-            int color = new Integer((int) (Math.random() * 9.0)).intValue();
+            int color = 2; //new Integer((int) (Math.random() * 9.0)).intValue();
 
             Paint p = new Paint();
 

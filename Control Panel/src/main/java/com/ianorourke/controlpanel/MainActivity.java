@@ -57,7 +57,9 @@ public class MainActivity extends Activity {
 
                 return true;
             case R.id.menu_connect:
-                orbiterConnect.connectToOrbiter();
+                if (GridController.getNumRects() == 0) this.mainLayout.createRect();
+
+                orbiterConnect.connect();
 
                 return true;
             default:
