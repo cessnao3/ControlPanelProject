@@ -3,7 +3,6 @@ package com.ianorourke.controlpanel.Orbiter;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import android.widget.TextView;
 import com.ianorourke.controlpanel.ShapeObjects.GridController;
 
 import java.io.*;
@@ -88,23 +87,21 @@ public class OrbiterConnect {
                 //final String GET_FOCUS = "FOCUS:Name";
                 //final String SET_TIMEWARP = "ORB:SetTimeAccel:5";
 
-                String message = CHANGE_HUD;
+                //String message = CHANGE_HUD;
 
-                Log.v("cp", "Message: " + message);
+                Log.v("cp", "Message: " + CHANGE_HUD);
 
-                out.println(message);
+                out.println(CHANGE_HUD);
 
-                if (out.checkError() == true){
+                if (out.checkError()){
                     Log.v("cp", "OUT ERROR");
                     publishProgress("Out Error");
                     return GENERIC_ERROR;
                 }
 
                 for (int i = 0; i < 5; i++) {
-                    Integer currentRound = new Integer(i + 1);
-
                     if (!in.ready()) {
-                        Log.v("cp", "Continue " + currentRound.toString());
+                        Log.v("cp", "Continue");
 
                         this.sleepThread(1000);
 
@@ -112,7 +109,7 @@ public class OrbiterConnect {
                     }
 
                     String response = in.readLine();
-                    Log.v("cp", "Response " + currentRound.toString() + ": " + response);
+                    Log.v("cp", "Response: " + response);
 
                     if (response != null){
                         publishProgress(response);
