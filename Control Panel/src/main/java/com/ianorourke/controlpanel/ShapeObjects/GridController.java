@@ -14,13 +14,11 @@ public class GridController {
         if (rect != null) {
             boolean addedRect = false;
 
-            //TODO: Fix weird Adding Rect Bug
-
             for (int i = 0; i < gridPointList.size(); i++) {
                 GridObject point = gridPointList.get(i);
 
                 if (!point.hasObject()) {
-                    addRect(rect, point);
+                    point.setObject(rect);
 
                     addedRect = true;
                     break;
@@ -63,7 +61,7 @@ public class GridController {
             int newGridInt = bestInt.intValue();
 
             deleteRect(rect);
-            addRect(rect, gridPointList.get(newGridInt));
+            gridPointList.get(newGridInt).setObject(rect);
         }
     }
 
@@ -79,11 +77,6 @@ public class GridController {
         }
     }
 
-    public static void addRect(RectangleLayout rect, GridObject point) {
-        point.setObject(rect);
-        point.realignObject();
-    }
-
     public static void deleteRect(RectangleLayout rect) {
         for (int i = 0; i < gridPointList.size(); i++) {
             GridObject point = gridPointList.get(i);
@@ -92,10 +85,6 @@ public class GridController {
                 point.setObject(null);
             }
         }
-    }
-
-    public static void resetAllGridPoints() {
-        //TODO: Reset Objects for New Grid Positions
     }
 
     public static void resetAllObjects() {

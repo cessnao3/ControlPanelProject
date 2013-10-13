@@ -15,22 +15,19 @@ public class MainActivity extends Activity {
 
     private GridLayout mainLayout;
 
+    private OrbiterConnect orbiterConnect;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO: Move points and move rects to new points
-        //TODO: http://techblogon.com/android-screen-orientation-change-rotation-example/
-
-        //Log.v("cp", ((savedInstanceState == null) ? "State Null" : "State True") + ", " + ((this.mainLayout == null) ? "Layout Null" : "Layout True"));
-
         if (this.mainLayout == null || this.mainLayout.getLayout() == null) {
             this.mainLayout = new GridLayout(this);
 
-            GridController.clearGridPoints();
-
             setContentView(this.mainLayout.getLayout());
         }
+
+        if (orbiterConnect == null) orbiterConnect = new OrbiterConnect();
 
         GridController.resetAllObjects();
     }
@@ -60,8 +57,7 @@ public class MainActivity extends Activity {
 
                 return true;
             case R.id.menu_connect:
-                OrbiterConnect orbConnect = new OrbiterConnect();
-                orbConnect.connectToOrbiter();
+                orbiterConnect.connectToOrbiter();
 
                 return true;
             default:

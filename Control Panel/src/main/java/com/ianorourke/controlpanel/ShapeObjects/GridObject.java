@@ -1,7 +1,5 @@
 package com.ianorourke.controlpanel.ShapeObjects;
 
-import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.RectangleView;
-
 import android.graphics.PointF;
 
 public class GridObject {

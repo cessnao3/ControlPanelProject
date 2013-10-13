@@ -25,7 +25,6 @@ public class OrbiterConnect {
         private String host;
 
         private Socket socket;
-        //private PrintStream out;
 
         private PrintStream out;
         private BufferedReader in;
@@ -48,9 +47,6 @@ public class OrbiterConnect {
                 socket = new Socket(this.host, this.port);
 
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                //out = new PrintStream(new BufferedOutputStream(socket.getOutputStream()), true);
-
-                //out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 out = new PrintStream(socket.getOutputStream(), true);
 
                 socket.setSoTimeout(30000);
@@ -58,6 +54,8 @@ public class OrbiterConnect {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            //TODO: Listen Loop
 
             boolean listenLoop = true;
 
@@ -68,16 +66,8 @@ public class OrbiterConnect {
                 if (!socket.isConnected()) return GENERIC_ERROR;
                 Log.v("cp", "Socket: " + socket.toString());
 
-                //out.println("ORB:GBodyCount");
-                //out.write("ORB:GBodyCount" + "\n");
                 out.println("ORB:GBodyCount");
                 out.flush();
-
-                //if (out.checkError()) Log.v("cp", "Send Error");
-
-                //this.sleepThread(500);
-
-                //if (!socket.isOutputShutdown()) socket.shutdownOutput();
 
                 for (int i = 0; i < 5; i++) {
                     Integer currentRound = new Integer(i + 1);
@@ -127,8 +117,6 @@ public class OrbiterConnect {
 
         protected void onPostExecute(String response) {
             Log.v("cp", "Ended Task");
-
-            //GridController.updateRects(response);
         }
     }
 }
