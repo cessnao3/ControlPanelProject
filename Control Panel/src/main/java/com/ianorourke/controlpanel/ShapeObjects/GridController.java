@@ -71,9 +71,7 @@ public class GridController {
 
             RectangleLayout rect = gridObject.getObject();
 
-            if (rect != null) {
-                rect.setText(string);
-            }
+            if (rect != null) rect.setText(string);
         }
     }
 

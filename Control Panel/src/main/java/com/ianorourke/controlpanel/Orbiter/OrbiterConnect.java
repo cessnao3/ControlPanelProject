@@ -10,22 +10,24 @@ import java.net.Socket;
 
 public class OrbiterConnect {
 
-    protected AsyncOrbiterConnection orbConnection;
+    //protected AsyncOrbiterConnection orbConnection;
+
+    private final int DEFAULT_PORT = 37777;
 
     public void connect(/*String host, int port*/) {
-        if (orbConnection != null) return;
+        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("192.168.1.102", DEFAULT_PORT); //ProBook Home Network
+        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.2.2", DEFAULT_PORT); //Android Emulator
+        AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.3.2", DEFAULT_PORT); //Genymotion Emulator
 
-        orbConnection = new AsyncOrbiterConnection("192.168.1.102", 37777); //ProBook Home Network
-        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.2.2", 37777); //Android Emulator
-        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.3.2", 37777); //Genymotion Emulator
+        //TODO: Fix Socket Init Error
 
         orbConnection.execute();
     }
 
-    public void disconnect() {
+    public void disconnect(AsyncOrbiterConnection orbConnection) {
         if (orbConnection == null) return;
-
         //TODO: Setup Canceling
+
         if (!orbConnection.isCancelled()) orbConnection.cancel(true);
 
         orbConnection = null;
@@ -83,15 +85,17 @@ public class OrbiterConnect {
                 if (!socket.isConnected()) return GENERIC_ERROR;
                 Log.v("cp", "Socket: " + socket.toString());
 
-                final String CHANGE_HUD = "ORB:ToggleHudColor" + "\n";
-                //final String GET_FOCUS = "FOCUS:Name";
+                //final String CHANGE_HUD = "ORB:ToggleHudColor" + "\n";
+                final String GET_FOCUS = "FOCUS:Name";
                 //final String SET_TIMEWARP = "ORB:SetTimeAccel:5";
 
                 //String message = CHANGE_HUD;
 
-                Log.v("cp", "Message: " + CHANGE_HUD);
+                Log.v("cp", "Message: " + GET_FOCUS);
 
-                out.println(CHANGE_HUD);
+                out.println(GET_FOCUS + "\r");
+
+                publishProgress("Message Published");
 
                 if (out.checkError()){
                     Log.v("cp", "OUT ERROR");
@@ -144,7 +148,7 @@ public class OrbiterConnect {
         }
 
         protected void onPostExecute(String response) {
-            Log.v("cp", "Ended Task");
+            Log.v("cp", "Ended Task: " + response);
         }
     }
 }
