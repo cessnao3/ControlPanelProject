@@ -46,16 +46,6 @@ public class MainActivity extends Activity {
                 this.mainLayout.createRect();
 
                 return true;
-            case R.id.menu_changetext:
-                if (labelText.equals("HI!")) {
-                    labelText = "Hello, World!";
-                } else {
-                    labelText = "HI!";
-                }
-
-                GridController.updateRects(labelText);
-
-                return true;
             case R.id.menu_connect:
                 if (GridController.getNumRects() == 0) this.mainLayout.createRect();
 

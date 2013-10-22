@@ -77,6 +77,13 @@ public class RectangleLayout {
         if (viewParent != null) viewParent.removeView(layout);
     }
 
+    //Colors
+    protected int color = 2;
+
+    public void setColor(int c) {
+        this.color = c;
+    }
+
     //RectangleView Class
 
     public class RectangleView extends View {
@@ -90,8 +97,6 @@ public class RectangleLayout {
 
         @Override
         public void onDraw(Canvas canvas) {
-            int color = 2; //new Integer((int) (Math.random() * 9.0)).intValue();
-
             Paint p = new Paint();
 
             if (color % 3 == 0) {

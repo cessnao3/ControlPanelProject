@@ -22,9 +22,9 @@ public class OrbiterConnect {
             return;
         }
 
-        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("192.168.1.102", DEFAULT_PORT); //ProBook Home Network
-        AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.72.17.5", DEFAULT_PORT); //School Network
-        //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.2.2", DEFAULT_PORT); //Android Emulator
+        //orbConnection = new AsyncOrbiterConnection("192.168.1.102", DEFAULT_PORT); //ProBook Home Network
+        orbConnection = new AsyncOrbiterConnection("10.72.17.5", DEFAULT_PORT); //School Network
+        //orbConnection = new AsyncOrbiterConnection("10.0.2.2", DEFAULT_PORT); //Android Emulator
         //orbConnection = new AsyncOrbiterConnection("10.0.3.2", DEFAULT_PORT); //Genymotion Emulator
 
         //TODO: Fix Socket Init Error
@@ -82,17 +82,32 @@ public class OrbiterConnect {
                 return "Socket Init Error";
             }
 
+            if (socket == null) return GENERIC_ERROR;
+
             //TODO: Remove most sleepThread if possible
             //this.sleepThread(1000);
 
-            //TODO: Listen Loop
+            //Try Count
+            for (int i = 0; i < 10; i++) {
+                if (socket.isConnected()) break;
+
+                Log.v("cp", "Socket Not Ready");
+                this.sleepThread(250);
+            }
+
+            if (!socket.isConnected()) return GENERIC_ERROR;
+
+            for (int i = 0; i < OrbiterData.subscribeMessages.length; i++) {
+                out.print(OrbiterData.subscribeMessages[i] + "\r");
+                Log.v("cp", "Sent: " + OrbiterData.subscribeMessages[i]);
+            }
+
             boolean listenLoop = true;
 
             //TODO: Redo Connection
 
             while (listenLoop) {
                 try {
-                    if (socket == null) return GENERIC_ERROR;
                     if (!socket.isConnected()) return GENERIC_ERROR;
 
                     if (isCancelled()) {
@@ -100,14 +115,8 @@ public class OrbiterConnect {
                         break;
                     }
 
-                    if (OrbiterData.message != null && !OrbiterData.message.equals("")) {
-                        out.println(OrbiterData.message + "\r");
-                        OrbiterData.message = "";
-                    }
-
                     for (int i = 0; i < 5; i++) {
                         if (!in.ready()) {
-                            Log.v("cp", "Continue");
                             this.sleepThread(250);
                             continue;
                         }
@@ -115,9 +124,6 @@ public class OrbiterConnect {
                         String response = in.readLine();
 
                         Log.v("cp", "Response: " + response);
-
-                        //TODO: Remove Later
-                        listenLoop = false;
 
                         if (response != null){
                             publishProgress(response);
@@ -146,10 +152,11 @@ public class OrbiterConnect {
         }
 
         protected void onProgressUpdate(String... progress) {
-            String update = progress[0];
+            OrbiterData.parseMessage(progress[0]);
 
-            Log.v("cp", "Update: " + update);
-            GridController.updateRects(update);
+            GridController.updateRects(progress[0]);
+
+            Log.v("cp", "Update: " + progress[0]);
         }
 
         protected void onPostExecute(String response) {

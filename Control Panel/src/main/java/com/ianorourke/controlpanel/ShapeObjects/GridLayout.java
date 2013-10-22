@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.ianorourke.controlpanel.Instruments.Altimeter;
+
 public class GridLayout {
     private RelativeLayout layout;
     private GridView mainView;
@@ -33,7 +35,6 @@ public class GridLayout {
         RectangleLayout rectLayout = new RectangleLayout(layout.getContext(), GridController.rectSize);
 
         GridController.addRectangle(rectLayout);
-
         addLayout(rectLayout);
 
         Log.v("cp", new Integer(GridController.getNumRects()).toString());

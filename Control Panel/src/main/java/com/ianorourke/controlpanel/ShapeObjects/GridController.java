@@ -2,6 +2,8 @@ package com.ianorourke.controlpanel.ShapeObjects;
 
 import android.graphics.PointF;
 
+import com.ianorourke.controlpanel.Instruments.Altimeter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +73,13 @@ public class GridController {
 
             RectangleLayout rect = gridObject.getObject();
 
-            if (rect != null) rect.setText(string);
+            if (rect == null) continue;
+
+            if (rect.getClass() == Altimeter.class) {
+                ((Altimeter) rect).updateDisplay();
+            } else {
+                rect.setText(string);
+            }
         }
     }
 
