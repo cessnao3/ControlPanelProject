@@ -54,6 +54,10 @@ public class OrbiterConnect {
             }
         }
 
+        protected void onPreExecute() {
+            OrbiterData.clearSubscriptionMap();
+        }
+
         protected String doInBackground(Void... params) {
             try {
                 socket = new Socket(this.host, this.port);
@@ -79,22 +83,18 @@ public class OrbiterConnect {
 
             if (!socket.isConnected()) return GENERIC_ERROR;
 
-            for (int i = 0; i < OrbiterData.subscribeMessages.length; i++) {
-                out.println(OrbiterData.subscribeMessages[i] + "\r");
-                Log.v("cp", "Sent: " + OrbiterData.subscribeMessages[i]);
+            String[] subscribeMessages = OrbiterData.getSubscriptions();
+
+            for (int i = 0; i < subscribeMessages.length; i++) {
+                out.println(subscribeMessages[i] + "\r");
+                Log.v("cp", "Sent: " + subscribeMessages[i]);
             }
 
             //Listening Loop
-
-            boolean listenLoop = true;
-
-            while (listenLoop) {
+            while (true) {
                 try {
-                    if (!socket.isConnected()) return GENERIC_ERROR;
-
-                    if (isCancelled()) {
-                        //TODO: Is ListenLoop Needed?
-                        listenLoop = false;
+                    if (isCancelled() || !socket.isConnected()) {
+                        //if (!socket.isConnected()) return GENERIC_ERROR;
                         break;
                     }
 
@@ -103,41 +103,27 @@ public class OrbiterConnect {
                         OrbiterData.setMessage("");
                     }
 
-                    for (int i = 0; i < 5; i++) {
-                        if (!in.ready()) {
-                            this.sleepThread(250);
-                            continue;
-                        }
-
-                        String response = in.readLine();
-
-                        Log.v("cp", "Response: " + response);
-
-                        if (response != null){
-                            publishProgress(response);
-                            break;
-                        }
+                    while (in.ready()) {
+                        publishProgress(in.readLine());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
 
-                    listenLoop = false;
                     Log.v("cp", "IO Exception Error");
+                    break;
                 }
 
                 this.sleepThread(1000);
             }
 
             //Unsubscribe
-
             if (socket.isConnected()) {
                 for (String key : OrbiterData.getSubscriptionMap().keySet()) {
                     out.println("UNSUBSCRIBE:" + key + "\r");
                 }
-            }
+            } else return GENERIC_ERROR;
 
             //Disconnect
-
             try {
                 if (!socket.isClosed()) socket.close();
                 if (!socket.isInputShutdown()) socket.shutdownInput();
@@ -152,15 +138,14 @@ public class OrbiterConnect {
         }
 
         protected void onProgressUpdate(String... progress) {
+            if (progress[0] == null) return;
             OrbiterData.parseMessage(progress[0]);
-
-            GridController.updateRects(progress[0]);
-
-            Log.v("cp", "Update: " + progress[0]);
         }
 
         protected void onPostExecute(String response) {
             Log.v("cp", "Ended Task: " + response);
+
+            OrbiterData.clearSubscriptionMap();
         }
     }
 }

@@ -6,6 +6,8 @@ import com.ianorourke.controlpanel.Orbiter.OrbiterData;
 import android.content.Context;
 
 public class Altimeter extends RectangleLayout {
+    public final String message = "FOCUS:Alt";
+
     public Altimeter(Context context, int size) {
         super(context, size);
 
@@ -13,6 +15,6 @@ public class Altimeter extends RectangleLayout {
     }
 
     public void updateDisplay() {
-        this.setText(new Double(OrbiterData.altitude).toString());
+        //this.setText(new Double(OrbiterData.altitude).toString());
     }
 }
