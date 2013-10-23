@@ -12,7 +12,7 @@ public class OrbiterConnect {
 
     private AsyncOrbiterConnection orbConnection;
 
-    private boolean isConnected = true;
+    //private boolean isConnected = true;
 
     private final int DEFAULT_PORT = 37777;
 
@@ -27,18 +27,7 @@ public class OrbiterConnect {
         //orbConnection = new AsyncOrbiterConnection("10.0.2.2", DEFAULT_PORT); //Android Emulator
         //orbConnection = new AsyncOrbiterConnection("10.0.3.2", DEFAULT_PORT); //Genymotion Emulator
 
-        //TODO: Fix Socket Init Error
-
         orbConnection.execute();
-    }
-
-    public void disconnect(AsyncOrbiterConnection orbConnection) {
-        if (orbConnection == null) return;
-        //TODO: Create Canceling
-
-        if (!orbConnection.isCancelled()) orbConnection.cancel(false);
-
-        orbConnection = null;
     }
 
     private static class AsyncOrbiterConnection extends AsyncTask<Void, String, String> {
@@ -51,8 +40,6 @@ public class OrbiterConnect {
 
         private PrintStream out;
         private BufferedReader in;
-
-        //private String message = "FOCUS:Alt";
 
         public AsyncOrbiterConnection(String host, int port) {
             this.port = port;
@@ -75,17 +62,12 @@ public class OrbiterConnect {
 
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintStream(socket.getOutputStream(), true);
-                //out = new PrintStream(socket.getOutputStream());
-
             } catch (IOException e) {
                 e.printStackTrace();
                 return "Socket Init Error";
             }
 
             if (socket == null) return GENERIC_ERROR;
-
-            //TODO: Remove most sleepThread if possible
-            //this.sleepThread(1000);
 
             //Try Count
             for (int i = 0; i < 10; i++) {
@@ -98,21 +80,27 @@ public class OrbiterConnect {
             if (!socket.isConnected()) return GENERIC_ERROR;
 
             for (int i = 0; i < OrbiterData.subscribeMessages.length; i++) {
-                out.print(OrbiterData.subscribeMessages[i] + "\r");
+                out.println(OrbiterData.subscribeMessages[i] + "\r");
                 Log.v("cp", "Sent: " + OrbiterData.subscribeMessages[i]);
             }
 
-            boolean listenLoop = true;
+            //Listening Loop
 
-            //TODO: Redo Connection
+            boolean listenLoop = true;
 
             while (listenLoop) {
                 try {
                     if (!socket.isConnected()) return GENERIC_ERROR;
 
                     if (isCancelled()) {
+                        //TODO: Is ListenLoop Needed?
                         listenLoop = false;
                         break;
+                    }
+
+                    if (OrbiterData.getMessage().equals("")){
+                        out.println(OrbiterData.getMessage() + "\r");
+                        OrbiterData.setMessage("");
                     }
 
                     for (int i = 0; i < 5; i++) {
@@ -140,6 +128,16 @@ public class OrbiterConnect {
                 this.sleepThread(1000);
             }
 
+            //Unsubscribe
+
+            if (socket.isConnected()) {
+                for (String key : OrbiterData.getSubscriptionMap().keySet()) {
+                    out.println("UNSUBSCRIBE:" + key + "\r");
+                }
+            }
+
+            //Disconnect
+
             try {
                 if (!socket.isClosed()) socket.close();
                 if (!socket.isInputShutdown()) socket.shutdownInput();
@@ -147,6 +145,8 @@ public class OrbiterConnect {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            //End Code
 
             return "00END00";
         }

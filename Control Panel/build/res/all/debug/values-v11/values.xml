@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/C:/Users/Ian/Documents/Android%20Studio/Control%20Panel%20Project/Control%20Panel/src/main/res/values-v11/styles.xml -->
+    <!-- From: file:/Users/ian/AndroidStudioProjects/Control%20Panel%20Project/Control%20Panel/src/main/res/values-v11/styles.xml -->
     <eat-comment />
 
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
