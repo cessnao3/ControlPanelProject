@@ -27,9 +27,7 @@ public class GridController {
                 }
             }
 
-            if (!addedRect) {
-                rect.removeSelf();
-            }
+            if (!addedRect) rect.removeSelf();
 
             resetAllObjects();
         }
@@ -67,19 +65,14 @@ public class GridController {
         }
     }
 
-    public static void updateRects(String string) {
+    public static void updateRects() {
         for (int i = 0; i < gridPointList.size(); i++) {
             GridObject gridObject = gridPointList.get(i);
 
             RectangleLayout rect = gridObject.getObject();
-
             if (rect == null) continue;
 
-            if (rect.getClass() == Altimeter.class) {
-                ((Altimeter) rect).updateDisplay();
-            } else {
-                rect.setText(string);
-            }
+            rect.updateRectDisplay();
         }
     }
 

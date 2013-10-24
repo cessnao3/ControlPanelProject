@@ -71,17 +71,7 @@ public class OrbiterConnect {
                 return "Socket Init Error";
             }
 
-            if (socket == null) return GENERIC_ERROR;
-
-            //Try Count
-            for (int i = 0; i < 10; i++) {
-                if (socket.isConnected()) break;
-
-                Log.v("cp", "Socket Not Ready");
-                this.sleepThread(250);
-            }
-
-            if (!socket.isConnected()) return GENERIC_ERROR;
+            if (socket == null || !socket.isConnected()) return GENERIC_ERROR;
 
             String[] subscribeMessages = OrbiterData.getSubscriptions();
 
@@ -93,15 +83,7 @@ public class OrbiterConnect {
             //Listening Loop
             while (true) {
                 try {
-                    if (isCancelled() || !socket.isConnected()) {
-                        //if (!socket.isConnected()) return GENERIC_ERROR;
-                        break;
-                    }
-
-                    if (OrbiterData.getMessage().equals("")){
-                        out.println(OrbiterData.getMessage() + "\r");
-                        OrbiterData.setMessage("");
-                    }
+                    if (isCancelled() || !socket.isConnected()) break;
 
                     while (in.ready()) {
                         publishProgress(in.readLine());

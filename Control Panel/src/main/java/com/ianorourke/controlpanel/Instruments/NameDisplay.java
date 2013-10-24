@@ -8,15 +8,15 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class Altimeter extends RectangleLayout {
-    public Altimeter(Context context, int size) {
+public class NameDisplay extends RectangleLayout {
+    public NameDisplay(Context context, int size) {
         super(context, size);
 
         Paint p = new Paint();
-        p.setColor(Color.RED);
+        p.setColor(Color.BLUE);
 
         this.setColor(p);
-        this.message = OrbiterMessages.getAltitudeHandle();
+        this.message = OrbiterMessages.getNameHandle();
 
         this.updateRectDisplay();
     }
@@ -27,6 +27,6 @@ public class Altimeter extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        this.setText(OrbiterData.getAltitudeString());
+        this.setText(OrbiterData.getNameString());
     }
 }

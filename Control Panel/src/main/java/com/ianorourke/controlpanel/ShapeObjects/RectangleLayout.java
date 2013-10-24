@@ -20,6 +20,8 @@ public class RectangleLayout {
 
     private final int size;
 
+    protected String message = "";
+
     public RectangleLayout(Context context, int size) {
         layout = new RelativeLayout(context);
 
@@ -34,11 +36,14 @@ public class RectangleLayout {
         textView.setWidth(size);
         textView.setHeight(size);
 
-        textView.setText("Hello, World!");
         textView.setTextSize(30.0f);
 
         layout.addView(rectView);
         layout.addView(textView);
+    }
+
+    public void updateRectDisplay() {
+        textView.setText(this.getClass().toString());
     }
 
     public void setText(String newText) {
@@ -78,10 +83,10 @@ public class RectangleLayout {
     }
 
     //Colors
-    protected int color = 2;
+    private Paint paintColor = null;
 
-    public void setColor(int c) {
-        this.color = c;
+    public void setColor(Paint p) {
+        if (p != null) paintColor = p;
     }
 
     //RectangleView Class
@@ -97,17 +102,12 @@ public class RectangleLayout {
 
         @Override
         public void onDraw(Canvas canvas) {
-            Paint p = new Paint();
-
-            if (color % 3 == 0) {
-                p.setColor(Color.RED);
-            } else if (color % 2 == 0) {
-                p.setColor(Color.GREEN);
-            } else {
-                p.setColor(Color.BLUE);
+            if (paintColor == null) {
+                paintColor = new Paint();
+                paintColor.setColor(Color.WHITE);
             }
 
-            canvas.drawRect(this.rect, p);
+            canvas.drawRect(this.rect, paintColor);
         }
 
         @Override

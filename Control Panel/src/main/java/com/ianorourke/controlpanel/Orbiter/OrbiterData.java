@@ -8,17 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrbiterData {
-    private static String message = "";
     private static String frequency = "1";
 
-    private static String name;
+    private static String vesselName;
     private static double altitude;
 
-    private static String[] subscribeMessages = {"FOCUS:Alt", "FOCUS:Name"};
+    private static String[] subscribeMessages = {OrbiterMessages.getAltitudeHandle(), OrbiterMessages.getNameHandle()};
 
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
 
-    //TODO: Parse Message
     public static void parseMessage(String message) {
         if (subscriptionMap == null) return;
         if (message == null || !message.contains("=")) return;
@@ -28,6 +26,7 @@ public class OrbiterData {
         if (message.contains("SUBSCRIBE")) {
             String id = message.substring(message.indexOf("=")).replace("=", "");
             if (id != null && !id.contains("ERR") && !subscriptionMap.containsKey(id)) subscriptionMap.put(id, message.replace("=" + id, ""));
+            return;
         }
 
         String key = message.substring(0, message.indexOf("="));
@@ -37,31 +36,22 @@ public class OrbiterData {
 
         if (action == null || action.equals("")) return;
 
-        if (action.contains("FOCUS:Alt")) {
+        if (action.contains(OrbiterMessages.getAltitudeHandle())) {
             altitude = new Double(message.replace(key + "=", "")).doubleValue();
-        } else if (action.contains("FOCUS:Name")) {
-            name = message.replace(key + "=", "");
+        } else if (action.contains(OrbiterMessages.getNameHandle())) {
+            vesselName = message.replace(key + "=", "");
         }
 
-        GridController.updateRects(new Double(altitude).toString());
+        GridController.updateRects();
     }
 
+    //Subscription Actions
     public static Map<String, String> getSubscriptionMap() {
         return subscriptionMap;
     }
 
     public static void clearSubscriptionMap() {
         subscriptionMap.clear();
-    }
-
-    public static void setMessage(String m) {
-        if (m == null) m = "";
-
-        message = m;
-    }
-
-    public static String getMessage() {
-        return message;
     }
 
     public static String[] getSubscriptions() {
@@ -72,5 +62,13 @@ public class OrbiterData {
         }
 
         return finalSubscriptions;
+    }
+
+    //Data Retrieval
+    public static String getAltitudeString() {
+        return new Double(altitude).toString();
+    }
+    public static String getNameString() {
+        return vesselName;
     }
 }

@@ -42,15 +42,14 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_new:
-                this.mainLayout.createRect();
-
+            case R.id.menu_alt:
+                this.mainLayout.createAltimeter();
+                return true;
+            case R.id.menu_name:
+                this.mainLayout.createNameDisplay();
                 return true;
             case R.id.menu_connect:
-                if (GridController.getNumRects() == 0) this.mainLayout.createRect();
-
                 orbiterConnect.connect();
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
