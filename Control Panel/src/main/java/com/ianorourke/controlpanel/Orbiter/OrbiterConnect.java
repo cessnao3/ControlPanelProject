@@ -95,7 +95,7 @@ public class OrbiterConnect {
                     break;
                 }
 
-                this.sleepThread(1000);
+                this.sleepThread(500);
             }
 
             //Unsubscribe
