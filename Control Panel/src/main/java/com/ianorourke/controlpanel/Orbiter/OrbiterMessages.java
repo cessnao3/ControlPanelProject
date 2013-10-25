@@ -8,6 +8,8 @@ public class OrbiterMessages {
 
     //Connection Protocols
 
+    //TODO: Graphics for Instruments
+
     public static String getAltitudeHandle() {
         return "SHIP:FOCUS:Alt";
     }
@@ -15,6 +17,9 @@ public class OrbiterMessages {
     public static String getNameHandle() {
         return "SHIP:FOCUS:Name";
     }
+
+    //TODO: Velocity
+    //TODO: Attitude
 
     //Messages
 
