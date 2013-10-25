@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class RectangleLayout {
     public RectangleView rectView;
-    private TextView textView;
+    protected TextView textView;
 
     public RelativeLayout layout;
 
@@ -42,16 +42,20 @@ public class RectangleLayout {
         layout.addView(textView);
     }
 
-    public void updateRectDisplay() {
-        textView.setText(this.getClass().toString());
-    }
-
     public void setText(String newText) {
         textView.setText(newText);
     }
 
     public int getSize() {
         return this.size;
+    }
+
+    public void onTouch() {
+        //Code for Subclasses
+    }
+
+    public void updateRectDisplay() {
+        //Code for Subclasses
     }
 
     private void alignSelf() {
@@ -112,22 +116,26 @@ public class RectangleLayout {
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            int[] screenLocation = new int[2];
-            this.getLocationOnScreen(screenLocation);
+            if (GridController.isEditing) {
+                int[] screenLocation = new int[2];
+                this.getLocationOnScreen(screenLocation);
 
-            //TODO: Bring Rect to Front
+                //TODO: Bring Rect to Front
 
-            float displacementX = event.getRawX() - screenLocation[0];
-            float displacementY = event.getRawY() - screenLocation[1];
+                float displacementX = event.getRawX() - screenLocation[0];
+                float displacementY = event.getRawY() - screenLocation[1];
 
-            layout.setX(toCornerPoint(layout.getX() + displacementX));
-            layout.setY(toCornerPoint(layout.getY() + displacementY));
+                layout.setX(toCornerPoint(layout.getX() + displacementX));
+                layout.setY(toCornerPoint(layout.getY() + displacementY));
 
-            if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-                if (layout.getX() < 0 && layout.getY() < 0) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) removeSelf();
-                } else alignSelf();
+                if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    if (layout.getX() < 0 && layout.getY() < 0) {
+                        if (event.getAction() == MotionEvent.ACTION_UP) removeSelf();
+                    } else alignSelf();
+                }
             }
+
+            if (event.getAction() == MotionEvent.ACTION_UP) onTouch();
 
             return true;
         }

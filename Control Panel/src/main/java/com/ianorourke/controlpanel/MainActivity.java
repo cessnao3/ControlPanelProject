@@ -1,6 +1,8 @@
 package com.ianorourke.controlpanel;
 
 import com.ianorourke.controlpanel.Orbiter.OrbiterConnect;
+import com.ianorourke.controlpanel.Orbiter.OrbiterData;
+import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.*;
 
@@ -50,6 +52,12 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.menu_connect:
                 orbiterConnect.connect();
+                return true;
+            case R.id.menu_change_hud:
+                this.mainLayout.createToggleHud();
+                return true;
+            case R.id.menu_toggle_editing:
+                GridController.isEditing = (GridController.isEditing) ? false : true;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -7,6 +7,7 @@ import com.ianorourke.controlpanel.ShapeObjects.GridController;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 public class OrbiterConnect {
 
@@ -62,7 +63,7 @@ public class OrbiterConnect {
             try {
                 socket = new Socket(this.host, this.port);
 
-                socket.setSoTimeout(30000);
+                socket.setSoTimeout(5000);
 
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintStream(socket.getOutputStream(), true);
@@ -85,6 +86,16 @@ public class OrbiterConnect {
                 try {
                     if (isCancelled() || !socket.isConnected()) break;
 
+                    if (OrbiterMessages.hasMessages()) {
+                        List<String> messages = OrbiterMessages.getMessages();
+
+                        for (int i = 0; i < messages.size(); i++) {
+                            out.println(messages.get(i) + "\r");
+                        }
+
+                        OrbiterMessages.clearMessages();
+                    }
+
                     while (in.ready()) {
                         publishProgress(in.readLine());
                     }
@@ -95,7 +106,7 @@ public class OrbiterConnect {
                     break;
                 }
 
-                this.sleepThread(500);
+                this.sleepThread(250);
             }
 
             //Unsubscribe
@@ -125,7 +136,8 @@ public class OrbiterConnect {
         }
 
         protected void onPostExecute(String response) {
-            Log.v("cp", "Ended Task: " + response);
+            if (response != null || !response.equals("")) Log.v("cp", "Ended Task: " + response);
+            else Log.v("cp", "Ended Task");
 
             OrbiterData.clearSubscriptionMap();
         }

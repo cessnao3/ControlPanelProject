@@ -12,6 +12,8 @@ public class GridController {
 
     public static int rectSize = 300;
 
+    public static boolean isEditing = false;
+
     public static void addRectangle(RectangleLayout rect) {
         if (rect != null) {
             boolean addedRect = false;

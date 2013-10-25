@@ -11,4 +11,12 @@
         android:title="Connect"
         android:orderInCategory="300"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/menu_change_hud"
+        android:title="HUD"
+        android:orderInCategory="400"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/menu_toggle_editing"
+        android:title="Edit"
+        android:orderInCategory="500"
+        android:showAsAction="ifRoom" />
 </menu>

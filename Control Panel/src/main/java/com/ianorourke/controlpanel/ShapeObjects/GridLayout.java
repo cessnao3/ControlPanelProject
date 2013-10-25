@@ -5,13 +5,11 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.ianorourke.controlpanel.Instruments.Altimeter;
-import com.ianorourke.controlpanel.Instruments.NameDisplay;
+import com.ianorourke.controlpanel.Instruments.*;
 
 public class GridLayout {
     private RelativeLayout layout;
     private GridView mainView;
-
 
     public GridLayout(Context context) {
         layout = new RelativeLayout(context);
@@ -44,6 +42,11 @@ public class GridLayout {
     public void createNameDisplay() {
         NameDisplay name = new NameDisplay(layout.getContext(), GridController.rectSize);
         addLayout(name);
+    }
+
+    public void createToggleHud() {
+        ToggleHud hud = new ToggleHud(layout.getContext(), GridController.rectSize);
+        addLayout(hud);
     }
 
     //Layout Params

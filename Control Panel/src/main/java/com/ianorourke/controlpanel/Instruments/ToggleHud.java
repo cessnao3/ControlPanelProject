@@ -8,17 +8,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class Altimeter extends RectangleLayout {
-    public Altimeter(Context context, int size) {
+public class ToggleHud extends RectangleLayout {
+    public ToggleHud(Context context, int size) {
         super(context, size);
 
         Paint p = new Paint();
-        p.setColor(Color.RED);
+        p.setColor(Color.LTGRAY);
 
         this.setColor(p);
-        this.message = OrbiterMessages.getAltitudeHandle();
+        this.message = null;
 
         this.textView.setTextSize(24.0f);
+
+        this.setText("Toggle HUD Color");
 
         this.updateRectDisplay();
     }
@@ -28,7 +30,7 @@ public class Altimeter extends RectangleLayout {
     }
 
     @Override
-    public void updateRectDisplay() {
-        this.setText(OrbiterData.getAltitudeString());
+    public void onTouch() {
+        OrbiterMessages.addMessage("ORB:ToggleHUDColor");
     }
 }
