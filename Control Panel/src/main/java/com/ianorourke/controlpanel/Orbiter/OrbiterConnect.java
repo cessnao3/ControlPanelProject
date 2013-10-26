@@ -22,8 +22,6 @@ public class OrbiterConnect {
         this.connect("10.72.17.5", DEFAULT_PORT); //School Network
         //this.connect("10.0.2.2", DEFAULT_PORT); //Android Emulator
         //this.connect("10.0.3.2", DEFAULT_PORT); //Genymotion Emulator
-
-        orbConnection.execute();
     }
 
     public void connect(String host) {

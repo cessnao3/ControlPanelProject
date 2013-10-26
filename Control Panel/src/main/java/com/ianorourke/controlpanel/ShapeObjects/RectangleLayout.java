@@ -138,8 +138,10 @@ public class RectangleLayout {
                 float displacementX = event.getRawX() - screenLocation[0];
                 float displacementY = event.getRawY() - screenLocation[1];
 
-                layout.setX(toCornerPoint(layout.getX() + displacementX));
-                layout.setY(toCornerPoint(layout.getY() + displacementY));
+                setCenter(new PointF(layout.getX() + displacementX, layout.getY() + displacementY));
+
+                //layout.setX(toCornerPoint(layout.getX() + displacementX));
+                //layout.setY(toCornerPoint(layout.getY() + displacementY));
 
                 if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
                     if (layout.getX() < 0 && layout.getY() < 0) {

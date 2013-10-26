@@ -7,12 +7,12 @@
         android:title="New Name"
         android:orderInCategory="200"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/menu_change_hud"
+          android:title="HUD"
+          android:orderInCategory="300"
+          android:showAsAction="ifRoom" />
     <item android:id="@+id/menu_connect"
         android:title="Connect"
-        android:orderInCategory="300"
-        android:showAsAction="ifRoom" />
-    <item android:id="@+id/menu_change_hud"
-        android:title="HUD"
         android:orderInCategory="400"
         android:showAsAction="ifRoom" />
     <item android:id="@+id/menu_toggle_editing"
