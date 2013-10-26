@@ -51,12 +51,12 @@ public class GridController {
 
                 if (bestInt != null) {
                     if (bestDistance > currentDistance) {
-                        bestInt = new Integer(i);
-                        bestDistance = new Float(currentDistance);
+                        bestInt = Integer.valueOf(i);
+                        bestDistance = Float.valueOf(currentDistance);
                     }
                 } else {
-                    bestInt = new Integer(i);
-                    bestDistance = new Float(currentDistance);
+                    bestInt = Integer.valueOf(i);
+                    bestDistance = Float.valueOf(currentDistance);
                 }
             }
         }

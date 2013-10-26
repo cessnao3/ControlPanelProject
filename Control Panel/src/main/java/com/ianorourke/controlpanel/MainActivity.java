@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
                 this.mainLayout.createToggleHud();
                 return true;
             case R.id.menu_toggle_editing:
-                GridController.isEditing = (GridController.isEditing) ? false : true;
+                GridController.isEditing = (!GridController.isEditing);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

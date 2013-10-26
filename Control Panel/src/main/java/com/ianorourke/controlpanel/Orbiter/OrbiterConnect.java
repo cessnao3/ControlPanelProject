@@ -3,8 +3,6 @@ package com.ianorourke.controlpanel.Orbiter;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ianorourke.controlpanel.ShapeObjects.GridController;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
@@ -40,7 +38,7 @@ public class OrbiterConnect {
 
     public boolean isConnected() {
         if (orbConnection != null) {
-            return (orbConnection.getStatus() == AsyncTask.Status.RUNNING) ? true : false;
+            return (orbConnection.getStatus() == AsyncTask.Status.RUNNING);
         } else return false;
     }
 

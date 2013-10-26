@@ -25,8 +25,7 @@ public class OrbiterMessages {
     //Messages
 
     public static boolean hasMessages() {
-        if (messages.size() > 0) return true;
-        else return false;
+        return messages.size() > 0;
     }
 
     public static List<String> getMessages() {

@@ -34,11 +34,10 @@ public class GridObject {
     }
 
     public boolean hasObject() {
-        return (currentObject != null) ? true : false;
+        return (currentObject != null);
     }
 
     public boolean hasObject(RectangleLayout rect) {
-        if (currentObject != null && currentObject.equals(rect)) return true;
-        else return false;
+        return (currentObject != null && currentObject.equals(rect));
     }
 }

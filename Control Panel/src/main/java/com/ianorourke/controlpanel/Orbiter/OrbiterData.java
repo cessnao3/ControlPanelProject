@@ -37,7 +37,7 @@ public class OrbiterData {
         if (action == null || action.equals("")) return;
 
         if (action.contains(OrbiterMessages.getAltitudeHandle())) {
-            altitude = new Double(message.replace(key + "=", "")).doubleValue();
+            altitude = Double.valueOf(message.replace(key + "=", "")).doubleValue();
         } else if (action.contains(OrbiterMessages.getNameHandle())) {
             vesselName = message.replace(key + "=", "");
         }
@@ -66,7 +66,7 @@ public class OrbiterData {
 
     //Data Retrieval
     public static String getAltitudeString() {
-        return new Double(altitude).toString();
+        return Double.valueOf(altitude).toString();
     }
     public static String getNameString() {
         return vesselName;

@@ -5,8 +5,6 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.view.View;
 
-import android.util.Log;
-
 public class GridView extends View {
     public GridView(Context context) {
         super(context);

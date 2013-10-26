@@ -56,6 +56,6 @@ public class GridLayout {
 
         layout.addView(rect.layout, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
 
-        Log.v("cp", new Integer(GridController.getNumRects()).toString());
+        Log.v("cp", Integer.valueOf(GridController.getNumRects()).toString());
     }
 }
