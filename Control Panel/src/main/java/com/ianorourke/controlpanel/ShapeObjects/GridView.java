@@ -14,6 +14,8 @@ public class GridView extends View {
         this.setPadding(0, 0, 0, 0);
     }
 
+    //TODO: Clean onMeasure
+
     @Override
     protected void onMeasure (int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

@@ -18,8 +18,9 @@ public class OrbiterMessages {
         return "SHIP:FOCUS:Name";
     }
 
-    //TODO: Velocity
+    //TODO: Velocities
     //TODO: Attitude
+    //TODO: Other Buttons
 
     //Messages
 

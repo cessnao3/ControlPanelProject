@@ -14,13 +14,13 @@ import android.widget.TextView;
 
 public class RectangleLayout {
     public RectangleView rectView;
-    protected TextView textView;
+    private TextView textView;
 
     public RelativeLayout layout;
 
     private final int size;
 
-    protected String message = "";
+    protected String message = null;
 
     public RectangleLayout(Context context, int size) {
         layout = new RelativeLayout(context);
@@ -42,12 +42,22 @@ public class RectangleLayout {
         layout.addView(textView);
     }
 
+    //TextView Setting
+
     public void setText(String newText) {
         textView.setText(newText);
     }
 
+    public void setTextSize(float f) {
+        textView.setTextSize(f);
+    }
+
     public int getSize() {
         return this.size;
+    }
+
+    public String getMessage() {
+        return this.message;
     }
 
     public void onTouch() {
@@ -61,6 +71,8 @@ public class RectangleLayout {
     private void alignSelf() {
         GridController.alignObject(this);
     }
+
+    //Points
 
     public PointF getCenter() {
         return new PointF(toCenterPoint(this.layout.getX()), toCenterPoint(this.layout.getY()));
@@ -79,6 +91,7 @@ public class RectangleLayout {
         return coord - this.size / 2;
     }
 
+    //Removal
     public void removeSelf() {
         GridController.deleteRect(this);
 

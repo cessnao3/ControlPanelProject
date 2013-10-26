@@ -1,16 +1,11 @@
 package com.ianorourke.controlpanel;
 
 import com.ianorourke.controlpanel.Orbiter.OrbiterConnect;
-import com.ianorourke.controlpanel.Orbiter.OrbiterData;
-import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
 import com.ianorourke.controlpanel.ShapeObjects.*;
-import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout.*;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.*;
-
-import android.util.Log;
 
 public class MainActivity extends Activity {
     private String labelText = "Hello, World!";

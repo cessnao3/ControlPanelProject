@@ -18,13 +18,9 @@ public class Altimeter extends RectangleLayout {
         this.setColor(p);
         this.message = OrbiterMessages.getAltitudeHandle();
 
-        this.textView.setTextSize(24.0f);
+        this.setTextSize(24.0f);
 
         this.updateRectDisplay();
-    }
-
-    public String getMessage() {
-        return this.message;
     }
 
     @Override

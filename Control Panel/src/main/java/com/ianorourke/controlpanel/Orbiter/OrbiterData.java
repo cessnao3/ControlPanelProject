@@ -13,7 +13,7 @@ public class OrbiterData {
     private static String vesselName;
     private static double altitude;
 
-    private static String[] subscribeMessages = {"SHIP:FOCUS:Status2", OrbiterMessages.getAltitudeHandle(), OrbiterMessages.getNameHandle()};
+    private static String[] subscribeMessages = {OrbiterMessages.getAltitudeHandle(), OrbiterMessages.getNameHandle()};
 
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
 

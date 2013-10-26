@@ -29,11 +29,6 @@ public class GridLayout {
     }
 
     //Rect Types
-    public void createRect() {
-        RectangleLayout rectLayout = new RectangleLayout(layout.getContext(), GridController.rectSize);
-        addLayout(rectLayout);
-    }
-
     public void createAltimeter() {
         Altimeter alt = new Altimeter(layout.getContext(), GridController.rectSize);
         addLayout(alt);

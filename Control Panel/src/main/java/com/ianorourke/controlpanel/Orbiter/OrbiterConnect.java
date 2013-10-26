@@ -13,22 +13,37 @@ public class OrbiterConnect {
 
     private AsyncOrbiterConnection orbConnection;
 
-    //private boolean isConnected = true;
-
     private final int DEFAULT_PORT = 37777;
 
-    public void connect(/*String host, int port*/) {
-        if (orbConnection != null && orbConnection.getStatus() == AsyncTask.Status.RUNNING) {
+    public void connect() {
+        //TODO: Delete this Function
+
+        //this.connect("192.168.1.102", DEFAULT_PORT); //Home Network
+        this.connect("10.72.17.5", DEFAULT_PORT); //School Network
+        //this.connect("10.0.2.2", DEFAULT_PORT); //Android Emulator
+        //this.connect("10.0.3.2", DEFAULT_PORT); //Genymotion Emulator
+
+        orbConnection.execute();
+    }
+
+    public void connect(String host) {
+        this.connect(host, DEFAULT_PORT);
+    }
+
+    public void connect(String host, int port) {
+        if (isConnected()) {
             orbConnection.cancel(false);
             return;
         }
 
-        //orbConnection = new AsyncOrbiterConnection("192.168.1.102", DEFAULT_PORT); //ProBook Home Network
-        orbConnection = new AsyncOrbiterConnection("10.72.17.5", DEFAULT_PORT); //School Network
-        //orbConnection = new AsyncOrbiterConnection("10.0.2.2", DEFAULT_PORT); //Android Emulator
-        //orbConnection = new AsyncOrbiterConnection("10.0.3.2", DEFAULT_PORT); //Genymotion Emulator
-
+        orbConnection = new AsyncOrbiterConnection(host, port);
         orbConnection.execute();
+    }
+
+    public boolean isConnected() {
+        if (orbConnection != null) {
+            return (orbConnection.getStatus() == AsyncTask.Status.RUNNING) ? true : false;
+        } else return false;
     }
 
     private static class AsyncOrbiterConnection extends AsyncTask<Void, String, String> {
@@ -109,7 +124,7 @@ public class OrbiterConnect {
                 this.sleepThread(250);
             }
 
-            //Unsubscribe
+            //Unsubscribe from Existing Subscriptions
             if (socket.isConnected()) {
                 for (String key : OrbiterData.getSubscriptionMap().keySet()) {
                     out.println("UNSUBSCRIBE:" + key + "\r");
@@ -126,7 +141,6 @@ public class OrbiterConnect {
             }
 
             //End Code
-
             return "00END00";
         }
 

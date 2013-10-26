@@ -21,10 +21,6 @@ public class NameDisplay extends RectangleLayout {
         this.updateRectDisplay();
     }
 
-    public String getMessage() {
-        return this.message;
-    }
-
     @Override
     public void updateRectDisplay() {
         this.setText(OrbiterData.getNameString());
