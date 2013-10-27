@@ -1,22 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_alt"
-        android:title="New Alt"
+    <item android:id="@+id/menu_new"
+        android:title="New"
         android:orderInCategory="100"
         android:showAsAction="ifRoom" />
-    <item android:id="@+id/menu_name"
-        android:title="New Name"
-        android:orderInCategory="200"
-        android:showAsAction="ifRoom" />
-    <item android:id="@+id/menu_change_hud"
-          android:title="HUD"
-          android:orderInCategory="300"
-          android:showAsAction="ifRoom" />
     <item android:id="@+id/menu_connect"
         android:title="Connect"
-        android:orderInCategory="400"
+        android:orderInCategory="200"
         android:showAsAction="ifRoom" />
     <item android:id="@+id/menu_toggle_editing"
         android:title="Edit"
-        android:orderInCategory="500"
+        android:orderInCategory="300"
         android:showAsAction="ifRoom" />
 </menu>

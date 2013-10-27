@@ -1,15 +1,15 @@
 package com.ianorourke.controlpanel;
 
+import android.content.DialogInterface;
 import com.ianorourke.controlpanel.Orbiter.OrbiterConnect;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.view.*;
 
 public class MainActivity extends Activity {
-    private String labelText = "Hello, World!";
-
     private GridLayout mainLayout;
 
     private OrbiterConnect orbiterConnect;
@@ -39,17 +39,35 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_alt:
-                this.mainLayout.createAltimeter();
-                return true;
-            case R.id.menu_name:
-                this.mainLayout.createNameDisplay();
+            case R.id.menu_new:
+                final CharSequence[] messages = {"Altimeter", "Name", "Toggle HUD Color"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Instrument Selection");
+
+                builder.setItems(messages, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                mainLayout.createAltimeter();
+                                break;
+                            case 1:
+                                mainLayout.createNameDisplay();
+                                break;
+                            case 2:
+                                mainLayout.createToggleHud();
+                                break;
+                            default:
+                                break;
+                        }
+
+                        //dialog.dismiss();
+                    }
+                }).show();
                 return true;
             case R.id.menu_connect:
                 orbiterConnect.connect();
-                return true;
-            case R.id.menu_change_hud:
-                this.mainLayout.createToggleHud();
                 return true;
             case R.id.menu_toggle_editing:
                 GridController.isEditing = (!GridController.isEditing);
