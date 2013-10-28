@@ -6,17 +6,19 @@ import com.ianorourke.controlpanel.Orbiter.OrbiterData;
 
 import android.content.Context;
 
-public class NameDisplay extends RectangleLayout {
-    public NameDisplay(Context context, int size) {
+public class PropFlowRate extends RectangleLayout {
+    public PropFlowRate(Context context, int size) {
         super(context, size);
 
-        this.message = OrbiterMessages.getNameHandle();
+        this.message = OrbiterMessages.getPropFlowHandle();
+
+        this.setTextSize(24.0f);
 
         this.updateRectDisplay();
     }
 
     @Override
     public void updateRectDisplay() {
-        this.setText(OrbiterData.getNameString());
+        this.setText(OrbiterData.getPropFlowString());
     }
 }

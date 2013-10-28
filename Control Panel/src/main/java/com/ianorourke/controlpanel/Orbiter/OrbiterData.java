@@ -8,12 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrbiterData {
-    private static String frequency = "1";
+    private static String frequency = "2";
 
-    private static String vesselName;
-    private static double altitude;
+    private static String vesselName = "Ship";
+    private static double altitude = 0.0;
+    private static double propFlowRate = 0.0;
 
-    private static String[] subscribeMessages = {OrbiterMessages.getAltitudeHandle(), OrbiterMessages.getNameHandle()};
+    private static String[] subscribeMessages = {OrbiterMessages.getAltitudeHandle(), OrbiterMessages.getNameHandle(), OrbiterMessages.getPropFlowHandle()};
 
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
 
@@ -36,10 +37,14 @@ public class OrbiterData {
 
         if (action == null || action.equals("")) return;
 
+        String responseString = message.replace(key + "=", "");
+
         if (action.contains(OrbiterMessages.getAltitudeHandle())) {
-            altitude = Double.valueOf(message.replace(key + "=", "")).doubleValue();
+            altitude = Double.valueOf(responseString).doubleValue();
         } else if (action.contains(OrbiterMessages.getNameHandle())) {
-            vesselName = message.replace(key + "=", "");
+            vesselName = responseString;
+        } else if (action.contains(OrbiterMessages.getPropFlowHandle())) {
+            propFlowRate = Double.valueOf(responseString).doubleValue();
         }
 
         GridController.updateRects();
@@ -68,7 +73,12 @@ public class OrbiterData {
     public static String getAltitudeString() {
         return Double.valueOf(altitude).toString();
     }
+
     public static String getNameString() {
         return vesselName;
+    }
+
+    public static String getPropFlowString() {
+        return Double.valueOf(propFlowRate).toString();
     }
 }

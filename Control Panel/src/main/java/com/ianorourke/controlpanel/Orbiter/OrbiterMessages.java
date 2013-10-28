@@ -18,6 +18,10 @@ public class OrbiterMessages {
         return "SHIP:FOCUS:Name";
     }
 
+    public static String getPropFlowHandle() {
+        return "SHIP:FOCUS:PropFlowRate";
+    }
+
     //TODO: Velocities
     //TODO: Attitude
     //TODO: Other Buttons

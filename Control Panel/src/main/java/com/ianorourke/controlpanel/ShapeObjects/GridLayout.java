@@ -44,6 +44,11 @@ public class GridLayout {
         addLayout(hud);
     }
 
+    public void createPropFlow() {
+        PropFlowRate prop = new PropFlowRate(layout.getContext(), GridController.rectSize);
+        addLayout(prop);
+    }
+
     //Layout Params
     private void addLayout(RectangleLayout rect) {
         if (rect == null) return;

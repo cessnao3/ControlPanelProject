@@ -99,13 +99,6 @@ public class RectangleLayout {
         if (viewParent != null) viewParent.removeView(layout);
     }
 
-    //Colors
-    private Paint paintColor = null;
-
-    public void setColor(Paint p) {
-        if (p != null) paintColor = p;
-    }
-
     //RectangleView Class
 
     public class RectangleView extends View {
@@ -119,10 +112,8 @@ public class RectangleLayout {
 
         @Override
         public void onDraw(Canvas canvas) {
-            if (paintColor == null) {
-                paintColor = new Paint();
-                paintColor.setColor(Color.WHITE);
-            }
+            Paint paintColor = new Paint();
+            paintColor.setColor(Color.LTGRAY);
 
             canvas.drawRect(this.rect, paintColor);
         }

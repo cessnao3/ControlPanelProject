@@ -16,10 +16,12 @@ public class OrbiterConnect {
     public void connect() {
         //TODO: Delete this Function
 
-        //this.connect("192.168.1.102", DEFAULT_PORT); //Home Network
-        this.connect("10.72.17.5", DEFAULT_PORT); //School Network
-        //this.connect("10.0.2.2", DEFAULT_PORT); //Android Emulator
-        //this.connect("10.0.3.2", DEFAULT_PORT); //Genymotion Emulator
+        Log.v("cp", "Connection Started");
+
+        //this.connect("192.168.1.102"); //Home Network
+        this.connect("10.72.17.5"); //School Network
+        //this.connect("10.0.2.2"); //Android Emulator
+        //this.connect("10.0.3.2"); //Genymotion Emulator
     }
 
     public void connect(String host) {
@@ -141,8 +143,7 @@ public class OrbiterConnect {
         }
 
         protected void onProgressUpdate(String... progress) {
-            if (progress[0] == null) return;
-            OrbiterData.parseMessage(progress[0]);
+            if (progress[0] != null) OrbiterData.parseMessage(progress[0]);
         }
 
         protected void onPostExecute(String response) {

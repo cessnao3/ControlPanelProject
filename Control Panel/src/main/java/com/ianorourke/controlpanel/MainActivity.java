@@ -2,6 +2,7 @@ package com.ianorourke.controlpanel;
 
 import android.content.DialogInterface;
 import com.ianorourke.controlpanel.Orbiter.OrbiterConnect;
+import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 
 import android.os.Bundle;
@@ -40,7 +41,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                final CharSequence[] messages = {"Altimeter", "Name", "Toggle HUD Color"};
+                final CharSequence[] messages = {"Altimeter", "Name", "Toggle HUD Color", "Prop Flow"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Instrument Selection");
@@ -58,6 +59,9 @@ public class MainActivity extends Activity {
                             case 2:
                                 mainLayout.createToggleHud();
                                 break;
+                            case 3:
+                                mainLayout.createPropFlow();
+                                break;
                             default:
                                 break;
                         }
@@ -71,6 +75,9 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.menu_toggle_editing:
                 GridController.isEditing = (!GridController.isEditing);
+                return true;
+            case R.id.menu_ship_status:
+                OrbiterMessages.addMessage("SHIP:FOCUS:Status2");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

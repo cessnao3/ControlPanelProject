@@ -11,5 +11,9 @@
         android:title="Edit"
         android:orderInCategory="300"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/menu_ship_status"
+        android:title="Status"
+        android:orderInCategory="400"
+        android:showAsAction="ifRoom" />
 </menu>
-<!-- From: file:/Users/ian/AndroidStudioProjects/Control%20Panel%20Project/Control%20Panel/src/main/res/menu/main.xml -->
+<!-- From: file:/C:/Users/Ian/Documents/Android%20Studio/Control%20Panel%20Project/Control%20Panel/src/main/res/menu/main.xml -->
