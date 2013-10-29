@@ -1,20 +1,27 @@
 package com.ianorourke.controlpanel.Instruments;
 
+import android.content.Context;
+
 import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 import com.ianorourke.controlpanel.Orbiter.OrbiterData;
 
-import android.content.Context;
-
-public class NameDisplay extends RectangleLayout {
-    public NameDisplay(Context context, int size) {
+public class AttitudeMode extends RectangleLayout {
+    public AttitudeMode(Context context, int size) {
         super(context, size);
+
+        this.setTextSize(24.0f);
 
         this.updateRectDisplay();
     }
 
     @Override
     public void updateRectDisplay() {
-        this.setText(OrbiterData.getNameString());
+        this.setText(OrbiterData.getAttitudeMode());
+    }
+
+    @Override
+    public void onTouch() {
+        OrbiterMessages.addMessage("FOCUS:ToggleAttitudeMode");
     }
 }

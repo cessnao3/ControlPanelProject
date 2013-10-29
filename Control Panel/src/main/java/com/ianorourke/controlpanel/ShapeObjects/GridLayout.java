@@ -45,8 +45,13 @@ public class GridLayout {
     }
 
     public void createPropFlow() {
-        PropFlowRate prop = new PropFlowRate(layout.getContext(), GridController.rectSize);
+        RemainingPropellent prop = new RemainingPropellent(layout.getContext(), GridController.rectSize);
         addLayout(prop);
+    }
+
+    public void createAttitudeMode() {
+        AttitudeMode att = new AttitudeMode(layout.getContext(), GridController.rectSize);
+        addLayout(att);
     }
 
     //Layout Params

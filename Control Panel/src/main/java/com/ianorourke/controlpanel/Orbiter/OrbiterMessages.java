@@ -19,7 +19,19 @@ public class OrbiterMessages {
     }
 
     public static String getPropFlowHandle() {
-        return "SHIP:FOCUS:PropFlowRate";
+        return "SHIP:FOCUS:DfltFuelFlowRate";
+    }
+
+    public static String getPropMassHandle() {
+        return "SHIP:FOCUS:DfltFuelMass";
+    }
+
+    public static String getPropMaxMass() {
+        return "SHIP:FOCUS:DfltMaxFuelMass";
+    }
+
+    public static String getEngineStatusHandle() {
+        return "FOCUS:EngineStatus";
     }
 
     //TODO: Velocities

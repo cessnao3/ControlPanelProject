@@ -6,11 +6,9 @@ import com.ianorourke.controlpanel.Orbiter.OrbiterData;
 
 import android.content.Context;
 
-public class PropFlowRate extends RectangleLayout {
-    public PropFlowRate(Context context, int size) {
+public class RemainingPropellent extends RectangleLayout {
+    public RemainingPropellent(Context context, int size) {
         super(context, size);
-
-        this.message = OrbiterMessages.getPropFlowHandle();
 
         this.setTextSize(24.0f);
 
@@ -19,6 +17,6 @@ public class PropFlowRate extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        this.setText(OrbiterData.getPropFlowString());
+        this.setText(OrbiterData.getRemainingPropTime());
     }
 }

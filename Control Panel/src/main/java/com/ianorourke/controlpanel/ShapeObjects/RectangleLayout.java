@@ -20,8 +20,6 @@ public class RectangleLayout {
 
     private final int size;
 
-    protected String message = null;
-
     public RectangleLayout(Context context, int size) {
         layout = new RelativeLayout(context);
 
@@ -54,10 +52,6 @@ public class RectangleLayout {
 
     public int getSize() {
         return this.size;
-    }
-
-    public String getMessage() {
-        return this.message;
     }
 
     public void onTouch() {
@@ -141,7 +135,7 @@ public class RectangleLayout {
                 }
             }
 
-            if (event.getAction() == MotionEvent.ACTION_UP) onTouch();
+            if (event.getAction() == MotionEvent.ACTION_UP && !GridController.isEditing) onTouch();
 
             return true;
         }

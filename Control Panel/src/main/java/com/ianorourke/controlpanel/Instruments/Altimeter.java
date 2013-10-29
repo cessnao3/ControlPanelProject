@@ -10,8 +10,6 @@ public class Altimeter extends RectangleLayout {
     public Altimeter(Context context, int size) {
         super(context, size);
 
-        this.message = OrbiterMessages.getAltitudeHandle();
-
         this.setTextSize(24.0f);
 
         this.updateRectDisplay();

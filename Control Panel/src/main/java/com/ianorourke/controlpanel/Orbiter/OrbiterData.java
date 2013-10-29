@@ -12,9 +12,14 @@ public class OrbiterData {
 
     private static String vesselName = "Ship";
     private static double altitude = 0.0;
+
+    private static double propMass = 0.0;
+    private static double maxPropMass = 0.0;
     private static double propFlowRate = 0.0;
 
-    private static String[] subscribeMessages = {OrbiterMessages.getAltitudeHandle(), OrbiterMessages.getNameHandle(), OrbiterMessages.getPropFlowHandle()};
+    private static String[] engineStatus = new String[3];
+
+    private static String[] subscribeMessages = {OrbiterMessages.getAltitudeHandle(), OrbiterMessages.getNameHandle(), OrbiterMessages.getPropMassHandle(), OrbiterMessages.getPropFlowHandle(), OrbiterMessages.getPropMaxMass(), OrbiterMessages.getEngineStatusHandle()};
 
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
 
@@ -45,8 +50,15 @@ public class OrbiterData {
             vesselName = responseString;
         } else if (action.contains(OrbiterMessages.getPropFlowHandle())) {
             propFlowRate = Double.valueOf(responseString).doubleValue();
+        } else if (action.contains(OrbiterMessages.getPropMassHandle())) {
+            propMass = Double.valueOf(responseString).doubleValue();
+        } else if (action.contains(OrbiterMessages.getPropMaxMass())) {
+            maxPropMass = Double.valueOf(responseString).doubleValue();
+        } else if (action.contains(OrbiterMessages.getEngineStatusHandle())) {
+            engineStatus = responseString.split(",");
         }
 
+        //Move UpdateRects call to Timer
         GridController.updateRects();
     }
 
@@ -78,7 +90,27 @@ public class OrbiterData {
         return vesselName;
     }
 
-    public static String getPropFlowString() {
-        return Double.valueOf(propFlowRate).toString();
+    public static String getRemainingPropTime() {
+        double secondsRemaining = 0.0;
+        double propellentPercentage = 0.0;
+
+        //PropRate in Kg/s
+
+        if (propFlowRate > 0.0) secondsRemaining = propMass / propFlowRate;
+        if (maxPropMass > 0.0) propellentPercentage = propMass / maxPropMass * 100.0;
+
+        return ((secondsRemaining != 0.0) ? Double.valueOf(Math.round(secondsRemaining)).toString() : "NaN") + "\n" + Double.valueOf(Math.round(propellentPercentage)).toString();
+    }
+
+    public static String getMainEngineThrottleString() {
+        return engineStatus[0];
+    }
+
+    public static String getHoverEngineThrottleString() {
+        return engineStatus[1];
+    }
+
+    public static String getAttitudeMode() {
+        return engineStatus[2];
     }
 }

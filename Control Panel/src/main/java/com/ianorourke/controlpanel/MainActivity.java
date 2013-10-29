@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                final CharSequence[] messages = {"Altimeter", "Name", "Toggle HUD Color", "Prop Flow"};
+                final CharSequence[] messages = {"Altimeter", "Name", "Toggle HUD Color", "RemainingPropellent", "Attitude Mode"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Instrument Selection");
@@ -61,6 +61,9 @@ public class MainActivity extends Activity {
                                 break;
                             case 3:
                                 mainLayout.createPropFlow();
+                                break;
+                            case 4:
+                                mainLayout.createAttitudeMode();
                                 break;
                             default:
                                 break;
