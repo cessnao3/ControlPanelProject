@@ -17,6 +17,6 @@ public class Altimeter extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        this.setText(OrbiterData.getAltitudeString());
+        this.setText(OrbiterData.vessel.altitude);
     }
 }

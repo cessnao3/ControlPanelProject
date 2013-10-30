@@ -17,7 +17,7 @@ public class AttitudeMode extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        this.setText(OrbiterData.getAttitudeMode());
+        this.setText(OrbiterData.engine.attMode);
     }
 
     @Override

@@ -15,6 +15,6 @@ public class NameDisplay extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        this.setText(OrbiterData.getNameString());
+        this.setText(OrbiterData.vessel.name);
     }
 }

@@ -1,5 +1,6 @@
 package com.ianorourke.controlpanel.Orbiter;
 
+import com.ianorourke.controlpanel.Orbiter.OrbiterDataTypes.*;
 import com.ianorourke.controlpanel.ShapeObjects.GridController;
 
 import android.util.Log;
@@ -10,20 +11,32 @@ import java.util.Map;
 public class OrbiterData {
     private static String frequency = "2";
 
-    private static String vesselName = "Ship";
-    private static double altitude = 0.0;
+    //TODO: TIMER!!!!
 
-    private static double propMass = 0.0;
-    private static double maxPropMass = 0.0;
-    private static double propFlowRate = 0.0;
-
-    private static String[] engineStatus = new String[3];
-
-    private static String[] subscribeMessages = {OrbiterMessages.getAltitudeHandle(), OrbiterMessages.getNameHandle(), OrbiterMessages.getPropMassHandle(), OrbiterMessages.getPropFlowHandle(), OrbiterMessages.getPropMaxMass(), OrbiterMessages.getEngineStatusHandle()};
-
+    //TODO: Clean Messages
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
+    private static Map<String, String> messageMap = new HashMap<String, String>();
+
+    //TODO: Move to Actual Thingy - NOT INDIVIDUAL FUNCTION
+    public static void createMessages() {
+        messageMap.put("SHIP:FOCUS:Alt", "");
+        messageMap.put("SHIP:FOCUS:Name", "");
+        messageMap.put("SHIP:FOCUS:DfltFuelFlowRate", "");
+        messageMap.put("SHIP:FOCUS:DfltFuelMass", "");
+        messageMap.put("SHIP:FOCUS:DfltMaxFuelMass", "");
+        messageMap.put("FOCUS:EngineStatus", "");
+        messageMap.put("SHIP:FOCUS:AtmConditions", "");
+    }
+
+    public static OrbiterVesselStatus vessel = new OrbiterVesselStatus();
+    public static OrbiterEngineStatus engine = new OrbiterEngineStatus();
+    public static OrbiterFuelStatus fuel = new OrbiterFuelStatus();
+    public static OrbiterAtmosphericConditions atmCond = new OrbiterAtmosphericConditions();
 
     public static void parseMessage(String message) {
+        //TODO: Remove
+        if (messageMap.isEmpty()) createMessages();
+
         if (subscriptionMap == null) return;
         if (message == null || !message.contains("=")) return;
 
@@ -31,7 +44,12 @@ public class OrbiterData {
 
         if (message.contains("SUBSCRIBE")) {
             String id = message.substring(message.indexOf("=")).replace("=", "");
-            if (id != null && !id.contains("ERR") && !subscriptionMap.containsKey(id)) subscriptionMap.put(id, message.replace("=" + id, ""));
+            String call = message.substring(0, message.indexOf("=")).replace("SUBSCRIBE:", "");
+
+            if (id != null && !id.contains("ERR") && !subscriptionMap.containsKey(id)) {
+                if (call != null && !call.equals("")) subscriptionMap.put(id, call);
+            }
+
             return;
         }
 
@@ -39,78 +57,34 @@ public class OrbiterData {
         if (key == null || key.equals("")) return;
 
         String action = subscriptionMap.get(key);
-
         if (action == null || action.equals("")) return;
 
         String responseString = message.replace(key + "=", "");
 
-        if (action.contains(OrbiterMessages.getAltitudeHandle())) {
-            altitude = Double.valueOf(responseString).doubleValue();
-        } else if (action.contains(OrbiterMessages.getNameHandle())) {
-            vesselName = responseString;
-        } else if (action.contains(OrbiterMessages.getPropFlowHandle())) {
-            propFlowRate = Double.valueOf(responseString).doubleValue();
-        } else if (action.contains(OrbiterMessages.getPropMassHandle())) {
-            propMass = Double.valueOf(responseString).doubleValue();
-        } else if (action.contains(OrbiterMessages.getPropMaxMass())) {
-            maxPropMass = Double.valueOf(responseString).doubleValue();
-        } else if (action.contains(OrbiterMessages.getEngineStatusHandle())) {
-            engineStatus = responseString.split(",");
-        }
+        String messageKey = messageMap.get(key);
+        if (messageMap.containsKey(messageKey)) messageMap.put(messageKey, responseString);
 
         //Move UpdateRects call to Timer
         GridController.updateRects();
     }
 
-    //Subscription Actions
-    public static Map<String, String> getSubscriptionMap() {
-        return subscriptionMap;
+    //Data Actions
+    public static Map<String, String> getDataMap() {
+        return messageMap;
     }
 
+    //Subscription Actions
     public static void clearSubscriptionMap() {
         subscriptionMap.clear();
     }
 
     public static String[] getSubscriptions() {
-        String[] finalSubscriptions = new String[subscribeMessages.length];
+        String[] finalSubscriptions = new String[messageMap.size()];
 
         for (int i = 0; i < finalSubscriptions.length; i++) {
-            finalSubscriptions[i] = "SUBSCRIBE:" + frequency + ":" + subscribeMessages[i];
+            finalSubscriptions[i] = messageMap.keySet().toArray()[i].toString();
         }
 
         return finalSubscriptions;
-    }
-
-    //Data Retrieval
-    public static String getAltitudeString() {
-        return Double.valueOf(altitude).toString();
-    }
-
-    public static String getNameString() {
-        return vesselName;
-    }
-
-    public static String getRemainingPropTime() {
-        double secondsRemaining = 0.0;
-        double propellentPercentage = 0.0;
-
-        //PropRate in Kg/s
-
-        if (propFlowRate > 0.0) secondsRemaining = propMass / propFlowRate;
-        if (maxPropMass > 0.0) propellentPercentage = propMass / maxPropMass * 100.0;
-
-        return ((secondsRemaining != 0.0) ? Double.valueOf(Math.round(secondsRemaining)).toString() : "NaN") + "\n" + Double.valueOf(Math.round(propellentPercentage)).toString();
-    }
-
-    public static String getMainEngineThrottleString() {
-        return engineStatus[0];
-    }
-
-    public static String getHoverEngineThrottleString() {
-        return engineStatus[1];
-    }
-
-    public static String getAttitudeMode() {
-        return engineStatus[2];
     }
 }

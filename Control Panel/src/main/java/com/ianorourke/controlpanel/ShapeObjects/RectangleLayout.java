@@ -46,6 +46,14 @@ public class RectangleLayout {
         textView.setText(newText);
     }
 
+    public void setText(double d) {
+        textView.setText(Double.valueOf(d).toString());
+    }
+
+    public void setText(int i) {
+        textView.setText(Integer.valueOf(i).toString());
+    }
+
     public void setTextSize(float f) {
         textView.setTextSize(f);
     }
