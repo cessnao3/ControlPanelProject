@@ -10,6 +10,8 @@ public class OrbiterVesselStatus {
     public double altitude = 0.0;
 
     public void update() {
+        //TODO: Add Arguemnts for Update
+
         Map<String, String> data = OrbiterData.getDataMap();
 
         name = data.get("SHIP:FOCUS:Name");

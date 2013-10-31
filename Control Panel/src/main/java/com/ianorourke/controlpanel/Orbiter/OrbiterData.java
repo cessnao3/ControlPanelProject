@@ -13,20 +13,16 @@ public class OrbiterData {
 
     //TODO: TIMER!!!!
 
-    //TODO: Clean Messages
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
-    private static Map<String, String> messageMap = new HashMap<String, String>();
-
-    //TODO: Move to Actual Thingy - NOT INDIVIDUAL FUNCTION
-    public static void createMessages() {
-        messageMap.put("SHIP:FOCUS:Alt", "");
-        messageMap.put("SHIP:FOCUS:Name", "");
-        messageMap.put("SHIP:FOCUS:DfltFuelFlowRate", "");
-        messageMap.put("SHIP:FOCUS:DfltFuelMass", "");
-        messageMap.put("SHIP:FOCUS:DfltMaxFuelMass", "");
-        messageMap.put("FOCUS:EngineStatus", "");
-        messageMap.put("SHIP:FOCUS:AtmConditions", "");
-    }
+    private static Map<String, String> messageMap = new HashMap<String, String>() {{
+        put("SHIP:FOCUS:Alt", "");
+        put("SHIP:FOCUS:Name", "");
+        put("SHIP:FOCUS:DfltFuelFlowRate", "");
+        put("SHIP:FOCUS:DfltFuelMass", "");
+        put("SHIP:FOCUS:DfltMaxFuelMass", "");
+        put("FOCUS:EngineStatus", "");
+        put("SHIP:FOCUS:AtmConditions", "");
+    }};
 
     public static OrbiterVesselStatus vessel = new OrbiterVesselStatus();
     public static OrbiterEngineStatus engine = new OrbiterEngineStatus();
@@ -34,8 +30,7 @@ public class OrbiterData {
     public static OrbiterAtmosphericConditions atmCond = new OrbiterAtmosphericConditions();
 
     public static void parseMessage(String message) {
-        //TODO: Remove
-        if (messageMap.isEmpty()) createMessages();
+        //TODO: Clean ParseMessage
 
         if (subscriptionMap == null) return;
         if (message == null || !message.contains("=")) return;
@@ -64,7 +59,16 @@ public class OrbiterData {
         String messageKey = messageMap.get(key);
         if (messageMap.containsKey(messageKey)) messageMap.put(messageKey, responseString);
 
-        //Move UpdateRects call to Timer
+        //TODO: Move UpdateRects call to Timer
+        updateData();
+    }
+
+    public static void updateData() {
+        atmCond.parseAtmosphericConditions(messageMap.get("SHIP:FOCUS:AtmConditions"));
+        engine.parseEngineStatus(messageMap.get("FOCUS:EngineStatus"));
+        fuel.updateValues();
+        vessel.update();
+
         GridController.updateRects();
     }
 
@@ -74,6 +78,10 @@ public class OrbiterData {
     }
 
     //Subscription Actions
+    public static Map<String, String> getSubscriptionMap() {
+        return subscriptionMap;
+    }
+
     public static void clearSubscriptionMap() {
         subscriptionMap.clear();
     }

@@ -10,6 +10,8 @@ public class OrbiterFuelStatus {
     public double propFlowRate = 0.0;
 
     public void updateValues() {
+        //TODO: Add Arguemnts for Update
+
         Map<String, String> data = OrbiterData.getDataMap();
 
         propMass = Double.valueOf(data.get("SHIP:FOCUS:DfltFuelMass")).doubleValue();

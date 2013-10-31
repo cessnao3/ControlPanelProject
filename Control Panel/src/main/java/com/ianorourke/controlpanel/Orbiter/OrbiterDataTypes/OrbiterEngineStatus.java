@@ -7,7 +7,7 @@ public class OrbiterEngineStatus {
     public double hover = 0.0;
     public int attMode = 0;
 
-    public void parseAtmosphericConditions(String in) {
+    public void parseEngineStatus(String in) {
         m = in.split(",");
 
         main = Double.valueOf(m[0]).doubleValue();
