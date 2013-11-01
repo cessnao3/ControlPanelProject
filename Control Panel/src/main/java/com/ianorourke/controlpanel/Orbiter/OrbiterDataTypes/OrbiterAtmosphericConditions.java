@@ -1,5 +1,7 @@
 package com.ianorourke.controlpanel.Orbiter.OrbiterDataTypes;
 
+import android.util.Log;
+
 public class OrbiterAtmosphericConditions {
     public String[] m = new String[5];
 
@@ -10,6 +12,8 @@ public class OrbiterAtmosphericConditions {
     public double mach = 0.0;
 
     public void parseAtmosphericConditions(String in) {
+        if (in == null || in.equals("")) return;
+
         m = in.split(",");
 
         temp = Double.valueOf(m[0]).doubleValue();

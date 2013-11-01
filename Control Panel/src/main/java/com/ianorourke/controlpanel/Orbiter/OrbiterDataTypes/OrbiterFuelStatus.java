@@ -1,6 +1,7 @@
 package com.ianorourke.controlpanel.Orbiter.OrbiterDataTypes;
 
 import com.ianorourke.controlpanel.Orbiter.OrbiterData;
+import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
 
 import java.util.Map;
 
@@ -9,14 +10,10 @@ public class OrbiterFuelStatus {
     public double maxPropMass = 0.0;
     public double propFlowRate = 0.0;
 
-    public void updateValues() {
-        //TODO: Add Arguemnts for Update
-
-        Map<String, String> data = OrbiterData.getDataMap();
-
-        propMass = Double.valueOf(data.get("SHIP:FOCUS:DfltFuelMass")).doubleValue();
-        maxPropMass = Double.valueOf(data.get("SHIP:FOCUS:DfltMaxFuelMass")).doubleValue();
-        propFlowRate = Double.valueOf(data.get("SHIP:FOCUS:DfltFuelFlowRate")).doubleValue();
+    public void updateValues(Map<String, String> data) {
+        if (!data.get(OrbiterMessages.handleFuelMass).equals("")) propMass = Double.valueOf(data.get(OrbiterMessages.handleFuelMass)).doubleValue();
+        if (!data.get(OrbiterMessages.handleFuelMaxMass).equals("")) maxPropMass = Double.valueOf(data.get(OrbiterMessages.handleFuelMaxMass)).doubleValue();
+        if (!data.get(OrbiterMessages.handleFuelFlowRate).equals("")) propFlowRate = Double.valueOf(data.get(OrbiterMessages.handleFuelFlowRate)).doubleValue();
     }
 
     public String getRemainingPropTime() {

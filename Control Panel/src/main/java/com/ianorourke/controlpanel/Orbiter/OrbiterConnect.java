@@ -16,8 +16,6 @@ public class OrbiterConnect {
     public void connect() {
         //TODO: Delete this Function
 
-        Log.v("cp", "Connection Started");
-
         //this.connect("192.168.1.102"); //Home Network
         this.connect("10.72.17.5"); //School Network
         //this.connect("10.0.2.2"); //Android Emulator
@@ -32,7 +30,11 @@ public class OrbiterConnect {
         if (isConnected()) {
             orbConnection.cancel(false);
             return;
+
+            Log.v("cp", "Connection Canceled");
         }
+
+        Log.v("cp", "Connection Started");
 
         orbConnection = new AsyncOrbiterConnection(host, port);
         orbConnection.execute();

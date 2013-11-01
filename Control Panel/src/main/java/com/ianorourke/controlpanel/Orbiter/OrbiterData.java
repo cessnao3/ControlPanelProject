@@ -9,19 +9,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrbiterData {
-    private static String frequency = "2";
+    private static int frequency = 2;
+
+    //TODO: Fix Connection Data Updating
 
     //TODO: TIMER!!!!
 
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
     private static Map<String, String> messageMap = new HashMap<String, String>() {{
-        put("SHIP:FOCUS:Alt", "");
-        put("SHIP:FOCUS:Name", "");
-        put("SHIP:FOCUS:DfltFuelFlowRate", "");
-        put("SHIP:FOCUS:DfltFuelMass", "");
-        put("SHIP:FOCUS:DfltMaxFuelMass", "");
-        put("FOCUS:EngineStatus", "");
-        put("SHIP:FOCUS:AtmConditions", "");
+        put(OrbiterMessages.handleAltitude, "");
+        put(OrbiterMessages.handleVesselName, "");
+        put(OrbiterMessages.handleFuelFlowRate, "");
+        put(OrbiterMessages.handleFuelMass, "");
+        put(OrbiterMessages.handleFuelMaxMass, "");
+        put(OrbiterMessages.handleEngineStatus, "");
+        put(OrbiterMessages.handleAtmophericConditions, "");
     }};
 
     public static OrbiterVesselStatus vessel = new OrbiterVesselStatus();
@@ -64,17 +66,12 @@ public class OrbiterData {
     }
 
     public static void updateData() {
-        atmCond.parseAtmosphericConditions(messageMap.get("SHIP:FOCUS:AtmConditions"));
-        engine.parseEngineStatus(messageMap.get("FOCUS:EngineStatus"));
-        fuel.updateValues();
-        vessel.update();
+        atmCond.parseAtmosphericConditions(messageMap.get(OrbiterMessages.handleAtmophericConditions));
+        engine.parseEngineStatus(messageMap.get(OrbiterMessages.handleEngineStatus));
+        fuel.updateValues(messageMap);
+        vessel.update(messageMap);
 
         GridController.updateRects();
-    }
-
-    //Data Actions
-    public static Map<String, String> getDataMap() {
-        return messageMap;
     }
 
     //Subscription Actions
@@ -90,7 +87,7 @@ public class OrbiterData {
         String[] finalSubscriptions = new String[messageMap.size()];
 
         for (int i = 0; i < finalSubscriptions.length; i++) {
-            finalSubscriptions[i] = messageMap.keySet().toArray()[i].toString();
+            finalSubscriptions[i] = "SUBSCRIBE:" + Integer.valueOf(frequency).toString() + ":" + messageMap.keySet().toArray()[i].toString();
         }
 
         return finalSubscriptions;

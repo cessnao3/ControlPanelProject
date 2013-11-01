@@ -8,6 +8,8 @@ public class OrbiterEngineStatus {
     public int attMode = 0;
 
     public void parseEngineStatus(String in) {
+        if (in == null || in.equals("")) return;
+
         m = in.split(",");
 
         main = Double.valueOf(m[0]).doubleValue();
