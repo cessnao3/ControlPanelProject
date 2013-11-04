@@ -6,6 +6,8 @@ import android.util.Log;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class OrbiterConnect {
 
@@ -29,15 +31,26 @@ public class OrbiterConnect {
     public void connect(String host, int port) {
         if (isConnected()) {
             orbConnection.cancel(false);
-            return;
-
             Log.v("cp", "Connection Canceled");
+            return;
         }
 
         Log.v("cp", "Connection Started");
 
+        //Connection
         orbConnection = new AsyncOrbiterConnection(host, port);
         orbConnection.execute();
+
+        //Update Timer
+        TimerTask updateRectTask = new TimerTask() {
+            @Override
+            public void run() {
+                OrbiterData.updateData();
+            }
+        };
+
+        Timer timer = new Timer();
+        //timer.schedule(updateRectTask, 0, 500);
     }
 
     public boolean isConnected() {

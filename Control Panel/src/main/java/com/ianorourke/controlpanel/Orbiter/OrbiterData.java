@@ -13,8 +13,6 @@ public class OrbiterData {
 
     //TODO: Fix Connection Data Updating
 
-    //TODO: TIMER!!!!
-
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
     private static Map<String, String> messageMap = new HashMap<String, String>() {{
         put(OrbiterMessages.handleAltitude, "");
@@ -61,7 +59,7 @@ public class OrbiterData {
         String messageKey = messageMap.get(key);
         if (messageMap.containsKey(messageKey)) messageMap.put(messageKey, responseString);
 
-        //TODO: Move UpdateRects call to Timer
+        //TODO: Remove
         updateData();
     }
 
