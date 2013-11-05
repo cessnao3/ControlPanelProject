@@ -12,6 +12,8 @@ public class OrbiterAtmosphericConditions {
     public double mach = 0.0;
 
     public void parseAtmosphericConditions(String in) {
+        if (in.contains("ERR")) return;
+
         if (in == null || in.equals("")) return;
 
         m = in.split(",");

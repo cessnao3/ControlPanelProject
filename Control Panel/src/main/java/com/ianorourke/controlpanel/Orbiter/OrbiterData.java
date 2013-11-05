@@ -35,11 +35,15 @@ public class OrbiterData {
         if (subscriptionMap == null) return;
         if (message == null || !message.contains("=")) return;
 
-        Log.v("cp", "Message: " + message);
+        //Log.v("cp", "Message: " + message);
 
         if (message.contains("SUBSCRIBE")) {
             String id = message.substring(message.indexOf("=")).replace("=", "");
-            String call = message.substring(0, message.indexOf("=")).replace("SUBSCRIBE:", "");
+            String call = message;
+            call = call.replace("SUBSCRIBE:" + Integer.valueOf(frequency).toString() + ":", "");
+            call = call.substring(0, call.indexOf("="));
+
+            Log.v("cp", id + ":" + call);
 
             if (id != null && !id.contains("ERR") && !subscriptionMap.containsKey(id)) {
                 if (call != null && !call.equals("")) subscriptionMap.put(id, call);
@@ -49,6 +53,9 @@ public class OrbiterData {
         }
 
         String key = message.substring(0, message.indexOf("="));
+
+        Log.v("cp", "Key: " + key);
+
         if (key == null || key.equals("")) return;
 
         String action = subscriptionMap.get(key);
@@ -56,7 +63,7 @@ public class OrbiterData {
 
         String responseString = message.replace(key + "=", "");
 
-        String messageKey = messageMap.get(key);
+        String messageKey = subscriptionMap.get(key);
         if (messageMap.containsKey(messageKey)) messageMap.put(messageKey, responseString);
 
         //TODO: Remove
