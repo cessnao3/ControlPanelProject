@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Preferences">
+    <PreferenceCategory android:title="Orbiter Preferences" >
+        <EditTextPreference
+            android:key="server_ip"
+            android:title="Server IP"
+            android:summary="IP Address"
+            android:defaultValue="255.255.255.255"
+            android:inputType="textUri"/>
+
+        <EditTextPreference
+            android:key="server_port"
+            android:title="Server Port"
+            android:summary="Port Number"
+            android:defaultValue="37777"
+            android:inputType="number"/>
+    </PreferenceCategory>
+</PreferenceScreen>

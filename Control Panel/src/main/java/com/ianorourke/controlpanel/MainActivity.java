@@ -5,15 +5,20 @@ import com.ianorourke.controlpanel.Orbiter.OrbiterConnect;
 import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.preference.PreferenceManager;
 import android.view.*;
 
 public class MainActivity extends Activity {
     private GridLayout mainLayout;
 
     private OrbiterConnect orbiterConnect;
+
+    private SharedPreferences mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,14 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        this.serverUrl = this.orientationSharedPreferences.getString("server_preference", "");
+        this.shouldCheckForReadBack = this.orientationSharedPreferences.getBoolean("read_back_preference", false);
+
+        String ip = this.mainPreferences.getString("server_ip", "");
+        String port = this.mainPreferences.getString("server_port", "");
+
+        //TODO: Finish Server Port/IP
+
         switch (item.getItemId()) {
             case R.id.menu_new:
                 final CharSequence[] messages = {"Altimeter", "Name", "Toggle HUD Color", "RemainingPropellent", "Attitude Mode"};
@@ -81,6 +94,10 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.menu_ship_status:
                 OrbiterMessages.addMessage("SHIP:FOCUS:Status2");
+                return true;
+            case R.id.menu_settings:
+                Intent intent = new Intent(this, MainPreferencesActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
