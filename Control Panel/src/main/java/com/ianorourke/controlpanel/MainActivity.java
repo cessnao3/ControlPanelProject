@@ -44,14 +44,6 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        this.serverUrl = this.orientationSharedPreferences.getString("server_preference", "");
-        this.shouldCheckForReadBack = this.orientationSharedPreferences.getBoolean("read_back_preference", false);
-
-        String ip = this.mainPreferences.getString("server_ip", "");
-        String port = this.mainPreferences.getString("server_port", "");
-
-        //TODO: Finish Server Port/IP
-
         switch (item.getItemId()) {
             case R.id.menu_new:
                 final CharSequence[] messages = {"Altimeter", "Name", "Toggle HUD Color", "RemainingPropellent", "Attitude Mode"};
@@ -81,13 +73,23 @@ public class MainActivity extends Activity {
                             default:
                                 break;
                         }
-
-                        //dialog.dismiss();
                     }
                 }).show();
                 return true;
             case R.id.menu_connect:
-                orbiterConnect.connect();
+                String ip = this.mainPreferences.getString("server_ip", "");
+
+                String portString = this.mainPreferences.getString("server_port", "");
+                int port = (!portString.equals("")) ? Integer.valueOf(portString).intValue() : 0;
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Connection");
+                builder.setMessage(ip + ":" + portString);
+                builder.create().show();
+
+                if (port == 0) orbiterConnect.connect(ip);
+                else orbiterConnect.connect(ip, port);
+
                 return true;
             case R.id.menu_toggle_editing:
                 GridController.isEditing = (!GridController.isEditing);
