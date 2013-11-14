@@ -11,8 +11,6 @@ import java.util.Map;
 public class OrbiterData {
     private static int frequency = 2;
 
-    //TODO: Fix Connection Data Updating
-
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
     private static Map<String, String> messageMap = new HashMap<String, String>() {{
         put(OrbiterMessages.handleAltitude, "");
@@ -54,8 +52,6 @@ public class OrbiterData {
         }
 
         String key = message.substring(0, message.indexOf("="));
-
-        Log.v("cp", "Key: " + key);
 
         if (key == null || key.equals("")) return;
 

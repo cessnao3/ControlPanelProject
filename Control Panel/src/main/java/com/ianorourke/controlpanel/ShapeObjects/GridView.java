@@ -34,9 +34,6 @@ public class GridView extends View {
 
         if (numX == 0 || numY == 0) return;
 
-        //TODO: Fix Interfaces
-        //this.gridInterface.finishedMeasuring();
-
         if (GridController.gridPointList.size() == 0) {
             for (int y = 0; y < numY; y++) {
                 for (int x = 0; x < numX; x++) {
@@ -71,6 +68,8 @@ public class GridView extends View {
                     }
                 }
             }
+
+            this.gridInterface.finishedMeasuring();
         }
 
         GridController.resetAllObjects();

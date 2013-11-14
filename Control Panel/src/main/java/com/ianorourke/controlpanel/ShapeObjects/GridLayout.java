@@ -7,9 +7,13 @@ import android.widget.RelativeLayout;
 
 import com.ianorourke.controlpanel.Instruments.*;
 
-public class GridLayout implements GridView.IGridVew {
+public class GridLayout implements GridView.IGridVew, GridController.IGridController {
     private RelativeLayout layout;
     private GridView mainView;
+
+    public void testInterface() {
+
+    }
 
     public GridLayout(Context context) {
         layout = new RelativeLayout(context);
@@ -19,6 +23,11 @@ public class GridLayout implements GridView.IGridVew {
     }
 
     public void finishedMeasuring() {
+        Log.v("cp", "Finished Measuring");
+
+        //TODO: Re-Add Objects when Orientation Changed
+
+        /*
         if (GridController.gridPointList.size() == 0) return;
 
         for (int i = 0; i < GridController.gridPointList.size(); i++) {
@@ -26,6 +35,7 @@ public class GridLayout implements GridView.IGridVew {
 
             if (point.hasObject()) addLayout(point.getObject());
         }
+        */
     }
 
     public RelativeLayout getLayout() {

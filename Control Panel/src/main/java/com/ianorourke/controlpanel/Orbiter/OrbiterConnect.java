@@ -15,16 +15,6 @@ public class OrbiterConnect {
 
     private final int DEFAULT_PORT = 37777;
 
-    /*
-    public void connect() {
-        //TODO: Delete this Function
-
-        //this.connect("192.168.1.102"); //Home Network
-        //this.connect("10.72.17.5"); //School Network
-        //this.connect("10.0.2.2"); //Android Emulator
-        //this.connect("10.0.3.2"); //Genymotion Emulator
-    }*/
-
     public void connect(String host) {
         this.connect(host, DEFAULT_PORT);
     }
