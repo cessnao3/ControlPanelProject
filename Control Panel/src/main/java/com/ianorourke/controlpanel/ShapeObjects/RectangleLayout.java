@@ -20,6 +20,11 @@ public class RectangleLayout {
 
     private final int size;
 
+    public interface IRect {
+        public void removeRect(RectangleLayout layout);
+        public void alignRect(RectangleLayout layout);
+    }
+
     public RectangleLayout(Context context, int size) {
         layout = new RelativeLayout(context);
 

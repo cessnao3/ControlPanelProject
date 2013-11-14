@@ -11,12 +11,8 @@
         android:title="Edit"
         android:orderInCategory="300"
         android:showAsAction="ifRoom" />
-    <item android:id="@+id/menu_ship_status"
-        android:title="Status"
-        android:orderInCategory="400"
-        android:showAsAction="ifRoom" />
     <item android:id="@+id/menu_settings"
         android:title="Settings"
-        android:orderInCategory="500"
+        android:orderInCategory="400"
         android:showAsAction="ifRoom" />
 </menu>

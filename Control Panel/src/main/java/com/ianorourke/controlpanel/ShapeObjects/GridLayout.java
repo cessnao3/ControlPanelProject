@@ -7,15 +7,19 @@ import android.widget.RelativeLayout;
 
 import com.ianorourke.controlpanel.Instruments.*;
 
-public class GridLayout {
+public class GridLayout implements GridView.IGridVew {
     private RelativeLayout layout;
     private GridView mainView;
 
     public GridLayout(Context context) {
         layout = new RelativeLayout(context);
-        mainView = new GridView(context);
+        mainView = new GridView(context, this);
 
         layout.addView(mainView);
+    }
+
+    public void finishedMeasuring() {
+        if (GridController.gridPointList.size() == 0) return;
 
         for (int i = 0; i < GridController.gridPointList.size(); i++) {
             GridObject point = GridController.gridPointList.get(i);
@@ -32,6 +36,11 @@ public class GridLayout {
     public void createAltimeter() {
         Altimeter alt = new Altimeter(layout.getContext(), GridController.rectSize);
         addLayout(alt);
+    }
+
+    public void createAirspeed() {
+        Airspeed aSpd = new Airspeed(layout.getContext(), GridController.rectSize);
+        addLayout(aSpd);
     }
 
     public void createNameDisplay() {

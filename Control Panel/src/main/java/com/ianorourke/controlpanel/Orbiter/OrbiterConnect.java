@@ -32,6 +32,7 @@ public class OrbiterConnect {
     public void connect(String host, int port) {
         if (isConnected()) {
             orbConnection.cancel(false);
+            OrbiterData.resetData();
             Log.v("cp", "Connection Canceled");
             return;
         }
@@ -43,6 +44,7 @@ public class OrbiterConnect {
         orbConnection.execute();
 
         //Update Timer
+        /*
         TimerTask updateRectTask = new TimerTask() {
             @Override
             public void run() {
@@ -51,7 +53,8 @@ public class OrbiterConnect {
         };
 
         Timer timer = new Timer();
-        //timer.schedule(updateRectTask, 0, 500);
+        timer.schedule(updateRectTask, 0, 500);
+        */
     }
 
     public boolean isConnected() {

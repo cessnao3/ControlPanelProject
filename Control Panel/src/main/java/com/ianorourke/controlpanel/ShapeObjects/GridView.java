@@ -6,10 +6,17 @@ import android.graphics.PointF;
 import android.view.View;
 
 public class GridView extends View {
-    public GridView(Context context) {
+    public interface IGridVew {
+        public void finishedMeasuring();
+    }
+
+    IGridVew gridInterface;
+
+    public GridView(Context context, GridLayout controller) {
         super(context);
 
         this.setPadding(0, 0, 0, 0);
+        this.gridInterface = controller;
     }
 
     @Override
@@ -18,14 +25,17 @@ public class GridView extends View {
 
         float scale = getResources().getDisplayMetrics().density;
 
-        GridController.rectSize = (int) (100.0 * scale + 0.5f);
+        GridController.rectSize = (int) (150.0 * scale + 0.5f);
 
         Point screenSize = new Point(this.getWidth(), this.getHeight());
 
-        int numX = (screenSize.x - GridController.rectSize / 4) / GridController.rectSize;
-        int numY = (screenSize.y - GridController.rectSize / 4) / GridController.rectSize;
+        int numX = (int) Math.floor(screenSize.x / GridController.rectSize);
+        int numY = (int) Math.floor(screenSize.y / GridController.rectSize);
 
         if (numX == 0 || numY == 0) return;
+
+        //TODO: Fix Interfaces
+        //this.gridInterface.finishedMeasuring();
 
         if (GridController.gridPointList.size() == 0) {
             for (int y = 0; y < numY; y++) {

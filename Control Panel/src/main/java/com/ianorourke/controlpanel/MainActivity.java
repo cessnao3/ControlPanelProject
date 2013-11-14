@@ -18,11 +18,13 @@ public class MainActivity extends Activity {
 
     private OrbiterConnect orbiterConnect;
 
-    private SharedPreferences mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    private SharedPreferences mainPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (this.mainLayout == null || this.mainLayout.getLayout() == null) {
             this.mainLayout = new GridLayout(this);
@@ -46,7 +48,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                final CharSequence[] messages = {"Altimeter", "Name", "Toggle HUD Color", "RemainingPropellent", "Attitude Mode"};
+                final CharSequence[] messages = {"Altimeter", "Airspeed", "Name", "Toggle HUD Color", "RemainingPropellent", "Attitude Mode"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Instrument Selection");
@@ -59,15 +61,18 @@ public class MainActivity extends Activity {
                                 mainLayout.createAltimeter();
                                 break;
                             case 1:
-                                mainLayout.createNameDisplay();
+                                mainLayout.createAirspeed();
                                 break;
                             case 2:
-                                mainLayout.createToggleHud();
+                                mainLayout.createNameDisplay();
                                 break;
                             case 3:
-                                mainLayout.createPropFlow();
+                                mainLayout.createToggleHud();
                                 break;
                             case 4:
+                                mainLayout.createPropFlow();
+                                break;
+                            case 5:
                                 mainLayout.createAttitudeMode();
                                 break;
                             default:
@@ -82,20 +87,15 @@ public class MainActivity extends Activity {
                 String portString = this.mainPreferences.getString("server_port", "");
                 int port = (!portString.equals("")) ? Integer.valueOf(portString).intValue() : 0;
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Connection");
-                builder.setMessage(ip + ":" + portString);
-                builder.create().show();
-
                 if (port == 0) orbiterConnect.connect(ip);
                 else orbiterConnect.connect(ip, port);
 
                 return true;
             case R.id.menu_toggle_editing:
                 GridController.isEditing = (!GridController.isEditing);
-                return true;
-            case R.id.menu_ship_status:
-                OrbiterMessages.addMessage("SHIP:FOCUS:Status2");
+
+                if (GridController.isEditing) item.setTitle("Stop Editing");
+                else item.setTitle("Edit");
                 return true;
             case R.id.menu_settings:
                 Intent intent = new Intent(this, MainPreferencesActivity.class);

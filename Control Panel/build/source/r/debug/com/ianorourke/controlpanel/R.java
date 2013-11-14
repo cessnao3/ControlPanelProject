@@ -20,8 +20,7 @@ public final class R {
     public static final class id {
         public static final int menu_connect=0x7f090001;
         public static final int menu_new=0x7f090000;
-        public static final int menu_settings=0x7f090004;
-        public static final int menu_ship_status=0x7f090003;
+        public static final int menu_settings=0x7f090003;
         public static final int menu_toggle_editing=0x7f090002;
     }
     public static final class layout {

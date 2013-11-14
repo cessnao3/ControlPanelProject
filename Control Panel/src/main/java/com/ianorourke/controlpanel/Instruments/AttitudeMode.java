@@ -17,7 +17,14 @@ public class AttitudeMode extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        this.setText(OrbiterData.engine.attMode);
+        if (OrbiterData.engine.attMode == 1) {
+            this.setText("Rotation");
+        } else if (OrbiterData.engine.attMode == 2) {
+            this.setText("Translation");
+        } else {
+            this.setText("No Data");
+        }
+
     }
 
     @Override

@@ -12,7 +12,7 @@ public class GridController {
 
     public static List<GridObject> gridPointList = new ArrayList<GridObject>();
 
-    public static int rectSize = 300;
+    public static int rectSize = 0;
 
     public static boolean isEditing = false;
 

@@ -16,6 +16,7 @@ public class OrbiterData {
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
     private static Map<String, String> messageMap = new HashMap<String, String>() {{
         put(OrbiterMessages.handleAltitude, "");
+        put(OrbiterMessages.handleAirspeed, "");
         put(OrbiterMessages.handleVesselName, "");
         put(OrbiterMessages.handleFuelFlowRate, "");
         put(OrbiterMessages.handleFuelMass, "");
@@ -66,7 +67,7 @@ public class OrbiterData {
         String messageKey = subscriptionMap.get(key);
         if (messageMap.containsKey(messageKey)) messageMap.put(messageKey, responseString);
 
-        //TODO: Remove
+        //TODO: Move to Timer
         updateData();
     }
 
@@ -77,6 +78,13 @@ public class OrbiterData {
         vessel.update(messageMap);
 
         GridController.updateRects();
+    }
+
+    public static void resetData() {
+        atmCond = new OrbiterAtmosphericConditions();
+        engine = new OrbiterEngineStatus();
+        fuel = new OrbiterFuelStatus();
+        vessel = new OrbiterVesselStatus();
     }
 
     //Subscription Actions

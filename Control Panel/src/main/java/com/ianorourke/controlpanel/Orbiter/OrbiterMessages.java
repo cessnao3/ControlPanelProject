@@ -26,8 +26,17 @@ public class OrbiterMessages {
         messages.clear();
     }
 
+    public static void setDebugMessage(String m) {
+        addMessage("ORB:DebugString:" + m + "\r");
+    }
+
+    public static void clearDebugMessage() {
+        addMessage("ORB:DebugString:CLEAR");
+    }
+
     //Subscription Handles
     public static final String handleAltitude = "SHIP:FOCUS:Alt";
+    public static final String handleAirspeed = "SHIP:FOCUS:Airspd";
     public static final String handleVesselName = "SHIP:FOCUS:Name";
     public static final String handleFuelFlowRate = "SHIP:FOCUS:DfltFuelFlowRate";
     public static final String handleFuelMass = "SHIP:FOCUS:DfltFuelMass";
