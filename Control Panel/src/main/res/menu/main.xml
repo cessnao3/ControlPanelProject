@@ -7,12 +7,16 @@
         android:title="Connect"
         android:orderInCategory="200"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/menu_reset_instruments"
+        android:title="Reset Instruments"
+        android:orderInCategory="300"
+        android:showAsAction="ifRoom" />
     <item android:id="@+id/menu_toggle_editing"
         android:title="Edit"
-        android:orderInCategory="300"
+        android:orderInCategory="400"
         android:showAsAction="ifRoom" />
     <item android:id="@+id/menu_settings"
         android:title="Settings"
-        android:orderInCategory="400"
+        android:orderInCategory="500"
         android:showAsAction="ifRoom" />
 </menu>

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrbiterData {
-    private static int frequency = 2;
+    public static int frequency = 2;
 
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
     private static Map<String, String> messageMap = new HashMap<String, String>() {{
@@ -44,9 +44,7 @@ public class OrbiterData {
 
             Log.v("cp", id + ":" + call);
 
-            if (id != null && !id.contains("ERR") && !subscriptionMap.containsKey(id)) {
-                if (call != null && !call.equals("")) subscriptionMap.put(id, call);
-            }
+            if (!id.contains("ERR") && !subscriptionMap.containsKey(id) && !call.equals("")) subscriptionMap.put(id, call);
 
             return;
         }
@@ -55,15 +53,12 @@ public class OrbiterData {
 
         if (key == null || key.equals("")) return;
 
-        String action = subscriptionMap.get(key);
-        if (action == null || action.equals("")) return;
-
         String responseString = message.replace(key + "=", "");
 
         String messageKey = subscriptionMap.get(key);
         if (messageMap.containsKey(messageKey)) messageMap.put(messageKey, responseString);
 
-        //TODO: Move to Timer
+        //TODO: Move Somewhere
         updateData();
     }
 
@@ -84,8 +79,25 @@ public class OrbiterData {
     }
 
     //Subscription Actions
+    /*
     public static Map<String, String> getSubscriptionMap() {
         return subscriptionMap;
+    }
+    */
+
+    public static String[] getSubscriptionIds() {
+        int count = subscriptionMap.size();
+
+        String[] ids = new String[count];
+
+        int i = 0;
+
+        for (String key : subscriptionMap.keySet()) {
+            ids[i] = key;
+            i++;
+        }
+
+        return ids;
     }
 
     public static void clearSubscriptionMap() {

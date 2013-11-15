@@ -32,19 +32,6 @@ public class OrbiterConnect {
         //Connection
         orbConnection = new AsyncOrbiterConnection(host, port);
         orbConnection.execute();
-
-        //Update Timer
-        /*
-        TimerTask updateRectTask = new TimerTask() {
-            @Override
-            public void run() {
-                OrbiterData.updateData();
-            }
-        };
-
-        Timer timer = new Timer();
-        timer.schedule(updateRectTask, 0, 500);
-        */
     }
 
     public boolean isConnected() {
@@ -133,8 +120,10 @@ public class OrbiterConnect {
 
             //Unsubscribe from Existing Subscriptions
             if (socket.isConnected()) {
-                for (String key : OrbiterData.getSubscriptionMap().keySet()) {
-                    out.println("UNSUBSCRIBE:" + key + "\r");
+                String[] ids = OrbiterData.getSubscriptionIds();
+
+                for (int i = 0; i < ids.length; i++) {
+                    out.println("UNSUBSCRIBE:" + ids[i] + "\r");
                 }
             } else return GENERIC_ERROR;
 

@@ -90,6 +90,14 @@ public class GridController {
         }
     }
 
+    public static void deleteAllRects() {
+        for (int i = 0; i < gridPointList.size(); i++) {
+            GridObject point = gridPointList.get(i);
+
+            if (point.hasObject()) point.getObject().removeSelf();
+        }
+    }
+
     public static void resetAllObjects() {
         for (int i = 0; i < gridPointList.size(); i++) {
             gridPointList.get(i).realignObject();
@@ -97,11 +105,7 @@ public class GridController {
     }
 
     public static void clearGridPoints() {
-        for (int i = 0; i < gridPointList.size(); i++) {
-            GridObject point = gridPointList.get(i);
-
-            if (point.hasObject()) point.getObject().removeSelf();
-        }
+        deleteAllRects();
 
         gridPointList.clear();
     }

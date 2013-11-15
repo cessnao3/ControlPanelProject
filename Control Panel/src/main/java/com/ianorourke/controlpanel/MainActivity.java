@@ -22,6 +22,8 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO: Reconnect orbiterConnect to Activity after Orientation Change
+
         super.onCreate(savedInstanceState);
 
         this.mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -34,6 +36,7 @@ public class MainActivity extends Activity {
 
         if (orbiterConnect == null) orbiterConnect = new OrbiterConnect();
 
+        GridController.deleteAllRects();
         GridController.resetAllObjects();
     }
 
@@ -48,7 +51,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                final CharSequence[] messages = {"Altimeter", "Airspeed", "Name", "Toggle HUD Color", "RemainingPropellent", "Attitude Mode"};
+                final CharSequence[] messages = {"Altimeter", "Airspeed", "Name", "Toggle HUD Color", "Remaining Propellent", "Attitude Mode"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Instrument Selection");
@@ -90,6 +93,9 @@ public class MainActivity extends Activity {
                 if (port == 0) orbiterConnect.connect(ip);
                 else orbiterConnect.connect(ip, port);
 
+                return true;
+            case R.id.menu_reset_instruments:
+                GridController.deleteAllRects();
                 return true;
             case R.id.menu_toggle_editing:
                 GridController.isEditing = (!GridController.isEditing);

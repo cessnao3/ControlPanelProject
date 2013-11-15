@@ -7,13 +7,9 @@ import android.widget.RelativeLayout;
 
 import com.ianorourke.controlpanel.Instruments.*;
 
-public class GridLayout implements GridView.IGridVew, GridController.IGridController {
+public class GridLayout implements GridView.IGridVew {
     private RelativeLayout layout;
     private GridView mainView;
-
-    public void testInterface() {
-
-    }
 
     public GridLayout(Context context) {
         layout = new RelativeLayout(context);
