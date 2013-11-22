@@ -69,6 +69,10 @@ public class RectangleLayout {
         return this.size;
     }
 
+    public Context getContext() {
+        return this.rectView.getContext();
+    }
+
     public void onTouch() {
         //Code for Subclasses
     }

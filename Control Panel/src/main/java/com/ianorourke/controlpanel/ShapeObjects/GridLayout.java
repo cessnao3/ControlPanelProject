@@ -19,8 +19,6 @@ public class GridLayout implements GridView.IGridVew {
     }
 
     public void finishedMeasuring() {
-        Log.v("cp", "Finished Measuring");
-
         //TODO: Re-Add Objects when Orientation Changed
 
         /*
@@ -29,7 +27,12 @@ public class GridLayout implements GridView.IGridVew {
         for (int i = 0; i < GridController.gridPointList.size(); i++) {
             GridObject point = GridController.gridPointList.get(i);
 
-            if (point.hasObject()) addLayout(point.getObject());
+            if (!point.hasObject()) continue;
+
+            RectangleLayout rect = point.getObject();
+
+            rect.removeSelf();
+            addLayout(rect);
         }
         */
     }
