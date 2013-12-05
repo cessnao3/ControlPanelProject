@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GridController {
-    //TODO: Make GridController an Object, not Static?
-
-    //TODO: Better isEditing Implementation
-
     public static List<GridObject> gridPointList = new ArrayList<GridObject>();
 
     public static int rectSize = 0;

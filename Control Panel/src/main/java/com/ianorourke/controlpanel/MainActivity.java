@@ -6,12 +6,16 @@ import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.*;
+
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private GridLayout mainLayout;

@@ -6,17 +6,18 @@ import android.graphics.PointF;
 import android.view.View;
 
 public class GridView extends View {
+    /*
     public interface IGridVew {
         public void finishedMeasuring();
     }
 
     IGridVew gridInterface;
+    */
 
-    public GridView(Context context, GridLayout controller) {
+    public GridView(Context context) {
         super(context);
 
         this.setPadding(0, 0, 0, 0);
-        this.gridInterface = controller;
     }
 
     @Override
@@ -68,8 +69,6 @@ public class GridView extends View {
                     }
                 }
             }
-
-            this.gridInterface.finishedMeasuring();
         }
 
         GridController.resetAllObjects();
