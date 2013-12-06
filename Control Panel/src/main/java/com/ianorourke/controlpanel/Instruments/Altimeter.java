@@ -30,20 +30,6 @@ public class Altimeter extends RectangleLayout {
 
         longHandImage = new ImageView(this.getContext());
         longHandImage.setImageResource(R.drawable.long_hand);
-
-        longHandImage.setMaxWidth((int) ((this.getSize() / 2) * 0.9));
-
-        //TODO: Needs to be Relative
-
-        float x = 25.0f;
-        float y = longHandImage.getHeight() / 2.0f;
-
-        longHandImage.setX((float) this.getSize() / 2 - x);
-        longHandImage.setY((float) this.getSize() / 2 - y);
-
-        longHandImage.setPivotX(x);
-        longHandImage.setPivotY(y);
-
         layout.addView(longHandImage);
 
         //TODO: Flip Long/Short Hand

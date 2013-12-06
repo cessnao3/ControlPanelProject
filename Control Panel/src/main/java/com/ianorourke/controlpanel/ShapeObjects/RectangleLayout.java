@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.view.MotionEvent;
@@ -136,9 +137,6 @@ public class RectangleLayout {
                 float displacementY = event.getRawY() - screenLocation[1];
 
                 setCenter(new PointF(layout.getX() + displacementX, layout.getY() + displacementY));
-
-                //layout.setX(toCornerPoint(layout.getX() + displacementX));
-                //layout.setY(toCornerPoint(layout.getY() + displacementY));
 
                 if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
                     if (layout.getX() < 0 && layout.getY() < 0) {
