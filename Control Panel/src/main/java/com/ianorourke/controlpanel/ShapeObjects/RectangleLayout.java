@@ -37,7 +37,7 @@ public class RectangleLayout {
 
         textView.setTextSize(30.0f);
 
-        layout.addView(rectView);
+        layout.addView(rectView, new RelativeLayout.LayoutParams(size, size));
         layout.addView(textView);
     }
 
