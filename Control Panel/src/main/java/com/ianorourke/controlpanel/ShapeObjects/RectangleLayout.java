@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class RectangleLayout {
     public RectangleView rectView;
-    private TextView textView;
+    public TextView textView;
 
     public RelativeLayout layout;
 
@@ -132,6 +132,9 @@ public class RectangleLayout {
                 this.getLocationOnScreen(screenLocation);
 
                 //TODO: Bring Rect to Front
+
+                layout.bringToFront();
+                layout.requestFocus();
 
                 float displacementX = event.getRawX() - screenLocation[0];
                 float displacementY = event.getRawY() - screenLocation[1];

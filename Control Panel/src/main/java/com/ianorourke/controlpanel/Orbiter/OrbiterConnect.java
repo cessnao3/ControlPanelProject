@@ -21,9 +21,7 @@ public class OrbiterConnect {
 
     public void connect(String host, int port) {
         if (isConnected()) {
-            orbConnection.cancel(false);
-            OrbiterData.resetData();
-            Log.v("cp", "Connection Canceled");
+            disconnect();
             return;
         }
 
@@ -32,6 +30,12 @@ public class OrbiterConnect {
         //Connection
         orbConnection = new AsyncOrbiterConnection(host, port);
         orbConnection.execute();
+    }
+
+    public void disconnect() {
+        orbConnection.cancel(false);
+        OrbiterData.resetData();
+        Log.v("cp", "Connection Canceled");
     }
 
     public boolean isConnected() {
@@ -106,6 +110,7 @@ public class OrbiterConnect {
                     }
 
                     while (in.ready()) {
+                        if (OrbiterMessages.hasMessages()) break;
                         publishProgress(in.readLine());
                     }
                 } catch (IOException e) {

@@ -1,0 +1,33 @@
+// TIMERS
+/*
+import java.lang.Runnable;
+import java.util.Timer;
+import java.util.TimerTask;
+import android.os.Handler;
+
+final Handler timerHandler = new Handler();
+final Runnable timerRunnable = new Runnable() {
+    @Override
+    public void run() {
+        float rotation = longHandImage.getRotation();
+
+        rotation += 1;
+
+        if (rotation > 360) rotation -= 360;
+
+        longHandImage.setRotation(rotation);
+    }
+};
+
+TimerTask task = new TimerTask() {
+    @Override
+    public void run() {
+        timerHandler.post(timerRunnable);
+    }
+};
+
+Timer timer = new Timer();
+timer.schedule(task, 0, 10);
+
+timerSteps++;
+*/

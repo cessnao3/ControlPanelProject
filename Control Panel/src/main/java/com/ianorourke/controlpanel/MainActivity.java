@@ -100,9 +100,11 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.menu_reset_instruments:
                 GridController.deleteAllRects();
+                orbiterConnect.disconnect();
+                orbiterConnect = new OrbiterConnect();
                 return true;
             case R.id.menu_toggle_editing:
-                GridController.isEditing = (!GridController.isEditing);
+                GridController.isEditing = !GridController.isEditing;
 
                 if (GridController.isEditing) item.setTitle("Stop Editing");
                 else item.setTitle("Edit");
