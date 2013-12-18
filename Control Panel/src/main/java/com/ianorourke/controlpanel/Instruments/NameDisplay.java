@@ -10,6 +10,7 @@ public class NameDisplay extends RectangleLayout {
     public NameDisplay(Context context, int size) {
         super(context, size);
 
+        createTextView();
         this.updateRectDisplay();
     }
 

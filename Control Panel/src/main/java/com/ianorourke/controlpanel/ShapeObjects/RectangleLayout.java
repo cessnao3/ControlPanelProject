@@ -13,9 +13,10 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ianorourke.controlpanel.R;
+
 public class RectangleLayout {
     public RectangleView rectView;
-    public TextView textView;
 
     public RelativeLayout layout;
 
@@ -23,12 +24,21 @@ public class RectangleLayout {
 
     public RectangleLayout(Context context, int size) {
         layout = new RelativeLayout(context);
-
         this.size = size;
 
         rectView = new RectangleView(context);
+        layout.addView(rectView, new RelativeLayout.LayoutParams(size, size));
+    }
 
-        textView = new TextView(context);
+    //TextView Setting
+
+    public void createTextView() {
+        if (layout.findViewById(R.id.rect_text_view) != null) return;
+
+        TextView textView = new TextView(layout.getContext());
+
+        textView.setId(R.id.rect_text_view);
+
         textView.setX(0.0f);
         textView.setY(0.0f);
 
@@ -37,26 +47,28 @@ public class RectangleLayout {
 
         textView.setTextSize(30.0f);
 
-        layout.addView(rectView, new RelativeLayout.LayoutParams(size, size));
         layout.addView(textView);
     }
 
-    //TextView Setting
+    public TextView getTextView() {
+        TextView textView = (TextView) layout.findViewById(R.id.rect_text_view);
+        return textView;
+    }
 
     public void setText(String newText) {
-        textView.setText(newText);
+        if (getTextView() != null) getTextView().setText(newText);
     }
 
     public void setText(double d) {
-        textView.setText(Double.valueOf(d).toString());
+        this.setText(Double.valueOf(d).toString());
     }
 
     public void setText(int i) {
-        textView.setText(Integer.valueOf(i).toString());
+        this.setText(Integer.valueOf(i).toString());
     }
 
     public void setTextSize(float f) {
-        textView.setTextSize(f);
+        if (getTextView() != null) getTextView().setTextSize(f);
     }
 
     public int getSize() {

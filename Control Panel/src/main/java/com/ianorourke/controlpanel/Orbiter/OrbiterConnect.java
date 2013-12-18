@@ -6,8 +6,6 @@ import android.util.Log;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class OrbiterConnect {
 

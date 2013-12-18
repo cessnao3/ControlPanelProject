@@ -105,6 +105,8 @@ public class OrbiterData {
     }
 
     public static String[] getSubscriptions() {
+        Log.v("cp", "Message Map Size: " + Integer.valueOf(messageMap.size()).toString());
+
         String[] finalSubscriptions = new String[messageMap.size()];
 
         for (int i = 0; i < finalSubscriptions.length; i++) {

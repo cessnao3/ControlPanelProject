@@ -19,7 +19,7 @@ public class Altimeter extends RectangleLayout {
     public Altimeter(Context context, int size) {
         super(context, size);
 
-        this.setTextSize(24.0f);
+        //this.setTextSize(24.0f);
 
         this.updateRectDisplay();
 
@@ -27,7 +27,7 @@ public class Altimeter extends RectangleLayout {
 
         backgroundImage = new ImageView(this.getContext());
         backgroundImage.setImageResource(R.drawable.alt_background);
-        //layout.addView(backgroundImage, new RelativeLayout.LayoutParams(this.getSize(), this.getSize()));
+        layout.addView(backgroundImage, new RelativeLayout.LayoutParams(this.getSize(), this.getSize()));
 
         //Long Hand
 
@@ -63,27 +63,21 @@ public class Altimeter extends RectangleLayout {
         shortHandImage.setX((float) (this.getSize() / 2.0 - x));
         shortHandImage.setY((float) (this.getSize() / 2.0 - y));
 
-        //Text View Stuffs
-
-        textView.bringToFront();
-        textView.requestFocus();
-
         //TODO: Flip Long/Short Hand
     }
 
     @Override
     public void updateRectDisplay() {
-        String altitude = String.format("%6.3e", OrbiterData.vessel.altitude);
-        altitude = altitude.replace(altitude.substring(altitude.indexOf("e")), "");
+        double altitude = InstrumentMath.getInitialNumber(OrbiterData.vessel.altitude);
 
         //TODO: Set to Kilometer x10^x Intervals
 
-        float rotation = Float.valueOf(altitude).floatValue() * 36.0f - 90.0f;
-        if (longHandImage != null && longHandImage.getParent() != null) longHandImage.setRotation(rotation);
-
-        rotation = (Float.valueOf(altitude).floatValue() - Integer.valueOf(altitude.substring(0, 1)).intValue()) * 360.0f - 90.0f;
+        float rotation = (float) altitude * 36.0f - 90.0f;
         if (shortHandImage != null && shortHandImage.getParent() != null) shortHandImage.setRotation(rotation);
 
-        this.setText(OrbiterData.vessel.altitude);
+        rotation = (float) (altitude - (int) altitude) * 360.0f - 90.0f;
+        if (longHandImage != null && longHandImage.getParent() != null) longHandImage.setRotation(rotation);
+
+        //this.setText(OrbiterData.vessel.altitude);
     }
 }
