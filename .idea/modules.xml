@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Control Panel/Control Panel.iml" filepath="$PROJECT_DIR$/Control Panel/Control Panel.iml" />
       <module fileurl="file://$PROJECT_DIR$/Control Panel Project.iml" filepath="$PROJECT_DIR$/Control Panel Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../Documents.iml" filepath="$PROJECT_DIR$/../../Documents.iml" />
     </modules>
   </component>
 </project>
