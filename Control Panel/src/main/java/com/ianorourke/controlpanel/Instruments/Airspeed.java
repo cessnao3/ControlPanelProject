@@ -17,6 +17,6 @@ public class Airspeed extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        this.setText(OrbiterData.vessel.airspeed);
+        this.setText(OrbiterData.status.airspeed);
     }
 }

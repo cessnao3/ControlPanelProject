@@ -17,6 +17,6 @@ public class RemainingPropellent extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        this.setText(OrbiterData.fuel.getRemainingPropTime());
+        this.setText(OrbiterData.status.getRemainingPropTime());
     }
 }

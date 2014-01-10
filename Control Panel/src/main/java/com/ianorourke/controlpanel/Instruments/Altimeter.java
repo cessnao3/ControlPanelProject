@@ -68,7 +68,7 @@ public class Altimeter extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        double altitude = InstrumentMath.getInitialNumber(OrbiterData.vessel.altitude);
+        double altitude = InstrumentMath.getInitialNumber(OrbiterData.status.altitude);
 
         //TODO: Set to Kilometer x10^x Intervals
 

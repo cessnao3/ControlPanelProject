@@ -1,6 +1,5 @@
 package com.ianorourke.controlpanel.Orbiter;
 
-import com.ianorourke.controlpanel.Orbiter.OrbiterDataTypes.*;
 import com.ianorourke.controlpanel.ShapeObjects.GridController;
 
 import android.util.Log;
@@ -23,10 +22,7 @@ public class OrbiterData {
         put(OrbiterMessages.handleAtmophericConditions, "");
     }};
 
-    public static OrbiterVesselStatus vessel = new OrbiterVesselStatus();
-    public static OrbiterEngineStatus engine = new OrbiterEngineStatus();
-    public static OrbiterFuelStatus fuel = new OrbiterFuelStatus();
-    public static OrbiterAtmosphericConditions atmCond = new OrbiterAtmosphericConditions();
+    public static OrbiterStatus status = new OrbiterStatus();
 
     public static void parseMessage(String message) {
         //TODO: Clean ParseMessage
@@ -63,19 +59,16 @@ public class OrbiterData {
     }
 
     public static void updateData() {
-        atmCond.parseAtmosphericConditions(messageMap.get(OrbiterMessages.handleAtmophericConditions));
-        engine.parseEngineStatus(messageMap.get(OrbiterMessages.handleEngineStatus));
-        fuel.updateValues(messageMap);
-        vessel.update(messageMap);
+        status.parseAtmosphericConditions(messageMap.get(OrbiterMessages.handleAtmophericConditions));
+        status.parseEngineStatus(messageMap.get(OrbiterMessages.handleEngineStatus));
+        status.parseFuelFavlues(messageMap);
+        status.parseVesselStatus(messageMap);
 
         GridController.updateRects();
     }
 
     public static void resetData() {
-        atmCond = new OrbiterAtmosphericConditions();
-        engine = new OrbiterEngineStatus();
-        fuel = new OrbiterFuelStatus();
-        vessel = new OrbiterVesselStatus();
+        status = new OrbiterStatus();
     }
 
     //Subscription Actions
