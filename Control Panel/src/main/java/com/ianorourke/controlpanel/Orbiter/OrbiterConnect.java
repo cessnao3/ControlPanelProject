@@ -1,5 +1,7 @@
 package com.ianorourke.controlpanel.Orbiter;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -8,10 +10,10 @@ import java.net.Socket;
 import java.util.List;
 
 public class OrbiterConnect {
-
     private AsyncOrbiterConnection orbConnection;
-
     private final int DEFAULT_PORT = 37777;
+
+    protected static Context mainContext = null;
 
     public void connect(String host) {
         this.connect(host, DEFAULT_PORT);
@@ -40,6 +42,10 @@ public class OrbiterConnect {
         if (orbConnection != null) {
             return (orbConnection.getStatus() == AsyncTask.Status.RUNNING);
         } else return false;
+    }
+
+    public void setContext(Context c) {
+        this.mainContext = c;
     }
 
     private static class AsyncOrbiterConnection extends AsyncTask<Void, String, String> {
@@ -150,6 +156,14 @@ public class OrbiterConnect {
         protected void onPostExecute(String response) {
             if (response != null || !response.equals("")) Log.v("cp", "Ended Task: " + response);
             else Log.v("cp", "Ended Task");
+
+            if (!response.equals("00END00")) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mainContext);
+                builder.setTitle("Error!");
+                builder.setMessage("Could not Connect to Specified IP Address" + "\n\n" + host + ":" + Integer.valueOf(port).toString());
+                builder.setPositiveButton("Ok", null);
+                builder.create().show();
+            }
 
             OrbiterData.clearSubscriptionMap();
         }

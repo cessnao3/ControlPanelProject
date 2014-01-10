@@ -20,7 +20,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
     private GridLayout mainLayout;
 
-    private OrbiterConnect orbiterConnect;
+    private static OrbiterConnect orbiterConnect;
 
     private SharedPreferences mainPreferences;
 
@@ -39,6 +39,8 @@ public class MainActivity extends Activity {
         }
 
         if (orbiterConnect == null) orbiterConnect = new OrbiterConnect();
+
+        orbiterConnect.setContext(this);
 
         GridController.deleteAllRects();
         GridController.resetAllObjects();

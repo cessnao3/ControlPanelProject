@@ -1,3 +1,0 @@
-Fix Altimeter
-Vertical Speed
-More Graphics
