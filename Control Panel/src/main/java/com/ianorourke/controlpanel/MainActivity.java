@@ -20,6 +20,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
     private GridLayout mainLayout;
 
+    //TODO: Fix Rotation and orbiterConnect errors
+    //TODO: Fix orbiterConnect reconnect problem
     private static OrbiterConnect orbiterConnect;
 
     private SharedPreferences mainPreferences;

@@ -3,3 +3,5 @@ Vertical Speed
 More Graphics
 
 Consolidate Data Types into One Class
+
+Fix Rotation
