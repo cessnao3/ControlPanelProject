@@ -1,7 +1,5 @@
 package com.ianorourke.controlpanel.Orbiter;
 
-import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
-
 import java.util.Map;
 
 public class OrbiterStatus {
@@ -15,20 +13,6 @@ public class OrbiterStatus {
     public double dynpressure = 0.0;
     public double mach = 0.0;
 
-    public void parseAtmosphericConditions(String in) {
-        if (in.contains("ERR")) return;
-
-        if (in == null || in.equals("")) return;
-
-        mA = in.split(",");
-
-        temp = parseDouble(mA[0]);
-        density = parseDouble(mA[1]);
-        pressure = parseDouble(mA[2]);
-        dynpressure = parseDouble(mA[3]);
-        mach = parseDouble(mA[4]);
-    }
-
     //Engine Status
 
     public String[] mE = new String[3];
@@ -37,27 +21,11 @@ public class OrbiterStatus {
     public double hover = 0.0;
     public int attMode = 0;
 
-    public void parseEngineStatus(String in) {
-        if (in == null || in.equals("")) return;
-
-        mE = in.split(",");
-
-        main = parseDouble(mE[0]);
-        hover = parseDouble(mE[1]);
-        attMode = parseInt(mE[2]);
-    }
-
     //Fuel Status
 
     public double propMass = 0.0;
     public double maxPropMass = 0.0;
     public double propFlowRate = 0.0;
-
-    public void parseFuelFavlues(Map<String, String> data) {
-        propMass = parseDouble(data.get(OrbiterMessages.handleFuelMass));
-        maxPropMass = parseDouble(data.get(OrbiterMessages.handleFuelMaxMass));
-        propFlowRate = parseDouble(data.get(OrbiterMessages.handleFuelFlowRate));
-    }
 
     public String getRemainingPropTime() {
         double secondsRemaining = 0.0;
@@ -77,7 +45,39 @@ public class OrbiterStatus {
     public double airspeed = 0.0;
     public double altitude = 0.0;
 
-    public void parseVesselStatus(Map<String, String> data) {
+    //Update Orbiter Status
+
+    public void parseOrbiterStatus(Map<String, String> data) {
+        //Atmospheric Conditions
+        String atmoString = data.get(OrbiterMessages.handleAtmophericConditions);
+        if (atmoString.contains("ERR")) return;
+
+        if (atmoString == null || atmoString.equals("")) return;
+
+        mA = atmoString.split(",");
+
+        temp = parseDouble(mA[0]);
+        density = parseDouble(mA[1]);
+        pressure = parseDouble(mA[2]);
+        dynpressure = parseDouble(mA[3]);
+        mach = parseDouble(mA[4]);
+
+        //Engine Status
+        String engineString = data.get(OrbiterMessages.handleEngineStatus);
+        if (engineString == null || engineString.equals("")) return;
+
+        mE = engineString.split(",");
+
+        main = parseDouble(mE[0]);
+        hover = parseDouble(mE[1]);
+        attMode = parseInt(mE[2]);
+
+        //Propellant Data
+        propMass = parseDouble(data.get(OrbiterMessages.handleFuelMass));
+        maxPropMass = parseDouble(data.get(OrbiterMessages.handleFuelMaxMass));
+        propFlowRate = parseDouble(data.get(OrbiterMessages.handleFuelFlowRate));
+
+        //Vessel Status
         name = data.get(OrbiterMessages.handleVesselName);
 
         airspeed = parseDouble(data.get(OrbiterMessages.handleAirspeed));

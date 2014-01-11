@@ -59,10 +59,7 @@ public class OrbiterData {
     }
 
     public static void updateData() {
-        status.parseAtmosphericConditions(messageMap.get(OrbiterMessages.handleAtmophericConditions));
-        status.parseEngineStatus(messageMap.get(OrbiterMessages.handleEngineStatus));
-        status.parseFuelFavlues(messageMap);
-        status.parseVesselStatus(messageMap);
+        status.parseOrbiterStatus(messageMap);
 
         GridController.updateRects();
     }
