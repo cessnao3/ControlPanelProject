@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
 
     //TODO: Fix Rotation and orbiterConnect errors
     //TODO: Fix orbiterConnect reconnect problem
-    private static OrbiterConnect orbiterConnect;
+    private OrbiterConnect orbiterConnect;
 
     private SharedPreferences mainPreferences;
 
@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
         //TODO: Reconnect orbiterConnect to Activity after Orientation Change
 
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         this.mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -41,7 +42,6 @@ public class MainActivity extends Activity {
         }
 
         if (orbiterConnect == null) orbiterConnect = new OrbiterConnect();
-
         orbiterConnect.setContext(this);
 
         GridController.deleteAllRects();

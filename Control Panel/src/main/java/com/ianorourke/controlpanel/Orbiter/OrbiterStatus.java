@@ -2,32 +2,36 @@ package com.ianorourke.controlpanel.Orbiter;
 
 import java.util.Map;
 
+import android.util.Log;
+
 public class OrbiterStatus {
+    //TODO: Move to Static Class
+
     //Atmospheric Conditions
 
-    public String[] mA = new String[5];
+    private static String[] mA = new String[5];
 
-    public double temp = 0.0;
-    public double density = 0.0;
-    public double pressure = 0.0;
-    public double dynpressure = 0.0;
-    public double mach = 0.0;
+    public static double temp = 0.0;
+    public static double density = 0.0;
+    public static double pressure = 0.0;
+    public static double dynpressure = 0.0;
+    public static double mach = 0.0;
 
     //Engine Status
 
-    public String[] mE = new String[3];
+    private static String[] mE = new String[3];
 
-    public double main = 0.0;
-    public double hover = 0.0;
-    public int attMode = 0;
+    public static double main = 0.0;
+    public static double hover = 0.0;
+    public static int attMode = 0;
 
     //Fuel Status
 
-    public double propMass = 0.0;
-    public double maxPropMass = 0.0;
-    public double propFlowRate = 0.0;
+    public static double propMass = 0.0;
+    public static double maxPropMass = 0.0;
+    public static double propFlowRate = 0.0;
 
-    public String getRemainingPropTime() {
+    public static String getRemainingPropTime() {
         double secondsRemaining = 0.0;
         double propellentPercentage = 0.0;
 
@@ -41,13 +45,13 @@ public class OrbiterStatus {
 
     //Vessel Status
 
-    public String name = "Ship";
-    public double airspeed = 0.0;
-    public double altitude = 0.0;
+    public static String name = "Ship";
+    public static double airspeed = 0.0;
+    public static double altitude = 0.0;
 
     //Update Orbiter Status
 
-    public void parseOrbiterStatus(Map<String, String> data) {
+    public static void parseOrbiterStatus(Map<String, String> data) {
         //Atmospheric Conditions
         String atmoString = data.get(OrbiterMessages.handleAtmophericConditions);
         if (atmoString.contains("ERR")) return;
@@ -84,9 +88,13 @@ public class OrbiterStatus {
         altitude = parseDouble(data.get(OrbiterMessages.handleAltitude));
     }
 
+    public static void resetOrbiterStatus() {
+        Log.v("cp", "Reset Orbiter Status Values");
+    }
+
     //Parse String Methods
 
-    private int parseInt(String s) {
+    private static int parseInt(String s) {
         int i;
 
         try {
@@ -100,7 +108,7 @@ public class OrbiterStatus {
         return i;
     }
 
-    private double parseDouble(String s) {
+    private static double parseDouble(String s) {
         double d;
 
         try {

@@ -27,7 +27,6 @@ public class OrbiterConnect {
 
         Log.v("cp", "Connection Started");
 
-        //Connection
         orbConnection = new AsyncOrbiterConnection(host, port);
         orbConnection.execute();
     }
@@ -72,6 +71,10 @@ public class OrbiterConnect {
             }
         }
 
+        private boolean shouldCancel() {
+            return (!socket.isConnected() || isCancelled());
+        }
+
         protected void onPreExecute() {
             OrbiterData.clearSubscriptionMap();
         }
@@ -101,7 +104,7 @@ public class OrbiterConnect {
             //Listening Loop
             while (true) {
                 try {
-                    if (isCancelled() || !socket.isConnected()) break;
+                    if (shouldCancel()) break;
 
                     if (OrbiterMessages.hasMessages()) {
                         List<String> messages = OrbiterMessages.getMessages();
@@ -114,7 +117,7 @@ public class OrbiterConnect {
                     }
 
                     while (in.ready()) {
-                        if (OrbiterMessages.hasMessages()) break;
+                        if (OrbiterMessages.hasMessages() || shouldCancel()) break;
                         publishProgress(in.readLine());
                     }
                 } catch (IOException e) {

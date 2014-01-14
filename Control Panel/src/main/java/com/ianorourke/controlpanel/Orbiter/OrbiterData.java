@@ -22,8 +22,6 @@ public class OrbiterData {
         put(OrbiterMessages.handleAtmophericConditions, "");
     }};
 
-    public static OrbiterStatus status = new OrbiterStatus();
-
     public static void parseMessage(String message) {
         //TODO: Clean ParseMessage
 
@@ -59,13 +57,13 @@ public class OrbiterData {
     }
 
     public static void updateData() {
-        status.parseOrbiterStatus(messageMap);
+        OrbiterStatus.parseOrbiterStatus(messageMap);
 
         GridController.updateRects();
     }
 
     public static void resetData() {
-        status = new OrbiterStatus();
+        //OrbiterStatus = new OrbiterStatus();
     }
 
     //Subscription Actions

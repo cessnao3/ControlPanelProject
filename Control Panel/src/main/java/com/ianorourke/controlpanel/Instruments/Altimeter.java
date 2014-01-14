@@ -1,11 +1,10 @@
 package com.ianorourke.controlpanel.Instruments;
 
-import com.ianorourke.controlpanel.Orbiter.OrbiterData;
+import com.ianorourke.controlpanel.Orbiter.OrbiterStatus;
 import com.ianorourke.controlpanel.R;
 import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -68,7 +67,7 @@ public class Altimeter extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        double altitude = InstrumentMath.getInitialNumber(OrbiterData.status.altitude);
+        double altitude = InstrumentMath.getInitialNumber(OrbiterStatus.altitude);
 
         //TODO: Set to Kilometer x10^x Intervals
 

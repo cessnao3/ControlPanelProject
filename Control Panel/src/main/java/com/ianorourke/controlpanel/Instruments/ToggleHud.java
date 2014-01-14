@@ -9,6 +9,7 @@ public class ToggleHud extends RectangleLayout {
     public ToggleHud(Context context, int size) {
         super(context, size);
 
+        this.createTextView();
         this.setTextSize(24.0f);
         this.setText("Toggle HUD Color");
 

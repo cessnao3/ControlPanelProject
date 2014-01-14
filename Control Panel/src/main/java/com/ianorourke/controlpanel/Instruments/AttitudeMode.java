@@ -4,12 +4,13 @@ import android.content.Context;
 
 import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
 import com.ianorourke.controlpanel.ShapeObjects.*;
-import com.ianorourke.controlpanel.Orbiter.OrbiterData;
+import com.ianorourke.controlpanel.Orbiter.OrbiterStatus;
 
 public class AttitudeMode extends RectangleLayout {
     public AttitudeMode(Context context, int size) {
         super(context, size);
 
+        this.createTextView();
         this.setTextSize(24.0f);
 
         this.updateRectDisplay();
@@ -17,9 +18,9 @@ public class AttitudeMode extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        if (OrbiterData.status.attMode == 1) {
+        if (OrbiterStatus.attMode == 1) {
             this.setText("Rotation");
-        } else if (OrbiterData.status.attMode == 2) {
+        } else if (OrbiterStatus.attMode == 2) {
             this.setText("Translation");
         } else {
             this.setText("No Data");
