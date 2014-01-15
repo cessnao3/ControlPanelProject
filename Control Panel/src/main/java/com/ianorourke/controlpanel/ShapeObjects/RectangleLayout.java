@@ -144,6 +144,7 @@ public class RectangleLayout {
                 this.getLocationOnScreen(screenLocation);
 
                 //TODO: Bring Rect to Front
+                //((RelativeLayout) layout.getParent()).bringChildToFront(layout);
 
                 layout.bringToFront();
                 layout.requestFocus();

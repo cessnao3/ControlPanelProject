@@ -25,13 +25,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO: Reconnect orbiterConnect to Activity after Orientation Change
         //TODO: Fix Rotation
 
         super.onCreate(savedInstanceState);
-
-        //TODO: Make a flag in Preferences
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         this.mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -42,10 +38,17 @@ public class MainActivity extends Activity {
         }
 
         if (orbiterConnect == null) orbiterConnect = new OrbiterConnect();
-        orbiterConnect.setContext(this);
+        OrbiterConnect.setContext(this);
 
         GridController.deleteAllRects();
         GridController.resetAllObjects();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (this.mainPreferences.getBoolean("keep_awake", false)) getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override

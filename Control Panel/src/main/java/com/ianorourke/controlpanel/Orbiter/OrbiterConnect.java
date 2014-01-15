@@ -6,16 +6,17 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.List;
 
 public class OrbiterConnect {
     private AsyncOrbiterConnection orbConnection;
-    private final int DEFAULT_PORT = 37777;
 
     protected static Context mainContext = null;
 
     public void connect(String host) {
+        final int DEFAULT_PORT = 37777;
         this.connect(host, DEFAULT_PORT);
     }
 
@@ -38,13 +39,11 @@ public class OrbiterConnect {
     }
 
     public boolean isConnected() {
-        if (orbConnection != null) {
-            return (orbConnection.getStatus() == AsyncTask.Status.RUNNING);
-        } else return false;
+        return orbConnection != null && (orbConnection.getStatus() == AsyncTask.Status.RUNNING);
     }
 
-    public void setContext(Context c) {
-        this.mainContext = c;
+    public static void setContext(Context c) {
+        mainContext = c;
     }
 
     private static class AsyncOrbiterConnection extends AsyncTask<Void, String, String> {
@@ -81,9 +80,10 @@ public class OrbiterConnect {
 
         protected String doInBackground(Void... params) {
             try {
-                socket = new Socket(this.host, this.port);
+                socket = new Socket();
 
                 socket.setSoTimeout(5000);
+                socket.connect(new InetSocketAddress(this.host, this.port), socket.getSoTimeout());
 
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintStream(socket.getOutputStream(), true);
@@ -96,9 +96,9 @@ public class OrbiterConnect {
 
             String[] subscribeMessages = OrbiterData.getSubscriptions();
 
-            for (int i = 0; i < subscribeMessages.length; i++) {
-                out.println(subscribeMessages[i] + "\r");
-                Log.v("cp", "Sent: " + subscribeMessages[i]);
+            for (String message : subscribeMessages) {
+                out.println(message + "\r");
+                Log.v("cp", "Sent: " + message);
             }
 
             //Listening Loop
@@ -109,8 +109,8 @@ public class OrbiterConnect {
                     if (OrbiterMessages.hasMessages()) {
                         List<String> messages = OrbiterMessages.getMessages();
 
-                        for (int i = 0; i < messages.size(); i++) {
-                            out.println(messages.get(i) + "\r");
+                        for (String message : messages) {
+                            out.println(message + "\r");
                         }
 
                         OrbiterMessages.clearMessages();
@@ -134,8 +134,8 @@ public class OrbiterConnect {
             if (socket.isConnected()) {
                 String[] ids = OrbiterData.getSubscriptionIds();
 
-                for (int i = 0; i < ids.length; i++) {
-                    out.println("UNSUBSCRIBE:" + ids[i] + "\r");
+                for (String id : ids) {
+                    out.println("UNSUBSCRIBE:" + id + "\r");
                 }
             } else return GENERIC_ERROR;
 
@@ -149,7 +149,10 @@ public class OrbiterConnect {
             }
 
             //End Code
-            return "00END00";
+
+            //00END00 for Manual Cancel
+            //00END01 for Connection Lost
+            return (this.isCancelled()) ? "00END00" : "00END01";
         }
 
         protected void onProgressUpdate(String... progress) {
@@ -163,7 +166,10 @@ public class OrbiterConnect {
             if (!response.equals("00END00")) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mainContext);
                 builder.setTitle("Error!");
-                builder.setMessage("Could not Connect to Specified IP Address" + "\n\n" + host + ":" + Integer.valueOf(port).toString());
+
+                if (response.equals("00END01")) builder.setMessage("Lost Connection to " + host);
+                else builder.setMessage("Could not Connect to Specified IP Address" + "\n\n" + host + ":" + Integer.valueOf(port).toString());
+
                 builder.setPositiveButton("Ok", null);
                 builder.create().show();
             }

@@ -15,5 +15,11 @@
             android:summary="Port Number"
             android:defaultValue="37777"
             android:inputType="number"/>
+
+        <CheckBoxPreference
+            android:key="keep_awake"
+            android:title="Screen Wake"
+            android:summary="Keep Screen From Sleeping"
+            android:defaultValue="false" />
     </PreferenceCategory>
 </PreferenceScreen>

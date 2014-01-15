@@ -15,7 +15,6 @@ public class NameDisplay extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        //TODO: Fix Data Updating
         this.setText(OrbiterStatus.name);
     }
 }
