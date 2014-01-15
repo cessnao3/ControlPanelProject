@@ -6,7 +6,6 @@ import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
@@ -20,8 +19,6 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
     private GridLayout mainLayout;
 
-    //TODO: Fix Rotation and orbiterConnect errors
-    //TODO: Fix orbiterConnect reconnect problem
     private OrbiterConnect orbiterConnect;
 
     private SharedPreferences mainPreferences;
@@ -29,8 +26,11 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //TODO: Reconnect orbiterConnect to Activity after Orientation Change
+        //TODO: Fix Rotation
 
         super.onCreate(savedInstanceState);
+
+        //TODO: Make a flag in Preferences
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         this.mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);

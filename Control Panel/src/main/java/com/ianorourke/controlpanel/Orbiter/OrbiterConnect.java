@@ -33,7 +33,7 @@ public class OrbiterConnect {
 
     public void disconnect() {
         orbConnection.cancel(false);
-        OrbiterData.resetData();
+        OrbiterStatus.resetOrbiterStatus();
         Log.v("cp", "Connection Canceled");
     }
 

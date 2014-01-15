@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrbiterData {
-    public static int frequency = 2;
+    public static int frequency = 1;
 
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
     private static Map<String, String> messageMap = new HashMap<String, String>() {{
@@ -61,17 +61,6 @@ public class OrbiterData {
 
         GridController.updateRects();
     }
-
-    public static void resetData() {
-        //OrbiterStatus = new OrbiterStatus();
-    }
-
-    //Subscription Actions
-    /*
-    public static Map<String, String> getSubscriptionMap() {
-        return subscriptionMap;
-    }
-    */
 
     public static String[] getSubscriptionIds() {
         int count = subscriptionMap.size();

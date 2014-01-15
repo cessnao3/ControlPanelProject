@@ -151,6 +151,8 @@ public class RectangleLayout {
                 float displacementX = event.getRawX() - screenLocation[0];
                 float displacementY = event.getRawY() - screenLocation[1];
 
+                //TODO: Fix Rect Moving -- Should be Smooth
+
                 setCenter(new PointF(layout.getX() + displacementX, layout.getY() + displacementY));
 
                 if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {

@@ -89,7 +89,29 @@ public class OrbiterStatus {
     }
 
     public static void resetOrbiterStatus() {
-        Log.v("cp", "Reset Orbiter Status Values");
+        //Atmospheric Status
+
+        temp = 0.0;
+        density = 0.0;
+        pressure = 0.0;
+        dynpressure = 0.0;
+        mach = 0.0;
+
+        //Engine Status
+
+        main = 0.0;
+        hover = 0.0;
+        attMode = 0;
+
+        //Fuel Status
+
+        propMass = 0.0;
+        maxPropMass = 0.0;
+        propFlowRate = 0.0;
+
+        name = "Ship";
+        airspeed = 0.0;
+        altitude = 0.0;
     }
 
     //Parse String Methods

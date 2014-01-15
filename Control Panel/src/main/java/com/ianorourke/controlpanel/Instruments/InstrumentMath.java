@@ -1,7 +1,5 @@
 package com.ianorourke.controlpanel.Instruments;
 
-import com.ianorourke.controlpanel.Orbiter.OrbiterData;
-
 public class InstrumentMath {
     public static String getScientificNotation(Double d) {
         return String.format("%6.3e", d);
