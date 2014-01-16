@@ -3,9 +3,6 @@ package com.ianorourke.controlpanel.Orbiter;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class OrbiterMessages {
     //Outgoing Messages
     private static List<String> messages = new ArrayList<String>();

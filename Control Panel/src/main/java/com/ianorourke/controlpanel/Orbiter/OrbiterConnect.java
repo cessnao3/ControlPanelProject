@@ -160,19 +160,21 @@ public class OrbiterConnect {
         }
 
         protected void onPostExecute(String response) {
-            if (response != null || !response.equals("")) Log.v("cp", "Ended Task: " + response);
-            else Log.v("cp", "Ended Task");
+            if (response != null) {
+                Log.v("cp", "Ended Task: " + response);
 
-            if (!response.equals("00END00")) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(mainContext);
-                builder.setTitle("Error!");
+                if (!response.equals("00END00")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mainContext);
+                    builder.setTitle("Error!");
 
-                if (response.equals("00END01")) builder.setMessage("Lost Connection to " + host);
-                else builder.setMessage("Could not Connect to Specified IP Address" + "\n\n" + host + ":" + Integer.valueOf(port).toString());
+                    if (response.equals("00END01")) builder.setMessage("Lost Connection to " + host);
+                    else builder.setMessage("Could not Connect to Specified IP Address" + "\n\n" + host + ":" + Integer.valueOf(port).toString());
 
-                builder.setPositiveButton("Ok", null);
-                builder.create().show();
+                    builder.setPositiveButton("Ok", null);
+                    builder.create().show();
+                }
             }
+            else Log.v("cp", "Ended Task");
 
             OrbiterData.clearSubscriptionMap();
         }
