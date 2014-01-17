@@ -2,7 +2,6 @@ package com.ianorourke.controlpanel;
 
 import android.content.DialogInterface;
 import com.ianorourke.controlpanel.Orbiter.OrbiterConnect;
-import com.ianorourke.controlpanel.Orbiter.OrbiterMessages;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 
 import android.content.Intent;
@@ -11,10 +10,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.*;
-
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private GridLayout mainLayout;
@@ -62,7 +58,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                final CharSequence[] messages = {"Altimeter", "Airspeed", "Name", "Toggle HUD Color", "Remaining Propellent", "Attitude Mode"};
+                final CharSequence[] messages = {"Altimeter", "Velocity", "Name", "Toggle HUD Color", "Remaining Propellent", "Attitude Mode", "Mach"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Instrument Selection");
@@ -75,7 +71,7 @@ public class MainActivity extends Activity {
                                 mainLayout.createAltimeter();
                                 break;
                             case 1:
-                                mainLayout.createAirspeed();
+                                mainLayout.createVelocity();
                                 break;
                             case 2:
                                 mainLayout.createNameDisplay();
@@ -88,6 +84,9 @@ public class MainActivity extends Activity {
                                 break;
                             case 5:
                                 mainLayout.createAttitudeMode();
+                                break;
+                            case 6:
+                                mainLayout.createMachometer();
                                 break;
                             default:
                                 break;

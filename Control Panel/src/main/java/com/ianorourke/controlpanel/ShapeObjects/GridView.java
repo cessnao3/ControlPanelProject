@@ -6,14 +6,6 @@ import android.graphics.PointF;
 import android.view.View;
 
 public class GridView extends View {
-    /*
-    public interface IGridVew {
-        public void finishedMeasuring();
-    }
-
-    IGridVew gridInterface;
-    */
-
     public GridView(Context context) {
         super(context);
 

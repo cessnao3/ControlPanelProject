@@ -28,9 +28,9 @@ public class GridLayout {
         addLayout(alt);
     }
 
-    public void createAirspeed() {
-        Airspeed aSpd = new Airspeed(layout.getContext(), GridController.rectSize);
-        addLayout(aSpd);
+    public void createVelocity() {
+        Velocity vel = new Velocity(layout.getContext(), GridController.rectSize);
+        addLayout(vel);
     }
 
     public void createNameDisplay() {
@@ -51,6 +51,11 @@ public class GridLayout {
     public void createAttitudeMode() {
         AttitudeMode att = new AttitudeMode(layout.getContext(), GridController.rectSize);
         addLayout(att);
+    }
+
+    public void createMachometer() {
+        Machometer mach = new Machometer(layout.getContext(), GridController.rectSize);
+        addLayout(mach);
     }
 
     //Layout Params

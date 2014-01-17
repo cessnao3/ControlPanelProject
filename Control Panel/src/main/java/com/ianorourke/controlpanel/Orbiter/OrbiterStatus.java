@@ -46,8 +46,12 @@ public class OrbiterStatus {
     //Vessel Status
 
     public static String name = "Ship";
-    public static double airspeed = 0.0;
     public static double altitude = 0.0;
+
+    public static double airspeed = 0.0;
+    public static double indicatedAirspeed = 0.0;
+    public static double orbitSpeed = 0.0;
+    public static double groundSpeed = 0.0;
 
     //Update Orbiter Status
 
@@ -83,9 +87,12 @@ public class OrbiterStatus {
 
         //Vessel Status
         name = data.get(OrbiterMessages.handleVesselName);
+        altitude = parseDouble(data.get(OrbiterMessages.handleAltitude));
 
         airspeed = parseDouble(data.get(OrbiterMessages.handleAirspeed));
-        altitude = parseDouble(data.get(OrbiterMessages.handleAltitude));
+        indicatedAirspeed = parseDouble(data.get(OrbiterMessages.handleIndicatedAirspeed));
+        orbitSpeed = parseDouble(data.get(OrbiterMessages.handleOrbitSpeed));
+        groundSpeed = parseDouble(data.get(OrbiterMessages.handleGroundSpeed));
     }
 
     public static void resetOrbiterStatus() {
@@ -110,8 +117,12 @@ public class OrbiterStatus {
         propFlowRate = 0.0;
 
         name = "Ship";
-        airspeed = 0.0;
         altitude = 0.0;
+
+        airspeed = 0.0;
+        indicatedAirspeed = 0.0;
+        orbitSpeed = 0.0;
+        groundSpeed = 0.0;
     }
 
     //Parse String Methods

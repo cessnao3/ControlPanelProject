@@ -14,6 +14,9 @@ public class OrbiterData {
     private static Map<String, String> messageMap = new HashMap<String, String>() {{
         put(OrbiterMessages.handleAltitude, "");
         put(OrbiterMessages.handleAirspeed, "");
+        put(OrbiterMessages.handleIndicatedAirspeed, "");
+        put(OrbiterMessages.handleOrbitSpeed, "");
+        put(OrbiterMessages.handleGroundSpeed, "");
         put(OrbiterMessages.handleVesselName, "");
         put(OrbiterMessages.handleFuelFlowRate, "");
         put(OrbiterMessages.handleFuelMass, "");

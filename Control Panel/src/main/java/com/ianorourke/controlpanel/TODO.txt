@@ -1,8 +1,5 @@
 Fix Altimeter
 Vertical Speed
-Mach-o-Meter
 More Graphics
-
-Consolidate Data Types into One Class -> Single Parse Function?
 
 Fix Rotation
