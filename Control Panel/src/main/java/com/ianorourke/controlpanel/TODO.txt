@@ -2,4 +2,6 @@ Fix Altimeter
 Vertical Speed
 More Graphics
 
+Connection Disconnects
+
 Fix Rotation

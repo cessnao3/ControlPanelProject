@@ -126,8 +126,6 @@ public class OrbiterConnect {
                     Log.v("cp", "IO Exception Error");
                     break;
                 }
-
-                this.sleepThread(250);
             }
 
             //Unsubscribe from Existing Subscriptions
@@ -141,9 +139,9 @@ public class OrbiterConnect {
 
             //Disconnect
             try {
-                if (!socket.isClosed()) socket.close();
                 if (!socket.isInputShutdown()) socket.shutdownInput();
                 if (!socket.isOutputShutdown()) socket.shutdownOutput();
+                if (!socket.isClosed()) socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -163,18 +161,25 @@ public class OrbiterConnect {
             if (response != null) {
                 Log.v("cp", "Ended Task: " + response);
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(mainContext);
+
                 if (!response.equals("00END00")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mainContext);
                     builder.setTitle("Error!");
 
                     if (response.equals("00END01")) builder.setMessage("Lost Connection to " + host);
                     else builder.setMessage("Could not Connect to Specified IP Address" + "\n\n" + host + ":" + Integer.valueOf(port).toString());
 
                     builder.setPositiveButton("Ok", null);
-                    builder.create().show();
+                } else {
+                    builder.setTitle("Disconnected");
+                    builder.setMessage("Successfully Disconnected from " + host);
+                    builder.setPositiveButton("Ok", null);
                 }
+
+                builder.create().show();
+            } else {
+                Log.v("cp", "Ended Task");
             }
-            else Log.v("cp", "Ended Task");
 
             OrbiterData.clearSubscriptionMap();
         }

@@ -17,6 +17,14 @@ public class OrbiterStatus {
     public static double dynpressure = 0.0;
     public static double mach = 0.0;
 
+    public static void resetAtmoContitions() {
+        temp = 0.0;
+        density = 0.0;
+        pressure = 0.0;
+        dynpressure = 0.0;
+        mach = 0.0;
+    }
+
     //Engine Status
 
     private static String[] mE = new String[3];
@@ -24,6 +32,12 @@ public class OrbiterStatus {
     public static double main = 0.0;
     public static double hover = 0.0;
     public static int attMode = 0;
+
+    public static void resetEngineStatus() {
+        main = 0.0;
+        hover = 0.0;
+        attMode = 0;
+    }
 
     //Fuel Status
 
@@ -43,6 +57,12 @@ public class OrbiterStatus {
         return ((secondsRemaining != 0.0) ? Double.valueOf(Math.round(secondsRemaining)).toString() : "NaN") + "\n" + Double.valueOf(Math.round(propellentPercentage)).toString();
     }
 
+    public static void resetPropStatus() {
+        propMass = 0.0;
+        maxPropMass = 0.0;
+        propFlowRate = 0.0;
+    }
+
     //Vessel Status
 
     public static String name = "Ship";
@@ -53,32 +73,41 @@ public class OrbiterStatus {
     public static double orbitSpeed = 0.0;
     public static double groundSpeed = 0.0;
 
+    public static void resetVesselStatus() {
+        name = "Ship";
+        altitude = 0.0;
+
+        airspeed = 0.0;
+        indicatedAirspeed = 0.0;
+        orbitSpeed = 0.0;
+        groundSpeed = 0.0;
+    }
+
     //Update Orbiter Status
 
     public static void parseOrbiterStatus(Map<String, String> data) {
         //Atmospheric Conditions
         String atmoString = data.get(OrbiterMessages.handleAtmophericConditions);
-        if (atmoString.contains("ERR")) return;
 
-        if (atmoString == null || atmoString.equals("")) return;
+        if (atmoString != null && !atmoString.equals("") && !atmoString.contains("ERR")) {
+            mA = atmoString.split(",");
 
-        mA = atmoString.split(",");
-
-        temp = parseDouble(mA[0]);
-        density = parseDouble(mA[1]);
-        pressure = parseDouble(mA[2]);
-        dynpressure = parseDouble(mA[3]);
-        mach = parseDouble(mA[4]);
+            temp = parseDouble(mA[0]);
+            density = parseDouble(mA[1]);
+            pressure = parseDouble(mA[2]);
+            dynpressure = parseDouble(mA[3]);
+            mach = parseDouble(mA[4]);
+        } else resetAtmoContitions();
 
         //Engine Status
         String engineString = data.get(OrbiterMessages.handleEngineStatus);
-        if (engineString == null || engineString.equals("")) return;
+        if (engineString != null && !engineString.equals("") && !engineString.contains("ERR")) {
+            mE = engineString.split(",");
 
-        mE = engineString.split(",");
-
-        main = parseDouble(mE[0]);
-        hover = parseDouble(mE[1]);
-        attMode = parseInt(mE[2]);
+            main = parseDouble(mE[0]);
+            hover = parseDouble(mE[1]);
+            attMode = parseInt(mE[2]);
+        } else resetEngineStatus();
 
         //Propellant Data
         propMass = parseDouble(data.get(OrbiterMessages.handleFuelMass));
@@ -96,38 +125,17 @@ public class OrbiterStatus {
     }
 
     public static void resetOrbiterStatus() {
-        //Atmospheric Status
-
-        temp = 0.0;
-        density = 0.0;
-        pressure = 0.0;
-        dynpressure = 0.0;
-        mach = 0.0;
-
-        //Engine Status
-
-        main = 0.0;
-        hover = 0.0;
-        attMode = 0;
-
-        //Fuel Status
-
-        propMass = 0.0;
-        maxPropMass = 0.0;
-        propFlowRate = 0.0;
-
-        name = "Ship";
-        altitude = 0.0;
-
-        airspeed = 0.0;
-        indicatedAirspeed = 0.0;
-        orbitSpeed = 0.0;
-        groundSpeed = 0.0;
+        resetAtmoContitions();
+        resetEngineStatus();
+        resetPropStatus();
+        resetVesselStatus();
     }
 
     //Parse String Methods
 
     private static int parseInt(String s) {
+        if (s == null || s.contains("ERR")) return 0;
+
         int i;
 
         try {
@@ -142,6 +150,8 @@ public class OrbiterStatus {
     }
 
     private static double parseDouble(String s) {
+        if (s == null || s.contains("ERR")) return 0.0;
+
         double d;
 
         try {

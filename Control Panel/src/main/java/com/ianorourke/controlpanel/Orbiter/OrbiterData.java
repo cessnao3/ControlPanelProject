@@ -34,6 +34,7 @@ public class OrbiterData {
         //Log.v("cp", "Message: " + message);
 
         if (message.contains("SUBSCRIBE")) {
+
             String id = message.substring(message.indexOf("=")).replace("=", "");
             String call = message;
             call = call.replace("SUBSCRIBE:" + Integer.valueOf(frequency).toString() + ":", "");
@@ -41,7 +42,7 @@ public class OrbiterData {
 
             Log.v("cp", id + ":" + call);
 
-            if (!id.contains("ERR") && !subscriptionMap.containsKey(id) && !call.equals("")) subscriptionMap.put(id, call);
+            if (!subscriptionMap.containsKey(id) && !call.equals("")) subscriptionMap.put(id, call);
 
             return;
         }
