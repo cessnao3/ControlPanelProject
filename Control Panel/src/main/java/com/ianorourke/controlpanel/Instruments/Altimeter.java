@@ -13,8 +13,6 @@ public class Altimeter extends RectangleLayout {
     ImageView longHandImage;
     ImageView shortHandImage;
 
-    int timerSteps = 0;
-
     public Altimeter(Context context, int size) {
         super(context, size);
 
@@ -34,7 +32,12 @@ public class Altimeter extends RectangleLayout {
         longHandImage.setImageResource(R.drawable.long_hand);
 
         int lWidth = (int) (0.95 * this.getSize() / 2.0);
-        int lHeight = (longHandImage.getDrawable().getIntrinsicHeight() * lWidth / longHandImage.getDrawable().getIntrinsicWidth());
+        int lHeight = 0;
+
+        try {
+            lHeight = (longHandImage.getDrawable().getIntrinsicHeight() * lWidth / longHandImage.getDrawable().getIntrinsicWidth());
+        } catch (NullPointerException e) {e.printStackTrace();}
+
         layout.addView(longHandImage, new RelativeLayout.LayoutParams(lWidth, lHeight));
 
         float lX = 0.05f * this.getSize() / 2.0f;
@@ -51,7 +54,12 @@ public class Altimeter extends RectangleLayout {
         shortHandImage.setImageResource(R.drawable.long_hand);
 
         int width = (int) (0.6 * this.getSize() / 2.0);
-        int height = (shortHandImage.getDrawable().getIntrinsicHeight() * width / shortHandImage.getDrawable().getIntrinsicWidth());
+        int height = 0;
+
+        try {
+            height = (shortHandImage.getDrawable().getIntrinsicHeight() * width / shortHandImage.getDrawable().getIntrinsicWidth());
+        } catch (NullPointerException e) {e.printStackTrace();}
+
         layout.addView(shortHandImage, new RelativeLayout.LayoutParams(width, height));
 
         float x = 0.05f * this.getSize() / 2.0f;

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrbiterData {
-    public static int frequency = 1;
+    public static int frequency = 2;
 
     private static Map<String, String> subscriptionMap = new HashMap<String, String>();
     private static Map<String, String> messageMap = new HashMap<String, String>() {{
@@ -16,6 +16,7 @@ public class OrbiterData {
         put(OrbiterMessages.handleAirspeed, "");
         put(OrbiterMessages.handleIndicatedAirspeed, "");
         put(OrbiterMessages.handleOrbitSpeed, "");
+        put(OrbiterMessages.handleAirspeedVector, "");
         put(OrbiterMessages.handleGroundSpeed, "");
         put(OrbiterMessages.handleVesselName, "");
         put(OrbiterMessages.handleFuelFlowRate, "");
@@ -31,8 +32,6 @@ public class OrbiterData {
         if (subscriptionMap == null) return;
         if (message == null || !message.contains("=")) return;
 
-        //Log.v("cp", "Message: " + message);
-
         if (message.contains("SUBSCRIBE")) {
 
             String id = message.substring(message.indexOf("=")).replace("=", "");
@@ -42,7 +41,9 @@ public class OrbiterData {
 
             Log.v("cp", id + ":" + call);
 
-            if (!subscriptionMap.containsKey(id) && !call.equals("")) subscriptionMap.put(id, call);
+            if (!subscriptionMap.containsKey(id) && !call.equals("")){
+                subscriptionMap.put(id, call);
+            }
 
             return;
         }
@@ -83,6 +84,8 @@ public class OrbiterData {
 
     public static void clearSubscriptionMap() {
         subscriptionMap.clear();
+
+        for (String key : messageMap.keySet()) messageMap.put(key, "");
     }
 
     public static String[] getSubscriptions() {

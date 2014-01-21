@@ -37,6 +37,7 @@ public class OrbiterMessages {
     public static final String handleIndicatedAirspeed = "SHIP:FOCUS:IndSpd";
     public static final String handleOrbitSpeed = "SHIP:FOCUS:OrbSpd";
     public static final String handleGroundSpeed = "SHIP:FOCUS:GndSpd";
+    public static final String handleAirspeedVector = "SHIP:FOCUS:HorizonAirspdVector";
     public static final String handleVesselName = "SHIP:FOCUS:Name";
     public static final String handleFuelFlowRate = "SHIP:FOCUS:DfltFuelFlowRate";
     public static final String handleFuelMass = "SHIP:FOCUS:DfltFuelMass";

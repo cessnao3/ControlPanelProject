@@ -3,6 +3,7 @@ package com.ianorourke.controlpanel.Orbiter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.io.*;
@@ -27,6 +28,9 @@ public class OrbiterConnect {
         }
 
         Log.v("cp", "Connection Started");
+
+        if (mainContext != null) OrbiterData.frequency = PreferenceManager.getDefaultSharedPreferences(mainContext).getInt("connection_frequency", 1);
+        else OrbiterData.frequency = 1;
 
         orbConnection = new AsyncOrbiterConnection(host, port);
         orbConnection.execute();

@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                final CharSequence[] messages = {"Altimeter", "Velocity", "Name", "Toggle HUD Color", "Remaining Propellent", "Attitude Mode", "Mach"};
+                final CharSequence[] messages = {"Altimeter", "Velocity", "Name", "Toggle HUD Color", "Remaining Propellent", "Attitude Mode", "Mach", "Vertical Speed"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Instrument Selection");
@@ -87,6 +87,9 @@ public class MainActivity extends Activity {
                                 break;
                             case 6:
                                 mainLayout.createMachometer();
+                                break;
+                            case 7:
+                                mainLayout.createVerticalSpeed();
                                 break;
                             default:
                                 break;

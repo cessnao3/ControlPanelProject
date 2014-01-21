@@ -58,6 +58,11 @@ public class GridLayout {
         addLayout(mach);
     }
 
+    public void createVerticalSpeed() {
+        VerticalSpeed vs = new VerticalSpeed(layout.getContext(), GridController.rectSize);
+        addLayout(vs);
+    }
+
     //Layout Params
     private void addLayout(RectangleLayout rect) {
         if (rect == null) return;

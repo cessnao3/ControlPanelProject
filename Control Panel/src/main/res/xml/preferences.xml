@@ -21,5 +21,13 @@
             android:title="Screen Wake"
             android:summary="Keep Screen From Sleeping"
             android:defaultValue="false" />
+
+        <ListPreference
+            android:key="connection_frequency"
+            android:title="Connection Frequency"
+            android:summary="Number of Updates per Second"
+            android:entries="@array/frequency_string"
+            android:entryValues="@array/frequency_values"
+            android:defaultValue="1" />
     </PreferenceCategory>
 </PreferenceScreen>

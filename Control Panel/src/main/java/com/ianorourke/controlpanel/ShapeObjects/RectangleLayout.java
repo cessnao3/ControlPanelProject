@@ -56,7 +56,7 @@ public class RectangleLayout {
     }
 
     public void setText(String newText) {
-        if (getTextView() != null) getTextView().setText(newText);
+        if (getTextView() != null) getTextView().setText((newText != null) ? newText : "");
     }
 
     public void setText(double d) {

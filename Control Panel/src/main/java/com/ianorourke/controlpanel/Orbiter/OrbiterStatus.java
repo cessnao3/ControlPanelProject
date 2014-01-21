@@ -2,14 +2,8 @@ package com.ianorourke.controlpanel.Orbiter;
 
 import java.util.Map;
 
-import android.util.Log;
-
 public class OrbiterStatus {
-    //TODO: Move to Static Class
-
     //Atmospheric Conditions
-
-    private static String[] mA = new String[5];
 
     public static double temp = 0.0;
     public static double density = 0.0;
@@ -26,8 +20,6 @@ public class OrbiterStatus {
     }
 
     //Engine Status
-
-    private static String[] mE = new String[3];
 
     public static double main = 0.0;
     public static double hover = 0.0;
@@ -73,6 +65,8 @@ public class OrbiterStatus {
     public static double orbitSpeed = 0.0;
     public static double groundSpeed = 0.0;
 
+    public static double[] airspeedVector = new double[3];
+
     public static void resetVesselStatus() {
         name = "Ship";
         altitude = 0.0;
@@ -90,7 +84,7 @@ public class OrbiterStatus {
         String atmoString = data.get(OrbiterMessages.handleAtmophericConditions);
 
         if (atmoString != null && !atmoString.equals("") && !atmoString.contains("ERR")) {
-            mA = atmoString.split(",");
+            String[] mA = atmoString.split(",");
 
             temp = parseDouble(mA[0]);
             density = parseDouble(mA[1]);
@@ -102,7 +96,7 @@ public class OrbiterStatus {
         //Engine Status
         String engineString = data.get(OrbiterMessages.handleEngineStatus);
         if (engineString != null && !engineString.equals("") && !engineString.contains("ERR")) {
-            mE = engineString.split(",");
+            String[] mE = engineString.split(",");
 
             main = parseDouble(mE[0]);
             hover = parseDouble(mE[1]);
@@ -122,6 +116,15 @@ public class OrbiterStatus {
         indicatedAirspeed = parseDouble(data.get(OrbiterMessages.handleIndicatedAirspeed));
         orbitSpeed = parseDouble(data.get(OrbiterMessages.handleOrbitSpeed));
         groundSpeed = parseDouble(data.get(OrbiterMessages.handleGroundSpeed));
+
+        String aVectorString = data.get(OrbiterMessages.handleAirspeedVector);
+        if (aVectorString != null && !aVectorString.equals("") && !aVectorString.contains("ERR")) {
+            String[] mA = aVectorString.split(",");
+
+            airspeedVector[0] = parseDouble(mA[0]);
+            airspeedVector[1] = parseDouble(mA[2]);
+            airspeedVector[2] = parseDouble(mA[1]);
+        }
     }
 
     public static void resetOrbiterStatus() {
@@ -134,7 +137,7 @@ public class OrbiterStatus {
     //Parse String Methods
 
     private static int parseInt(String s) {
-        if (s == null || s.contains("ERR")) return 0;
+        if (s == null || s.contains("ERR") || s.equals("")) return 0;
 
         int i;
 
@@ -150,7 +153,7 @@ public class OrbiterStatus {
     }
 
     private static double parseDouble(String s) {
-        if (s == null || s.contains("ERR")) return 0.0;
+        if (s == null || s.contains("ERR") || s.equals("")) return 0.0;
 
         double d;
 
