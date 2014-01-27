@@ -19,6 +19,7 @@ public class RectangleLayout {
     public RectangleView rectView;
 
     public RelativeLayout layout;
+    public Paint paintColor;
 
     private final int size;
 
@@ -33,7 +34,7 @@ public class RectangleLayout {
     //TextView Setting
 
     public void createTextView() {
-        if (layout.findViewById(R.id.rect_text_view) != null) return;
+        if (layout.findViewById(R.id.rect_text_view) != null || layout.getContext() == null) return;
 
         TextView textView = new TextView(layout.getContext());
 
@@ -51,8 +52,7 @@ public class RectangleLayout {
     }
 
     public TextView getTextView() {
-        TextView textView = (TextView) layout.findViewById(R.id.rect_text_view);
-        return textView;
+        return (TextView) layout.findViewById(R.id.rect_text_view);
     }
 
     public void setText(String newText) {
@@ -61,10 +61,6 @@ public class RectangleLayout {
 
     public void setText(double d) {
         this.setText(Double.valueOf(d).toString());
-    }
-
-    public void setText(int i) {
-        this.setText(Integer.valueOf(i).toString());
     }
 
     public void setTextSize(float f) {
@@ -98,8 +94,6 @@ public class RectangleLayout {
     }
 
     public void setCenter(PointF p) {
-        //Log.v("cp", p.toString());
-
         this.layout.setX(toCornerPoint(p.x));
         this.layout.setY(toCornerPoint(p.y));
     }
@@ -133,24 +127,14 @@ public class RectangleLayout {
 
         @Override
         public void onDraw(Canvas canvas) {
-            Paint paintColor = new Paint();
             paintColor.setColor(Color.LTGRAY);
-
             canvas.drawRect(this.rect, paintColor);
         }
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
             if (GridController.isEditing) {
-                //TODO: Bring Rect to Front
-                //((RelativeLayout) layout.getParent()).bringChildToFront(layout);
-
-                layout.bringToFront();
-                layout.requestFocus();
-
                 //TODO: Fix Rect Moving -- Should be Smooth
-
-                //Log.v("cp", event.getRawX() + ", " + event.getRawY());
 
                 if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     int[] screenLocation = new int[2];
