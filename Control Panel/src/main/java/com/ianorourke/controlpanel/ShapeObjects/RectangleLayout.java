@@ -4,9 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +98,8 @@ public class RectangleLayout {
     }
 
     public void setCenter(PointF p) {
+        //Log.v("cp", p.toString());
+
         this.layout.setX(toCornerPoint(p.x));
         this.layout.setY(toCornerPoint(p.y));
     }
@@ -140,21 +142,27 @@ public class RectangleLayout {
         @Override
         public boolean onTouchEvent(MotionEvent event) {
             if (GridController.isEditing) {
-                int[] screenLocation = new int[2];
-                this.getLocationOnScreen(screenLocation);
-
                 //TODO: Bring Rect to Front
                 //((RelativeLayout) layout.getParent()).bringChildToFront(layout);
 
                 layout.bringToFront();
                 layout.requestFocus();
 
-                float displacementX = event.getRawX() - screenLocation[0];
-                float displacementY = event.getRawY() - screenLocation[1];
-
                 //TODO: Fix Rect Moving -- Should be Smooth
 
-                setCenter(new PointF(layout.getX() + displacementX, layout.getY() + displacementY));
+                //Log.v("cp", event.getRawX() + ", " + event.getRawY());
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    int[] screenLocation = new int[2];
+                    this.getLocationOnScreen(screenLocation);
+
+                    float displacementX = event.getRawX() - screenLocation[0];
+                    float displacementY = event.getRawY() - screenLocation[1];
+
+                    Log.v("cp", Float.valueOf(event.getRawY()).toString());
+
+                    setCenter(new PointF(layout.getX() + displacementX, layout.getY() + displacementY));
+                }
 
                 if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
                     if (layout.getX() < 0 && layout.getY() < 0) {

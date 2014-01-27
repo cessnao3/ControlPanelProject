@@ -80,6 +80,7 @@ public class OrbiterConnect {
 
         protected void onPreExecute() {
             OrbiterData.clearSubscriptionMap();
+            OrbiterMessages.clearMessages();
         }
 
         protected String doInBackground(Void... params) {
