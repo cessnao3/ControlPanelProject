@@ -2,4 +2,8 @@ Fix Altimeter
 Vertical Speed
 More Graphics
 
+Better Detect Click vs. Move in RectangleLayout
+
 Fix Rotation
+
+Save/Load Layouts

@@ -1,6 +1,8 @@
 package com.ianorourke.controlpanel.ShapeObjects;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,11 +17,13 @@ import android.widget.TextView;
 
 import com.ianorourke.controlpanel.R;
 
+import java.util.Calendar;
+
 public class RectangleLayout {
     public RectangleView rectView;
 
     public RelativeLayout layout;
-    public Paint paintColor;
+    public Paint paintColor = new Paint();
 
     private final int size;
 
@@ -131,8 +135,13 @@ public class RectangleLayout {
             canvas.drawRect(this.rect, paintColor);
         }
 
+        private final int MAX_TIME = 200;
+        private long startTime = 0;
+
         @Override
         public boolean onTouchEvent(MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) startTime = Calendar.getInstance().getTimeInMillis();
+
             if (GridController.isEditing) {
                 //TODO: Fix Rect Moving -- Should be Smooth
 
@@ -148,16 +157,32 @@ public class RectangleLayout {
                     setCenter(new PointF(layout.getX() + displacementX, layout.getY() + displacementY));
                 }
 
-                if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    if (layout.getX() < 0 && layout.getY() < 0) {
-                        if (event.getAction() == MotionEvent.ACTION_UP) removeSelf();
-                    } else alignSelf();
+                if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) alignSelf();
+
+                //TODO: Better Detect Click
+
+                //Click Event
+                if (event.getAction() == MotionEvent.ACTION_UP && Calendar.getInstance().getTimeInMillis() - startTime < MAX_TIME) {
+                    if (!GridController.isEditing) onTouch();
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder
+                                .setMessage("Delete Rect?")
+                                .setTitle("Confirm")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        removeSelf();
+                                    }
+                                })
+                                .setNegativeButton("No", null);
+                        builder.create().show();
+                    }
                 }
-            }
 
-            if (event.getAction() == MotionEvent.ACTION_UP && !GridController.isEditing) onTouch();
-
-            return true;
+                return true;
+            } else return false;
         }
     }
 }
