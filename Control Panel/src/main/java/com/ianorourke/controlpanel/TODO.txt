@@ -1,8 +1,7 @@
 Fix Altimeter
-Vertical Speed
 More Graphics
 
-Better Detect Click vs. Move in RectangleLayout
+Improve Graphics
 
 Fix Rotation
 

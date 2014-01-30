@@ -17,8 +17,6 @@ import android.widget.TextView;
 
 import com.ianorourke.controlpanel.R;
 
-import java.util.Calendar;
-
 public class RectangleLayout {
     public RectangleView rectView;
 
@@ -172,19 +170,21 @@ public class RectangleLayout {
                 if (event.getAction() == MotionEvent.ACTION_UP && shouldClick) {
                     if (!GridController.isEditing) onTouch();
                     else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder
-                                .setMessage("Delete Rect?")
-                                .setTitle("Confirm")
-                                .setCancelable(false)
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        removeSelf();
-                                    }
-                                })
-                                .setNegativeButton("No", null);
-                        builder.create().show();
+                        if (getContext() != null) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder
+                                    .setMessage("Delete Rect?")
+                                    .setTitle("Confirm")
+                                    .setCancelable(false)
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            removeSelf();
+                                        }
+                                    })
+                                    .setNegativeButton("No", null);
+                            builder.create().show();
+                        }
                     }
                 }
 
@@ -194,7 +194,8 @@ public class RectangleLayout {
 
         private float distancePxToDp(float x1, float x2, float y1, float y2) {
             float distance = (float) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-            return distance / getResources().getDisplayMetrics().density;
+            if (getResources() != null && getResources().getDisplayMetrics() != null) return distance / getResources().getDisplayMetrics().density;
+            else return distance;
         }
     }
 }

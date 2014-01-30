@@ -19,4 +19,9 @@
         android:title="Settings"
         android:orderInCategory="500"
         android:showAsAction="ifRoom" />
+
+    <item android:id="@+id/menu_save_and_load"
+        android:title="Save/Load"
+        android:orderInCategory="600"
+        android:showAsAction="ifRoom" />
 </menu>

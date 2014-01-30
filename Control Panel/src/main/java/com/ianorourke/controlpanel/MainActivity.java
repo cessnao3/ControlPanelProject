@@ -122,6 +122,26 @@ public class MainActivity extends Activity {
                 Intent intent = new Intent(this, MainPreferencesActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.menu_save_and_load:
+                AlertDialog.Builder saveBuilder = new AlertDialog.Builder(this);
+                saveBuilder.setTitle("Save/Load");
+                String[] items = {"Save", "Load"};
+
+                saveBuilder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                //SAVE
+                                break;
+                            case 1:
+                                //LOAD
+                                break;
+                        }
+                    }
+                }).show();
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

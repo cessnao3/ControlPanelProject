@@ -2,5 +2,6 @@
 <resources>
 
     <string name="app_name">Control Panel</string>
+    <string name="preference_file_key">com.ianorourke.controlpanel.grid_preferences</string>
 
 </resources>
