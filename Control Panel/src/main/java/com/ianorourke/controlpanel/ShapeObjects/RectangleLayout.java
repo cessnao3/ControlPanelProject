@@ -135,34 +135,41 @@ public class RectangleLayout {
             canvas.drawRect(this.rect, paintColor);
         }
 
-        private final int MAX_TIME = 200;
-        private long startTime = 0;
+        private final int MAX_DP = 12;
+
+        private float startX, startY;
+        boolean shouldClick = true;
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) startTime = Calendar.getInstance().getTimeInMillis();
+            if (event.getAction() == MotionEvent.ACTION_DOWN){
+                startX = event.getRawX();
+                startY = event.getRawY();
+
+                shouldClick = true;
+            }
 
             if (GridController.isEditing) {
-                //TODO: Fix Rect Moving -- Should be Smooth
-
                 if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    int[] screenLocation = new int[2];
-                    this.getLocationOnScreen(screenLocation);
+                    if (distancePxToDp(startX, event.getRawX(), startY, event.getRawY()) > MAX_DP) shouldClick = false;
 
-                    float displacementX = event.getRawX() - screenLocation[0];
-                    float displacementY = event.getRawY() - screenLocation[1];
+                    if (!shouldClick) {
+                        int[] screenLocation = new int[2];
+                        this.getLocationOnScreen(screenLocation);
 
-                    Log.v("cp", Float.valueOf(event.getRawY()).toString());
+                        float displacementX = event.getRawX() - screenLocation[0];
+                        float displacementY = event.getRawY() - screenLocation[1];
 
-                    setCenter(new PointF(layout.getX() + displacementX, layout.getY() + displacementY));
+                        Log.v("cp", Float.valueOf(event.getRawY()).toString());
+
+                        setCenter(new PointF(layout.getX() + displacementX, layout.getY() + displacementY));
+                    }
                 }
 
                 if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) alignSelf();
 
-                //TODO: Better Detect Click
-
                 //Click Event
-                if (event.getAction() == MotionEvent.ACTION_UP && Calendar.getInstance().getTimeInMillis() - startTime < MAX_TIME) {
+                if (event.getAction() == MotionEvent.ACTION_UP && shouldClick) {
                     if (!GridController.isEditing) onTouch();
                     else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -183,6 +190,11 @@ public class RectangleLayout {
 
                 return true;
             } else return false;
+        }
+
+        private float distancePxToDp(float x1, float x2, float y1, float y2) {
+            float distance = (float) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+            return distance / getResources().getDisplayMetrics().density;
         }
     }
 }
