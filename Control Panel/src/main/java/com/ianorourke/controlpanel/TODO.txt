@@ -4,5 +4,6 @@ More Graphics
 Improve Graphics
 
 Fix Rotation
+Fix Frequency Preference Bug
 
 Save/Load Layouts
