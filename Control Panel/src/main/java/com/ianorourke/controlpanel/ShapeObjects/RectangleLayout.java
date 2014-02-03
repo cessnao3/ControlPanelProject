@@ -164,32 +164,33 @@ public class RectangleLayout {
                     }
                 }
 
-                if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) alignSelf();
+                if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) alignSelf();
+            }
 
-                //Click Event
-                if (event.getAction() == MotionEvent.ACTION_UP && shouldClick) {
-                    if (!GridController.isEditing) onTouch();
-                    else {
-                        if (getContext() != null) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                            builder
-                                    .setMessage("Delete Rect?")
-                                    .setTitle("Confirm")
-                                    .setCancelable(false)
-                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            removeSelf();
-                                        }
-                                    })
-                                    .setNegativeButton("No", null);
-                            builder.create().show();
-                        }
+            //Click Event
+            if (event.getAction() == MotionEvent.ACTION_UP && shouldClick) {
+                if (!GridController.isEditing) {
+                    onTouch();
+                } else {
+                    if (getContext() != null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder
+                                .setMessage("Delete Rect?")
+                                .setTitle("Confirm")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        removeSelf();
+                                    }
+                                })
+                                .setNegativeButton("No", null);
+                        builder.create().show();
                     }
                 }
+            }
 
-                return true;
-            } else return false;
+            return true;
         }
 
         private float distancePxToDp(float x1, float x2, float y1, float y2) {

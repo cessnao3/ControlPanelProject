@@ -29,8 +29,8 @@ public class OrbiterConnect {
 
         Log.v("cp", "Connection Started");
 
-        if (mainContext != null) OrbiterData.frequency = PreferenceManager.getDefaultSharedPreferences(mainContext).getInt("connection_frequency", 1);
-        else OrbiterData.frequency = 1;
+        //if (mainContext != null) OrbiterData.frequency = PreferenceManager.getDefaultSharedPreferences(mainContext).getInt("connection_frequency", 1);
+        //else OrbiterData.frequency = 1;
 
         orbConnection = new AsyncOrbiterConnection(host, port);
         orbConnection.execute();

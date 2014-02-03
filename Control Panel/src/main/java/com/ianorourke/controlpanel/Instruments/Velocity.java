@@ -56,5 +56,7 @@ public class Velocity extends RectangleLayout {
     public void onTouch() {
         currentMode++;
         if (currentMode > 3) currentMode = 0;
+
+        updateRectDisplay();
     }
 }
