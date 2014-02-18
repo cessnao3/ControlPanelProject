@@ -158,8 +158,6 @@ public class RectangleLayout {
                         float displacementX = event.getRawX() - screenLocation[0];
                         float displacementY = event.getRawY() - screenLocation[1];
 
-                        Log.v("cp", Float.valueOf(event.getRawY()).toString());
-
                         setCenter(new PointF(layout.getX() + displacementX, layout.getY() + displacementY));
                     }
                 }
