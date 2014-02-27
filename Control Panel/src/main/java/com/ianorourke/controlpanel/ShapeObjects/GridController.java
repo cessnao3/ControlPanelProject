@@ -13,24 +13,41 @@ public class GridController {
     public static boolean isEditing = false;
 
     public static void addRectangle(RectangleLayout rect) {
-        if (rect != null) {
-            boolean addedRect = false;
+        if (rect == null) return;
 
-            for (int i = 0; i < gridPointList.size(); i++) {
-                GridObject point = gridPointList.get(i);
+        boolean addedRect = false;
 
-                if (!point.hasObject()) {
-                    point.setObject(rect);
+        for (int i = 0; i < gridPointList.size(); i++) {
+            GridObject point = gridPointList.get(i);
 
-                    addedRect = true;
-                    break;
-                }
+            if (!point.hasObject()) {
+                point.setObject(rect);
+
+                addedRect = true;
+                break;
             }
-
-            if (!addedRect) rect.removeSelf();
-
-            resetAllObjects();
         }
+
+        if (!addedRect) rect.removeSelf();
+
+        resetAllObjects();
+    }
+
+    public static void addRectangle(RectangleLayout rect, int pos) {
+        if (rect == null) return;
+
+        if (pos < gridPointList.size() - 1) {
+            GridObject point = gridPointList.get(pos);
+
+            if (!point.hasObject()) point.setObject(rect);
+        } else {
+            //TODO: Better Return for Adding
+            addRectangle(rect);
+
+            //rect.removeSelf();
+        }
+
+        resetAllObjects();
     }
 
     public static void alignObject(RectangleLayout rect) {

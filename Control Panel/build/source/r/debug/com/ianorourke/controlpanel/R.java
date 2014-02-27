@@ -27,6 +27,7 @@ public final class R {
         public static final int menu_connect=0x7f070002;
         public static final int menu_new=0x7f070001;
         public static final int menu_reset_instruments=0x7f070003;
+        public static final int menu_save_and_load=0x7f070006;
         public static final int menu_settings=0x7f070005;
         public static final int menu_toggle_editing=0x7f070004;
         public static final int rect_text_view=0x7f070000;

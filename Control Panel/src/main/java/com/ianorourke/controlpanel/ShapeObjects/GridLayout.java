@@ -22,6 +22,32 @@ public class GridLayout {
         return layout;
     }
 
+    public void parseLoadString(String load) {
+        if (load == null || load == "") return;
+
+        String[] instruments = load.split("\n");
+
+        for (String i : instruments) {
+            String[] values = i.split("//\\\\");
+            if (values.length < 2) break;
+
+            RectangleLayout r = null;
+
+            //TODO: Fix Loading
+
+            if (values[0].equals(Altimeter.class)) r = new Altimeter(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(AttitudeMode.class)) r = new AttitudeMode(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(Machometer.class)) r = new Machometer(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(NameDisplay.class)) r = new NameDisplay(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(RemainingPropellent.class)) r = new RemainingPropellent(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(ToggleHud.class)) r = new ToggleHud(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(Velocity.class)) r = new Velocity(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(VerticalSpeed.class)) r = new VerticalSpeed(layout.getContext(), GridController.rectSize);
+
+            if (r != null) addLayout(r, Integer.parseInt(values[1]));
+        }
+    }
+
     //Rect Types
     public void createAltimeter() {
         Altimeter alt = new Altimeter(layout.getContext(), GridController.rectSize);
@@ -75,6 +101,19 @@ public class GridLayout {
 
         layout.addView(rect.layout, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
 
+        Log.v("cp", Integer.valueOf(GridController.getNumRects()).toString());
+    }
+
+    private void addLayout(RectangleLayout rect, int pos) {
+        if (rect == null) return;
+        if (GridController.getNumRects() >= GridController.gridPointList.size()) return;
+
+        GridController.addRectangle(rect, pos);
+
+        ViewGroup viewParent = (ViewGroup) rect.layout.getParent();
+        if (viewParent != null) viewParent.removeView(rect.layout);
+
+        layout.addView(rect.layout, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
         Log.v("cp", Integer.valueOf(GridController.getNumRects()).toString());
     }
 }
