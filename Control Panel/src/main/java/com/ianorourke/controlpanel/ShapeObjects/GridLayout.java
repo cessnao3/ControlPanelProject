@@ -6,6 +6,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.ianorourke.controlpanel.Instruments.*;
+import com.ianorourke.controlpanel.OrbiterSave;
+
+import java.lang.reflect.InvocationTargetException;
+
+//http://stackoverflow.com/questions/8887197/reliably-convert-any-object-to-string-and-then-back-again
 
 public class GridLayout {
     private RelativeLayout layout;
@@ -28,21 +33,40 @@ public class GridLayout {
         String[] instruments = load.split("\n");
 
         for (String i : instruments) {
-            String[] values = i.split("//\\\\");
+            String[] values = i.split(OrbiterSave.GRID_SPLIT);
             if (values.length < 2) break;
+
+            //TODO: Fix Splitting
+            values[1] = values[1].replace("\\", "").replace("/", "");
 
             RectangleLayout r = null;
 
             //TODO: Fix Loading
+            /*
+            if (values[0].equals(Altimeter.class.toString())) r = new Altimeter(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(AttitudeMode.class.toString())) r = new AttitudeMode(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(Machometer.class.toString())) r = new Machometer(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(NameDisplay.class.toString())) r = new NameDisplay(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(RemainingPropellent.class.toString())) r = new RemainingPropellent(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(ToggleHud.class.toString())) r = new ToggleHud(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(Velocity.class.toString())) r = new Velocity(layout.getContext(), GridController.rectSize);
+            else if (values[0].equals(VerticalSpeed.class.toString())) r = new VerticalSpeed(layout.getContext(), GridController.rectSize);
+            */
 
-            if (values[0].equals(Altimeter.class)) r = new Altimeter(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(AttitudeMode.class)) r = new AttitudeMode(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(Machometer.class)) r = new Machometer(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(NameDisplay.class)) r = new NameDisplay(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(RemainingPropellent.class)) r = new RemainingPropellent(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(ToggleHud.class)) r = new ToggleHud(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(Velocity.class)) r = new Velocity(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(VerticalSpeed.class)) r = new VerticalSpeed(layout.getContext(), GridController.rectSize);
+            try {
+                Class<?> cls = Class.forName(values[0]);
+                r = (RectangleLayout) cls.getConstructor(new Class[] {Context.class, int.class}).newInstance(new Object[] {layout.getContext(), GridController.rectSize});
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
             if (r != null) addLayout(r, Integer.parseInt(values[1]));
         }

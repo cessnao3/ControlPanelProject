@@ -9,6 +9,12 @@ import android.content.SharedPreferences;
 public class OrbiterSave {
     private static final String GRID_SAVE_ID = "grid_save_id";
     private static final String GRID_SAVE_KEY = "grid_save_key";
+    public static final String GRID_SPLIT = "!!!!!";
+
+    public static boolean saveExists(Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        return sharedPref.contains(GRID_SAVE_KEY);
+    }
 
     public static void save(Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -19,7 +25,7 @@ public class OrbiterSave {
         for (int i = 0; i < GridController.gridPointList.size(); i++) {
             GridObject object = GridController.gridPointList.get(i);
 
-            if (object.hasObject()) save += object.getObject().getClass() + "//\\\\" + String.valueOf(i) + "\n";
+            if (object.hasObject()) save += object.getObject().getClass().toString() + GRID_SPLIT + String.valueOf(i) + "\n";
         }
 
         editor.putString(GRID_SAVE_KEY, save.trim());
