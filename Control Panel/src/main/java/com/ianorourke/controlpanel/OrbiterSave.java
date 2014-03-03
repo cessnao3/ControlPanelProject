@@ -6,11 +6,15 @@ import com.ianorourke.controlpanel.ShapeObjects.GridObject;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+//TODO: Serialize Class Object?
+//http://stackoverflow.com/questions/8887197/reliably-convert-any-object-to-string-and-then-back-again
+
 public class OrbiterSave {
     private static final String GRID_SAVE_ID = "grid_save_id";
     private static final String GRID_SAVE_KEY = "grid_save_key";
     public static final String GRID_SPLIT = "!!!!!";
 
+    //TODO: Is Needed?
     public static boolean saveExists(Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         return sharedPref.contains(GRID_SAVE_KEY);

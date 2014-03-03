@@ -10,8 +10,6 @@ import com.ianorourke.controlpanel.OrbiterSave;
 
 import java.lang.reflect.InvocationTargetException;
 
-//http://stackoverflow.com/questions/8887197/reliably-convert-any-object-to-string-and-then-back-again
-
 public class GridLayout {
     private RelativeLayout layout;
     private GridView mainView;
