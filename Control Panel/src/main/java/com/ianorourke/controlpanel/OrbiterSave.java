@@ -12,7 +12,7 @@ import android.content.SharedPreferences;
 public class OrbiterSave {
     private static final String GRID_SAVE_ID = "grid_save_id";
     private static final String GRID_SAVE_KEY = "grid_save_key";
-    public static final String GRID_SPLIT = "!!!!!";
+    public static final String GRID_SPLIT = ",";
 
     //TODO: Is Needed?
     public static boolean saveExists(Context context) {
@@ -29,7 +29,7 @@ public class OrbiterSave {
         for (int i = 0; i < GridController.gridPointList.size(); i++) {
             GridObject object = GridController.gridPointList.get(i);
 
-            if (object.hasObject()) save += object.getObject().getClass().toString() + GRID_SPLIT + String.valueOf(i) + "\n";
+            if (object.hasObject()) save += object.getObject().getClass().getName() + GRID_SPLIT + String.valueOf(i) + "\n";
         }
 
         editor.putString(GRID_SAVE_KEY, save.trim());

@@ -112,6 +112,8 @@ public class GridLayout {
     }
 
     //Layout Params
+
+    //TODO: Cleanup
     private void addLayout(RectangleLayout rect) {
         if (rect == null) return;
         if (GridController.getNumRects() >= GridController.gridPointList.size()) return;

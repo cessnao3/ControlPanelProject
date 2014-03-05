@@ -22,7 +22,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //TODO: Fix Rotation
-
         super.onCreate(savedInstanceState);
 
         this.mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);
