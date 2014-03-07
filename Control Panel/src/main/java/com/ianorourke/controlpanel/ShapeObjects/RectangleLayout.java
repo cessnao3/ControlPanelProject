@@ -23,8 +23,6 @@ public class RectangleLayout {
     public RelativeLayout layout;
     public Paint paintColor = new Paint();
 
-    private String name = "";
-
     private final int size;
 
     public RectangleLayout(Context context, int size) {
@@ -34,9 +32,6 @@ public class RectangleLayout {
         rectView = new RectangleView(context);
         layout.addView(rectView, new RelativeLayout.LayoutParams(size, size));
     }
-
-    protected void setName(String name) { this.name = name; }
-    public String getName() { return name; }
 
     //TextView Setting
 

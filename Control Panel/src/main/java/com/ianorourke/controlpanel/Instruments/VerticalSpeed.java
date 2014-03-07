@@ -17,7 +17,6 @@ public class VerticalSpeed extends RectangleLayout {
 
     public VerticalSpeed(Context context, int size) {
         super(context, size);
-        setName("Vertical Speed");
 
         //TODO: New Graphics
 

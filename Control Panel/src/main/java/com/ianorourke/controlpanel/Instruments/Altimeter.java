@@ -1,6 +1,5 @@
 package com.ianorourke.controlpanel.Instruments;
 
-import com.ianorourke.controlpanel.Orbiter.InstrumentMath;
 import com.ianorourke.controlpanel.Orbiter.OrbiterStatus;
 import com.ianorourke.controlpanel.R;
 import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout;
@@ -16,7 +15,6 @@ public class Altimeter extends RectangleLayout {
 
     public Altimeter(Context context, int size) {
         super(context, size);
-        setName("Altimeter");
 
         this.updateRectDisplay();
 
@@ -75,7 +73,7 @@ public class Altimeter extends RectangleLayout {
 
     @Override
     public void updateRectDisplay() {
-        double altitude = InstrumentMath.getInitialNumber(OrbiterStatus.altitude);
+        double altitude = InstrumentActions.getInitialNumber(OrbiterStatus.altitude);
 
         //TODO: Set to Kilometer x10^x Intervals
 

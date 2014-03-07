@@ -1,6 +1,8 @@
 package com.ianorourke.controlpanel;
 
 import android.content.DialogInterface;
+
+import com.ianorourke.controlpanel.Instruments.InstrumentActions;
 import com.ianorourke.controlpanel.Orbiter.OrbiterConnect;
 import com.ianorourke.controlpanel.ShapeObjects.*;
 
@@ -13,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.view.*;
 
 import java.lang.Class;
+import java.util.List;
 
 public class MainActivity extends Activity {
     private GridLayout mainLayout;
@@ -60,7 +63,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new:
-                final CharSequence[] messages = {"Altimeter", "Velocity", "Name", "Toggle HUD Color", "Remaining Propellent", "Attitude Mode", "Mach", "Vertical Speed"};
+                final CharSequence[] messages = InstrumentActions.getInstrumentNames();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Instrument Selection");
@@ -68,34 +71,8 @@ public class MainActivity extends Activity {
                 builder.setItems(messages, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                mainLayout.createAltimeter();
-                                break;
-                            case 1:
-                                mainLayout.createVelocity();
-                                break;
-                            case 2:
-                                mainLayout.createNameDisplay();
-                                break;
-                            case 3:
-                                mainLayout.createToggleHud();
-                                break;
-                            case 4:
-                                mainLayout.createPropFlow();
-                                break;
-                            case 5:
-                                mainLayout.createAttitudeMode();
-                                break;
-                            case 6:
-                                mainLayout.createMachometer();
-                                break;
-                            case 7:
-                                mainLayout.createVerticalSpeed();
-                                break;
-                            default:
-                                break;
-                        }
+                        List<Class> classList = InstrumentActions.getInstrumentList();
+                        if (which < classList.size()) mainLayout.addInstrument(classList.get(which));
                     }
                 }).show();
                 return true;
@@ -116,7 +93,6 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.menu_toggle_editing:
                 GridController.isEditing = !GridController.isEditing;
-
                 if (GridController.isEditing) item.setTitle("Stop Editing");
                 else item.setTitle("Edit");
                 return true;
@@ -124,7 +100,6 @@ public class MainActivity extends Activity {
                 Intent intent = new Intent(this, MainPreferencesActivity.class);
                 startActivity(intent);
                 return true;
-
             case R.id.menu_save_and_load:
                 AlertDialog.Builder saveBuilder = new AlertDialog.Builder(this);
                 saveBuilder.setTitle("Save/Load");

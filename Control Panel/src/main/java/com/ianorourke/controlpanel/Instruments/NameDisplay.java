@@ -8,7 +8,6 @@ import android.content.Context;
 public class NameDisplay extends RectangleLayout {
     public NameDisplay(Context context, int size) {
         super(context, size);
-        setName("Name Display");
 
         this.createTextView();
         this.updateRectDisplay();

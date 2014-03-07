@@ -9,7 +9,6 @@ import com.ianorourke.controlpanel.Orbiter.OrbiterStatus;
 public class AttitudeMode extends RectangleLayout {
     public AttitudeMode(Context context, int size) {
         super(context, size);
-        setName("Attitude Mode");
 
         this.createTextView();
         this.setTextSize(24.0f);

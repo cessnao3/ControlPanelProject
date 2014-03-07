@@ -40,15 +40,7 @@ public class GridLayout {
 
             try {
                 Class<?> cls = Class.forName(values[0]);
-                r = (RectangleLayout) cls.getConstructor(new Class[] {Context.class, int.class}).newInstance(new Object[] {layout.getContext(), GridController.rectSize});
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                r = createInstrument(cls);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -57,45 +49,26 @@ public class GridLayout {
         }
     }
 
-    //Rect Types
-    public void createAltimeter() {
-        Altimeter alt = new Altimeter(layout.getContext(), GridController.rectSize);
-        addLayout(alt, NO_POS);
+    private RectangleLayout createInstrument(Class c) {
+        RectangleLayout inst = null;
+
+        try {
+            inst = (RectangleLayout) c.getConstructor(new Class[]{Context.class, int.class}).newInstance(new Object[]{layout.getContext(), GridController.rectSize});
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return inst;
     }
 
-    public void createVelocity() {
-        Velocity vel = new Velocity(layout.getContext(), GridController.rectSize);
-        addLayout(vel, NO_POS);
-    }
-
-    public void createNameDisplay() {
-        NameDisplay name = new NameDisplay(layout.getContext(), GridController.rectSize);
-        addLayout(name, NO_POS);
-    }
-
-    public void createToggleHud() {
-        ToggleHud hud = new ToggleHud(layout.getContext(), GridController.rectSize);
-        addLayout(hud, NO_POS);
-    }
-
-    public void createPropFlow() {
-        RemainingPropellent prop = new RemainingPropellent(layout.getContext(), GridController.rectSize);
-        addLayout(prop, NO_POS);
-    }
-
-    public void createAttitudeMode() {
-        AttitudeMode att = new AttitudeMode(layout.getContext(), GridController.rectSize);
-        addLayout(att, NO_POS);
-    }
-
-    public void createMachometer() {
-        Machometer mach = new Machometer(layout.getContext(), GridController.rectSize);
-        addLayout(mach, NO_POS);
-    }
-
-    public void createVerticalSpeed() {
-        VerticalSpeed vs = new VerticalSpeed(layout.getContext(), GridController.rectSize);
-        addLayout(vs, NO_POS);
+    public void addInstrument(Class c) {
+        addLayout(createInstrument(c), NO_POS);
     }
 
     //Layout Params

@@ -18,7 +18,6 @@ public class Velocity extends RectangleLayout {
 
     public Velocity(Context context, int size) {
         super(context, size);
-        setName("Velocity");
 
         this.createTextView();
         this.setTextSize(24.0f);
