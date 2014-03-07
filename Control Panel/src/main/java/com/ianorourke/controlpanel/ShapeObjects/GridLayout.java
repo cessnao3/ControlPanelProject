@@ -35,21 +35,9 @@ public class GridLayout {
             if (values.length < 2) break;
 
             //TODO: Fix Splitting
-            values[1] = values[1].replace("\\", "").replace("/", "");
+            //values[1] = values[1].replace("\\", "").replace("/", "");
 
             RectangleLayout r = null;
-
-            //TODO: Fix Loading
-            /*
-            if (values[0].equals(Altimeter.class.toString())) r = new Altimeter(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(AttitudeMode.class.toString())) r = new AttitudeMode(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(Machometer.class.toString())) r = new Machometer(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(NameDisplay.class.toString())) r = new NameDisplay(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(RemainingPropellent.class.toString())) r = new RemainingPropellent(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(ToggleHud.class.toString())) r = new ToggleHud(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(Velocity.class.toString())) r = new Velocity(layout.getContext(), GridController.rectSize);
-            else if (values[0].equals(VerticalSpeed.class.toString())) r = new VerticalSpeed(layout.getContext(), GridController.rectSize);
-            */
 
             try {
                 Class<?> cls = Class.forName(values[0]);

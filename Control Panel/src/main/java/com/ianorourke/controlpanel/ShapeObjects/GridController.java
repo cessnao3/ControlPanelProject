@@ -39,11 +39,7 @@ public class GridController {
         if (pos < gridPointList.size() && pos >= 0) {
             GridObject point = gridPointList.get(pos);
             if (!point.hasObject()) point.setObject(rect);
-        } else {
-            //TODO: Better Return for Adding
-            //addRectangle(rect);
-            rect.removeSelf();
-        }
+        } else rect.removeSelf();
 
         resetAllObjects();
     }

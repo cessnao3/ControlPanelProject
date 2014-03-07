@@ -14,7 +14,6 @@ import android.view.*;
 
 public class MainActivity extends Activity {
     private GridLayout mainLayout;
-
     private OrbiterConnect orbiterConnect;
 
     private SharedPreferences mainPreferences;
@@ -24,10 +23,12 @@ public class MainActivity extends Activity {
         //TODO: Fix Rotation
         super.onCreate(savedInstanceState);
 
-        this.mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //TODO: Autoload or Initial Menu Screen
 
-        if (this.mainLayout == null || this.mainLayout.getLayout() == null) {
-            this.mainLayout = new GridLayout(this);
+        mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (mainLayout == null || mainLayout.getLayout() == null) {
+            mainLayout = new GridLayout(this);
 
             setContentView(this.mainLayout.getLayout());
         }
