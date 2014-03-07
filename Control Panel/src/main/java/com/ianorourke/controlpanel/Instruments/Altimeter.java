@@ -1,5 +1,6 @@
 package com.ianorourke.controlpanel.Instruments;
 
+import com.ianorourke.controlpanel.Orbiter.InstrumentMath;
 import com.ianorourke.controlpanel.Orbiter.OrbiterStatus;
 import com.ianorourke.controlpanel.R;
 import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout;
@@ -15,8 +16,7 @@ public class Altimeter extends RectangleLayout {
 
     public Altimeter(Context context, int size) {
         super(context, size);
-
-        //this.setTextSize(24.0f);
+        setName("Altimeter");
 
         this.updateRectDisplay();
 

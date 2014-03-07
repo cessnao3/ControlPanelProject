@@ -14,6 +14,8 @@ public class GridLayout {
     private RelativeLayout layout;
     private GridView mainView;
 
+    final int NO_POS = -1;
+
     public GridLayout(Context context) {
         layout = new RelativeLayout(context);
         mainView = new GridView(context);
@@ -33,9 +35,6 @@ public class GridLayout {
         for (String i : instruments) {
             String[] values = i.split(OrbiterSave.GRID_SPLIT);
             if (values.length < 2) break;
-
-            //TODO: Fix Splitting
-            //values[1] = values[1].replace("\\", "").replace("/", "");
 
             RectangleLayout r = null;
 
@@ -61,66 +60,51 @@ public class GridLayout {
     //Rect Types
     public void createAltimeter() {
         Altimeter alt = new Altimeter(layout.getContext(), GridController.rectSize);
-        addLayout(alt);
+        addLayout(alt, NO_POS);
     }
 
     public void createVelocity() {
         Velocity vel = new Velocity(layout.getContext(), GridController.rectSize);
-        addLayout(vel);
+        addLayout(vel, NO_POS);
     }
 
     public void createNameDisplay() {
         NameDisplay name = new NameDisplay(layout.getContext(), GridController.rectSize);
-        addLayout(name);
+        addLayout(name, NO_POS);
     }
 
     public void createToggleHud() {
         ToggleHud hud = new ToggleHud(layout.getContext(), GridController.rectSize);
-        addLayout(hud);
+        addLayout(hud, NO_POS);
     }
 
     public void createPropFlow() {
         RemainingPropellent prop = new RemainingPropellent(layout.getContext(), GridController.rectSize);
-        addLayout(prop);
+        addLayout(prop, NO_POS);
     }
 
     public void createAttitudeMode() {
         AttitudeMode att = new AttitudeMode(layout.getContext(), GridController.rectSize);
-        addLayout(att);
+        addLayout(att, NO_POS);
     }
 
     public void createMachometer() {
         Machometer mach = new Machometer(layout.getContext(), GridController.rectSize);
-        addLayout(mach);
+        addLayout(mach, NO_POS);
     }
 
     public void createVerticalSpeed() {
         VerticalSpeed vs = new VerticalSpeed(layout.getContext(), GridController.rectSize);
-        addLayout(vs);
+        addLayout(vs, NO_POS);
     }
 
     //Layout Params
-
-    //TODO: Cleanup
-    private void addLayout(RectangleLayout rect) {
-        if (rect == null) return;
-        if (GridController.getNumRects() >= GridController.gridPointList.size()) return;
-
-        GridController.addRectangle(rect);
-
-        ViewGroup viewParent = (ViewGroup) rect.layout.getParent();
-        if (viewParent != null) viewParent.removeView(rect.layout);
-
-        layout.addView(rect.layout, new ViewGroup.LayoutParams(rect.getSize(), rect.getSize()));
-
-        Log.v("cp", Integer.valueOf(GridController.getNumRects()).toString());
-    }
-
     private void addLayout(RectangleLayout rect, int pos) {
         if (rect == null) return;
         if (GridController.getNumRects() >= GridController.gridPointList.size()) return;
 
-        GridController.addRectangle(rect, pos);
+        if (pos >= 0) GridController.addRectangle(rect, pos);
+        else GridController.addRectangle(rect);
 
         ViewGroup viewParent = (ViewGroup) rect.layout.getParent();
         if (viewParent != null) viewParent.removeView(rect.layout);

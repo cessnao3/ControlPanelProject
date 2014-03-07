@@ -12,6 +12,8 @@ import android.app.AlertDialog;
 import android.preference.PreferenceManager;
 import android.view.*;
 
+import java.lang.Class;
+
 public class MainActivity extends Activity {
     private GridLayout mainLayout;
     private OrbiterConnect orbiterConnect;

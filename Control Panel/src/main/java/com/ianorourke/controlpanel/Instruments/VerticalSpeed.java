@@ -17,6 +17,7 @@ public class VerticalSpeed extends RectangleLayout {
 
     public VerticalSpeed(Context context, int size) {
         super(context, size);
+        setName("Vertical Speed");
 
         //TODO: New Graphics
 
@@ -53,8 +54,6 @@ public class VerticalSpeed extends RectangleLayout {
     @Override
     public void updateRectDisplay() {
         double vs = OrbiterStatus.airspeedVector[2];
-
-        //this.setText(OrbiterStatus.airspeedVector[2]);
 
         double angle = 0.0;
 

@@ -43,6 +43,8 @@ public class OrbiterSave {
         if (loadString != null && !loadString.equals("")) GridController.deleteAllRects();
         else return null;
 
+        GridController.isEditing = false;
+
         return loadString;
     }
 }

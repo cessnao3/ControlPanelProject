@@ -8,6 +8,7 @@ import com.ianorourke.controlpanel.ShapeObjects.RectangleLayout;
 public class Machometer extends RectangleLayout {
     public Machometer(Context context, int size) {
         super(context, size);
+        setName("Machometer");
 
         this.createTextView();
         this.updateRectDisplay();

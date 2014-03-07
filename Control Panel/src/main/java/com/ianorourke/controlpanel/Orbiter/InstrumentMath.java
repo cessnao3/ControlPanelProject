@@ -1,4 +1,4 @@
-package com.ianorourke.controlpanel.Instruments;
+package com.ianorourke.controlpanel.Orbiter;
 
 public class InstrumentMath {
     public static String getScientificNotation(Double d) {
