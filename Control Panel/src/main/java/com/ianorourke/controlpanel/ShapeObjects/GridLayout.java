@@ -14,7 +14,7 @@ public class GridLayout {
     private RelativeLayout layout;
     private GridView mainView;
 
-    final int NO_POS = -1;
+    static final int NO_POS = -1;
 
     public GridLayout(Context context) {
         layout = new RelativeLayout(context);
