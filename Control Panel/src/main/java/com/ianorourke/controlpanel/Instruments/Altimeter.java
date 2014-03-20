@@ -67,8 +67,6 @@ public class Altimeter extends RectangleLayout {
         shortHandImage.setPivotY(y);
         shortHandImage.setX((float) (this.getSize() / 2.0 - x));
         shortHandImage.setY((float) (this.getSize() / 2.0 - y));
-
-        //TODO: Flip Long/Short Hand
     }
 
     @Override
@@ -76,6 +74,7 @@ public class Altimeter extends RectangleLayout {
         double altitude = InstrumentActions.getInitialNumber(OrbiterStatus.altitude);
 
         //TODO: Set to Kilometer x10^x Intervals
+        //TODO: Check Long/Short Image
 
         float rotation = (float) altitude * 36.0f - 90.0f;
         if (shortHandImage != null && shortHandImage.getParent() != null) shortHandImage.setRotation(rotation);

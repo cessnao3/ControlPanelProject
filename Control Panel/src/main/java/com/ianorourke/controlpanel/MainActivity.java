@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         //TODO: Autoload or Initial Menu Screen
+        //TODO: Fix grid spacing for various screen sizes
 
         mainPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 

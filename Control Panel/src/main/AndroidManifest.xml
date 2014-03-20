@@ -20,8 +20,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait">
 
-            <!--TODO: FIX ORIENTATION-->
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
