@@ -10,14 +10,21 @@ import java.net.Socket;
 
 public class OrbiterConnect {
 
-    //protected AsyncOrbiterConnection orbConnection;
+    private AsyncOrbiterConnection orbConnection;
+
+    private boolean isConnected = true;
 
     private final int DEFAULT_PORT = 37777;
 
     public void connect(/*String host, int port*/) {
+        if (orbConnection != null && orbConnection.getStatus() == AsyncTask.Status.RUNNING) {
+            orbConnection.cancel(false);
+            return;
+        }
+
         //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("192.168.1.102", DEFAULT_PORT); //ProBook Home Network
         //AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.2.2", DEFAULT_PORT); //Android Emulator
-        AsyncOrbiterConnection orbConnection = new AsyncOrbiterConnection("10.0.3.2", DEFAULT_PORT); //Genymotion Emulator
+        orbConnection = new AsyncOrbiterConnection("10.0.3.2", DEFAULT_PORT); //Genymotion Emulator
 
         //TODO: Fix Socket Init Error
 
@@ -26,9 +33,9 @@ public class OrbiterConnect {
 
     public void disconnect(AsyncOrbiterConnection orbConnection) {
         if (orbConnection == null) return;
-        //TODO: Setup Canceling
+        //TODO: Create Canceling
 
-        if (!orbConnection.isCancelled()) orbConnection.cancel(true);
+        if (!orbConnection.isCancelled()) orbConnection.cancel(false);
 
         orbConnection = null;
     }
@@ -43,6 +50,8 @@ public class OrbiterConnect {
 
         private PrintStream out;
         private BufferedReader in;
+
+        private String message = "FOCUS:Alt";
 
         public AsyncOrbiterConnection(String host, int port) {
             this.port = port;
@@ -73,68 +82,62 @@ public class OrbiterConnect {
             }
 
             //TODO: Remove most sleepThread if possible
-            this.sleepThread(1000);
+            //this.sleepThread(1000);
 
             //TODO: Listen Loop
-            //boolean listenLoop = true;
+            boolean listenLoop = true;
 
-            //TODO: Fix Null Pointer Exception Crash
+            while (listenLoop) {
+                try {
+                    if (socket == null) return GENERIC_ERROR;
+                    if (!socket.isConnected()) return GENERIC_ERROR;
 
-            try {
-                if (socket == null) return GENERIC_ERROR;
-                if (!socket.isConnected()) return GENERIC_ERROR;
-                Log.v("cp", "Socket: " + socket.toString());
-
-                //final String CHANGE_HUD = "ORB:ToggleHudColor" + "\n";
-                final String GET_FOCUS = "FOCUS:Name";
-                //final String SET_TIMEWARP = "ORB:SetTimeAccel:5";
-
-                //String message = CHANGE_HUD;
-
-                Log.v("cp", "Message: " + GET_FOCUS);
-
-                out.println(GET_FOCUS + "\r");
-
-                publishProgress("Message Published");
-
-                if (out.checkError()){
-                    Log.v("cp", "OUT ERROR");
-                    publishProgress("Out Error");
-                    return GENERIC_ERROR;
-                }
-
-                for (int i = 0; i < 5; i++) {
-                    if (!in.ready()) {
-                        Log.v("cp", "Continue");
-
-                        this.sleepThread(1000);
-
-                        continue;
-                    }
-
-                    String response = in.readLine();
-                    Log.v("cp", "Response: " + response);
-
-                    if (response != null){
-                        publishProgress(response);
+                    if (isCancelled()) {
+                        listenLoop = false;
                         break;
                     }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
 
-                Log.v("cp", "IO Exception Error");
-            } finally {
-                try {
-                    if (!socket.isClosed()) {
-                        //TODO: Add these?
-                        //if (!socket.isInputShutdown()) socket.shutdownInput();
-                        //if (!socket.isOutputShutdown()) socket.shutdownOutput();
-                        socket.close();
+                    out.println(message + "\r");
+
+                    if (out.checkError()){
+                        Log.v("cp", "OUT ERROR");
+                        publishProgress("Out Error");
+                        return GENERIC_ERROR;
+                    }
+
+                    for (int i = 0; i < 5; i++) {
+                        if (!in.ready()) {
+                            Log.v("cp", "Continue");
+                            continue;
+                        }
+
+                        String response = in.readLine();
+                        response = response.replace(message + "=", "");
+
+                        Log.v("cp", "Response: " + response);
+
+                        if (response != null){
+                            publishProgress(response);
+                            break;
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+
+                    listenLoop = false;
+
+                    Log.v("cp", "IO Exception Error");
                 }
+
+                this.sleepThread(1000);
+            }
+
+            try {
+                if (!socket.isClosed()) socket.close();
+                if (!socket.isInputShutdown()) socket.shutdownInput();
+                if (!socket.isOutputShutdown()) socket.shutdownOutput();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
             return "00END00";
