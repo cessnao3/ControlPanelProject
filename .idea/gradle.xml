@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="C:\Users\Ian\Documents\Android Studio Projects\Control Panel Project" />
-            <option value="C:\Users\Ian\Documents\Android Studio Projects\Control Panel Project\Control Panel" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Control Panel" />
           </set>
         </option>
       </GradleProjectSettings>

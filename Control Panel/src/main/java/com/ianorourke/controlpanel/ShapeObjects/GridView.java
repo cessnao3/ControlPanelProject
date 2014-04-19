@@ -18,12 +18,15 @@ public class GridView extends View {
 
         float scale = getResources().getDisplayMetrics().density;
 
-        GridController.rectSize = (int) (150.0 * scale + 0.5f);
+        double dpSize = 150.0;
+
+        GridController.rectSize = (int) (dpSize * scale + 0.5f);
+        int offsetSize = (int) ((dpSize + 1.0) * scale + 0.5f);
 
         Point screenSize = new Point(this.getWidth(), this.getHeight());
 
-        int numX = (int) Math.floor(screenSize.x / GridController.rectSize);
-        int numY = (int) Math.floor(screenSize.y / GridController.rectSize);
+        int numX = (int) Math.floor(screenSize.x / offsetSize);
+        int numY = (int) Math.floor(screenSize.y / offsetSize);
 
         if (numX == 0 || numY == 0) return;
 
