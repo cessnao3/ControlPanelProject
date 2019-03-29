@@ -1,4 +1,4 @@
-# Orbiter Contorl Panel
+# Orbiter Control Panel
 A remote instrument panel for the Orbiter Space Flight Simulator
 
 This application utilizes the OrbConnect plugin (http://sourceforge.net/projects/orbconnect/) to connect to Orbiter Space Flight Simulator (http://orbit.medphys.ucl.ac.uk/).
@@ -8,7 +8,7 @@ This application utilizes the OrbConnect plugin (http://sourceforge.net/projects
 The Orbiter Control Panel features the following instruments:
 * Altimeter
 * Attitude Mode Selector
-* Machometer
+* Mach Meter
 * Ship Name Display
 * Remaining Propellent
 * HUD Color Toggle
